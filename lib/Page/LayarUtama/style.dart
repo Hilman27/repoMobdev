@@ -28,3 +28,10 @@ TextStyle normalFont(){
     fontFamily: "calibri",
   );
 }
+
+TextStyle tittleHead(){
+  return TextStyle(
+    fontSize: 14,
+    fontFamily: "calibri",
+  );
+}

@@ -62,10 +62,37 @@ class NewsItem extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 3),
+            child: Padding(
+              padding: const EdgeInsets.only(left : 8.0, top: 2.0),
+              child: Row(                
+                children: <Widget>[
+                  SizedBox(width: 17,),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 3),
+                    child: SizedBox(
+                      width: 50,            
+                      height: 50,
+                      child: Container(     
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),                              
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 17,),
+                  Text(news.user.name, style: tittleHead(),),
+
+                ],
+              ),
+            ),
+          ),
           Row(
-            children: <Widget>[
+            children: <Widget>[              
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left:8.0, right: 3.0,bottom: 3.0),
                 child: SizedBox(
                   width: 80,            
                   height: 80,
@@ -75,44 +102,24 @@ class NewsItem extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 3),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(right: 3),
-                            child: SizedBox(
-                              width: 20,            
-                              height: 20,
-                              child: Container(     
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.red,
-                                ),                              
-                              ),
-                            ),
-                          ),
-
-                          Text(news.user.name),
-
-                        ],
-                      ),
-                    ),
-                    Text(news.event.eventName, style: normalFont(), textAlign: TextAlign.left,),
-                    SizedBox(height : 5),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: Text(news.event.caption,
-                      style: normalFont(),
-                      softWrap: true,
-                      maxLines: 4,
-                      textAlign: TextAlign.justify,),
-                    )
-                  ],
+                child: Container(
+                  height: 80,                  
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[                    
+                      Text(news.event.eventName, style: normalFont(), textAlign: TextAlign.left,),
+                      SizedBox(height : 5),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Text(news.event.caption,
+                        style: normalFont(),
+                        softWrap: true,
+                        maxLines: 4,
+                        textAlign: TextAlign.justify,),
+                      )
+                    ],
+                  ),
                 ),
               )
             ],

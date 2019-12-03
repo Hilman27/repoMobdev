@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/UI/LayarUtama/layar_utama.dart';
+import 'package:provider/provider.dart';
+import 'package:religi_app/Page/LayarUtama/layar_utama.dart';
+import 'package:religi_app/Models/LayarUtama/feed_model.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,15 +9,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => NewsFeed()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home:SafeArea(
+          child: PageUtama(),
+        ), 
       ),
-      //home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home:SafeArea(
-        child: PageUtama(),
-      ), 
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/UI/LayarUtama/style.dart';
+import 'package:religi_app/Page/LayarUtama/style.dart';
 
 class BarAtas extends StatefulWidget{
   @override

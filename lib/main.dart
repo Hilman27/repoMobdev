@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:religi_app/widgets/textform.dart';
 
 void main() => runApp(MyApp());
 
@@ -93,6 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               'You have pushed the button this many times:',
+            ),
+            FormTextBiasa(
+              namaLabel: 'nama',
             ),
             Text(
               '$_counter',

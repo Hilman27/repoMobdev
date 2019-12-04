@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/widgets/textform.dart';
+import 'package:religi_app/widgets/_widgets.dart';
 
 void main() => runApp(MyApp());
 
@@ -105,11 +105,23 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingButton(
+        onpress: () {
+          _incrementCounter();
+        },
+      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+
+      // FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: Icon(Icons.add),
+      // )
+
+      // , // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:religi_app/Models/LayarUtama/feed_model.dart';
+import 'package:religi_app/constant/_const.dart';
 import 'package:religi_app/Widgets/AppBar/appBar.dart';
 import 'package:religi_app/Widgets/Buttons/searchButton.dart';
 import 'package:religi_app/Const/Fontstyle.dart';

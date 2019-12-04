@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/Const/fontStyle.dart';
+import 'package:religi_app/constant/_const.dart';
 
 class BarAtas extends StatelessWidget{
   @override

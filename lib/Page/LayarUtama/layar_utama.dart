@@ -2,48 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:religi_app/Models/LayarUtama/feed_model.dart';
 import 'package:religi_app/Widgets/AppBar/appBar.dart';
+import 'package:religi_app/Widgets/Buttons/searchButton.dart';
 import 'package:religi_app/Const/style.dart';
+
 
 
 class PageUtama extends StatelessWidget{
   @override
   Widget build(BuildContext context) {    
     return Scaffold(      
-      appBar: AppBar(
+      /* appBar: AppBar(
         title : BarAtas(),
-      ),
+      ), */
+      floatingActionButton: SearchButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: MenuBar(),
       body: Container(
-        child: Column(
-            children: <Widget>[
-              Container(
-                alignment: Alignment.topCenter,
-                //width: 384,                
-                height: 511,
-                color: Colors.yellow,
-                child:  Container(
-                  child: CustomScrollView(
-                    slivers: <Widget>[
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                       (context,index) => NewsItem(index),
-                        ),
-                      )
-                    ],
-                  )
+        alignment: Alignment.topCenter,
+        color: Colors.yellow,
+        child: Container(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+               (context,index) => NewsItem(index),
                 ),
-                  
-                ), 
-                //NewsItem(),
-                
-              
-              /* Container(
-                width: 100,
-                //height: 600,
-                color: Colors.cyan,
-              ) */ //Dev Notes : Ads Space Gone. Make the screen too small.
+              )
             ],
-          ),
-      )
+          )
+        ),
+      ),
+      
     );
   }     
 }

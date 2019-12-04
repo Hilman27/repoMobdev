@@ -6,10 +6,7 @@ class SilverAppBarContoh extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add_box),
-      ),
+      floatingActionButton: new FloatingButtonTemplate(),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -78,6 +75,20 @@ class SilverAppBarContoh extends StatelessWidget {
       isiString,
       style: TextStyle(fontSize: 30),
       textAlign: TextAlign.justify,
+    );
+  }
+}
+
+class FloatingButtonTemplate extends StatelessWidget {
+  const FloatingButtonTemplate({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {},
+      child: Icon(Icons.add_box),
     );
   }
 }

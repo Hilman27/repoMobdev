@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:religi_app/Const/size.dart';
 
 TextStyle styleMini() {
   return TextStyle(
@@ -16,7 +17,7 @@ TextStyle styleMini2() {
 
 TextStyle styleInput() {
   return TextStyle(
-    fontSize: 10,
+    fontSize: ukuranKecil,
     fontWeight: FontWeight.bold,
     
   );
@@ -24,10 +25,18 @@ TextStyle styleInput() {
 
 TextStyle normalFont(){
   return TextStyle(
-    fontSize: 12,
+    fontSize: ukuranNormal,
     fontFamily: "calibri",
   );
 }
+
+TextStyle smallerFont(){
+  return TextStyle(
+    fontSize: ukuranKecil,
+    fontFamily: "calibri",
+  );
+}
+
 
 TextStyle tittleHead(){
   return TextStyle(

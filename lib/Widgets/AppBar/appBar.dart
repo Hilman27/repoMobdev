@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/Page/LayarUtama/style.dart';
+import 'package:religi_app/Const/style.dart';
 
-class BarAtas extends StatefulWidget{
-  @override
-  State<StatefulWidget> createState() {    
-    return _BarAtas();
-  }
-  
-}
-
-class _BarAtas extends  State<BarAtas> {
+class BarAtas extends StatelessWidget{
   @override
   Widget build(BuildContext context) {    
     return Center(
@@ -48,5 +40,6 @@ class _BarAtas extends  State<BarAtas> {
           ),
         )   ;
   }
-
+ 
+  
 }

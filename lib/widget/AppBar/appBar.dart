@@ -75,7 +75,7 @@ class MenuBar extends StatelessWidget{
   
 }
 
-class FloatingBar extends StatelessWidget{
+/* class FloatingBar extends StatelessWidget{
   @override
   Widget build(BuildContext context) {    
     return Positioned(
@@ -83,4 +83,4 @@ class FloatingBar extends StatelessWidget{
     );
   }
   
-}
+} */

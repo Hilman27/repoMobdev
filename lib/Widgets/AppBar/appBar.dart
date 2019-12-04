@@ -54,8 +54,8 @@ class MenuBar extends StatelessWidget{
       elevation: 10,           
       shape: CircularNotchedRectangle(),
       child: Container(
-        padding : EdgeInsets.all(8.0),
-        height: 50,      
+        padding : EdgeInsets.all(5.0),
+        height: 55,      
         color: Colors.greenAccent,  
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

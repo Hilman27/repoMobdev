@@ -7,11 +7,15 @@ class FormTextBiasa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          labelText: namaLabel,
-          hintText: 'masukkan $namaLabel'.toLowerCase()),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: TextField(
+        decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: namaLabel,
+            hintText: 'masukkan $namaLabel'.toLowerCase()),
+      ),
     );
   }
 }

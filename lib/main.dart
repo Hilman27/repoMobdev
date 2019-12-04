@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/widgets/_widgets.dart';
 
 void main() => runApp(MyApp());
 
@@ -95,9 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            FormTextBiasa(
-              namaLabel: 'nama',
-            ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
@@ -105,23 +101,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingButton(
-        onpress: () {
-          _incrementCounter();
-        },
-      ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-
-      // FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // )
-
-      // , // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

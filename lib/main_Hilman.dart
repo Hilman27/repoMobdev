@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:religi_app/Page/LayarUtama/layar_utama.dart';
-import 'package:religi_app/Models/LayarUtama/feed_model.dart';
+import 'package:religi_app/pages/LayarUtama/layar_utama.dart';
+import 'package:religi_app/model/_model.dart';
 
 void main() => runApp(MyApp());
 

@@ -9,13 +9,13 @@
             "name": "Flutter",
             "request": "launch",
             "type": "dart"
-        }
+        },
 
         {
             "name": "HilmanTest",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main_Hilman",
+            "program": "lib/main_Hilman.dart",
             
         }
     ]

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:religi_app/Const/size.dart';
+import 'package:religi_app/constant/_const.dart';
 
 TextStyle styleMini() {
   return TextStyle(

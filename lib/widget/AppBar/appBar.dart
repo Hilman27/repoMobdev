@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/Const/fontStyle.dart';
+import 'package:religi_app/constant/_const.dart';
 
 class BarAtas extends StatelessWidget{
   @override
@@ -75,7 +75,7 @@ class MenuBar extends StatelessWidget{
   
 }
 
-class FloatingBar extends StatelessWidget{
+/* class FloatingBar extends StatelessWidget{
   @override
   Widget build(BuildContext context) {    
     return Positioned(
@@ -83,4 +83,4 @@ class FloatingBar extends StatelessWidget{
     );
   }
   
-}
+} */

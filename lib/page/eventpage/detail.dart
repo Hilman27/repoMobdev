@@ -23,49 +23,27 @@ class SilverAppBarContoh extends StatelessWidget {
           ),
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Column(
-              children: <Widget>[
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-                buildRowTemplate('nama: ', 'ini isinya panjang ya'),
-              ],
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    buildRowIcon(Icon(Icons.date_range), 'tanggal 4 Juli 2020'),
+                    SizedBox10(),
+                    buildRowIcon(Icon(Icons.home), 'masjid jami\' '),
+                    new SizedBox10(),
+                    buildTextTemplate('keterangan event'),
+                    Divider(
+                      color: Colors.black,
+                    ),
+                    buildTextTemplate(
+                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ')
+                  ],
+                ),
+              ),
             ),
           )
-          // SliverFillRemaining(
-          //   child: Column(
-          //     children: List<int>.generate(50, (index) => index)
-          //         .map((index) => Container(
-          //               height: 40,
-          //               margin: EdgeInsets.symmetric(vertical: 10),
-          //               color: Colors.grey[300],
-          //               alignment: Alignment.center,
-          //               child: Text('Heading $index'),
-          //             ))
-          //         .toList(),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -81,24 +59,34 @@ class SilverAppBarContoh extends StatelessWidget {
     );
   }
 
+  Row buildRowIcon(Icon icon, String isiStringnya) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        icon,
+        buildTextTemplate(isiStringnya),
+      ],
+    );
+  }
+
   Text buildTextTemplate(String isiString) {
     return Text(
       isiString,
       style: TextStyle(fontSize: 30),
+      textAlign: TextAlign.justify,
     );
   }
 }
 
-class RowTemplate extends StatelessWidget {
-  final label;
-  final isinya;
-
-  const RowTemplate({Key key, this.label, this.isinya}) : super(key: key);
+class SizedBox10 extends StatelessWidget {
+  const SizedBox10({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[],
+    return SizedBox(
+      height: 10,
     );
   }
 }

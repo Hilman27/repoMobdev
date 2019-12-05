@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:religi_app/widgets/textform.da5rt';
 
-import 'package:religi_app/widget/_widgets.dart';
+// import 'package:religi_app/widget/_widgets.dart';
 
 class PageDetailEvent extends StatelessWidget {
   @override
@@ -40,12 +40,13 @@ class PageDetailEvent extends StatelessWidget {
                       children: <Widget>[Icon(Icons.star), new RatingStar()],
                     ),
                     new SizedBox10(),
-                    buildTextTemplate('keterangan event'),
+                    buildTextTemplate('keterangan event', 30),
                     Divider(
                       color: Colors.black,
                     ),
                     buildTextTemplate(
-                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse '),
+                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse ',
+                        20),
                     Divider(
                       thickness: 10.0,
                       color: Colors.black,
@@ -93,7 +94,7 @@ class PageDetailEvent extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 10.0,
+              fontSize: 30.0,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -138,7 +139,10 @@ class StarHalf extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(Icons.star_half);
+    return Icon(
+      Icons.star_half,
+      color: Colors.yellow[700],
+    );
   }
 }
 
@@ -160,8 +164,8 @@ Row buildRowTemplate(String isiLabel, String isiStringnya) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[
-      buildTextTemplate(isiLabel),
-      buildTextTemplate(isiStringnya),
+      buildTextTemplate(isiLabel, 30),
+      buildTextTemplate(isiStringnya, 30),
     ],
   );
 }
@@ -171,15 +175,15 @@ Row buildRowIcon<Icon, String>(icon, isinya) {
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       icon,
-      buildTextTemplate(isinya),
+      buildTextTemplate(isinya, 30),
     ],
   );
 }
 
-Text buildTextTemplate(String isiString) {
+Text buildTextTemplate(String isiString, double size) {
   return Text(
     isiString,
-    style: TextStyle(fontSize: 30),
+    style: TextStyle(fontSize: size ?? 30),
     textAlign: TextAlign.justify,
   );
 }

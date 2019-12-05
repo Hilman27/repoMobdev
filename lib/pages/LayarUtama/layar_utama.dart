@@ -14,27 +14,39 @@ class PageUtama extends StatelessWidget{
       /* appBar: AppBar(
         title : BarAtas(),
       ), */
-      floatingActionButton: SearchButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: MenuBar(),
-      body: Container(
-        alignment: Alignment.topCenter,
-        color: Colors.yellow,
-        child: Container(
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-               (context,index) => NewsItem(index),
-                ),
-              )
-            ],
-          )
-        ),
-      ),
-      
+      /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SearchButton(),      
+      bottomNavigationBar: MenuBar(), */
+      body: NavBar("Beranda", CallNewsFeed()),                    
     );
   }     
+}
+
+class CallNewsFeed extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {    
+    return Container(          
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              alignment: Alignment.topCenter,
+              color: putihMain,
+              child: Container(
+                child: CustomScrollView(
+                  slivers: <Widget>[
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                     (context,index) => NewsItem(index),
+                      ),
+                    )
+                  ],
+                )
+              ),
+            ),
+          ),
+        );
+  }
+  
 }
 
 class NewsItem extends StatelessWidget {
@@ -48,44 +60,58 @@ class NewsItem extends StatelessWidget {
     var feeds = Provider.of<NewsFeed>(context);
     var news = feeds.init(index);
     var textTheme = Theme.of(context).textTheme.title; 
-    return Container(
-      child:                  
-          Row(
-            children: <Widget>[              
-              Padding(
-                padding: const EdgeInsets.only(left:8.0, right: 3.0,bottom: 3.0, top: 3.0),
-                child: SizedBox(
-                  width: 80,            
-                  height: 80,
-                  child: Container(              
-                    color: Colors.red,
+    return Column(
+      children: <Widget>[
+      Container(
+        decoration: BoxDecoration(
+            border: Border.all(width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
+        child: ExpansionTile(
+          initiallyExpanded: true,
+          title: Column(children: <Widget>[        
+            NewsUser(news.user.name, news.user.link,news.event.eventName),
+          ],
+          ),      
+          children: <Widget>[
+              Column(
+                children: <Widget>[              
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: AspectRatio(
+                      aspectRatio: 4/3,
+                      child: SizedBox(                  
+                        width: 400,                                
+                        child: Container(              
+                          color: dummyPicColor,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 80,                  
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[        
-                      NewsUser(news.user.name, news.user.link),
-                      Text(news.event.eventName, style: normalFont(), textAlign: TextAlign.left,),
-                      SizedBox(height : 4),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: Text(news.event.caption,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[                            
+                        Text(news.event.eventName, style: normalFont(), textAlign: TextAlign.left,),
+                        SizedBox(height : 4),
+                        Text(news.event.caption,
                         style: normalFont(),
                         softWrap: true,
                         maxLines: 3,
-                        textAlign: TextAlign.justify,),
-                      )
-                    ],
+                        textAlign: TextAlign.justify,)
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),                        
+                ],
+              ),
+            ],                                  
+        ),
+      ),
+      SizedBox(height: 5, 
+      child: Container(color: fullWhite,),)
+      ],      
     );
   }
     
@@ -94,37 +120,41 @@ class NewsItem extends StatelessWidget {
 class NewsUser extends StatelessWidget{
   final String username;
   final String userlink;
+  final String eventName;
 
-  const NewsUser(this.username, this.userlink , {Key key}) : super(key: key);
+  const NewsUser(this.username, this.userlink, this.eventName , {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {    
     return Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Padding(
-              padding: const EdgeInsets.only(left : 3.0, top: 2.0),
-              child: Row(                
-                children: <Widget>[                  
-                  Padding(
-                    padding: const EdgeInsets.only(right: 3),
-                    child: SizedBox(
-                      width: 15,            
-                      height: 15,
-                      child: Container(     
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.red,
-                        ),                              
-                      ),
-                    ),
-                  ),
-                  
-                  Text(username, style: smallerFont(),),
-
-                ],
+      padding: const EdgeInsets.symmetric(vertical: 3.0),
+      child: Row(
+        children: <Widget>[          
+          Row(
+          mainAxisAlignment: MainAxisAlignment.end,                
+          children: <Widget>[                  
+            Padding(
+              padding: const EdgeInsets.only(right: 3),
+              child: SizedBox(
+                width: 25,            
+                height: 25,
+                child: Container(     
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: dummyPicColor,
+                  ),                              
+                ),
               ),
             ),
-          );
+            
+            Text(username, style: tittleSmall(),),
+
+            Text(eventName, style: tittleHead(),),
+          ],
+        ),
+        ],        
+      ),
+    );
   }
 
 }

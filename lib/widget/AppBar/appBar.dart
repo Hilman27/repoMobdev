@@ -4,46 +4,34 @@ import 'package:religi_app/constant/_const.dart';
 class BarAtas extends StatelessWidget{
   @override
   Widget build(BuildContext context) {    
-    return BottomAppBar(
-      child: Center(
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(right: 10,top: 10),
-                  child: Icon(Icons.offline_bolt),  
-                ),
-                Container(
-                width: 215,            
-                child: TextFormField(
-                  initialValue: "Masukan Text",              
-                  textAlign: TextAlign.center,
-                  style: styleInput(),
-                ),
-              ),          
-              Container(            
-                width: 100,
-                //color: Colors.red,
-                child: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Row(              
-                  children: <Widget>[                                
-                    //Icon(Icons.notifications),
-                    Icon(Icons.access_time),        
-                    SizedBox(width: 5),
-                    Icon(Icons.message),
-                    SizedBox(width: 5),
-                    Icon(Icons.account_circle),
-                  ],
-                )
-                ),   
-              ),  
-              ],
-            ),
-          ),
-    )   ;
+    return Positioned(
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            Text("Beranda", style :tittleHeadWhite(), ),
+            Icon(Icons.filter),
+          ],
+        ),
+      ),
+      
+    );
   }
  
   
+}
+
+class NavBar extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {    
+    return Stack(
+      children: <Widget>[
+        Scaffold(          
+          bottomNavigationBar: MenuBar(),
+        )
+      ],
+    );
+  }
+
 }
 
 class MenuBar extends StatelessWidget{
@@ -56,15 +44,15 @@ class MenuBar extends StatelessWidget{
       child: Container(
         padding : EdgeInsets.all(5.0),
         height: 55,      
-        color: Colors.greenAccent,  
+        color: hijauMain,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             AppButton(Icons.home, iconScale, functionTest),
             SizedBox(width: 20,),
-            AppButton(Icons.tablet, iconScale, null),
+            AppButton(Icons.search, iconScale, null),
             SizedBox(width: 100,),
-            AppButton(Icons.photo, iconScale, null),
+            AppButton(Icons.bookmark, iconScale, null),
             SizedBox(width: 20,),
             AppButton(Icons.settings, iconScale, null)
           ],
@@ -72,12 +60,26 @@ class MenuBar extends StatelessWidget{
       ),
     );
   }
+
+  void functionTest (){
+
+  }
   
 }
 
-void functionTest (){
-
+class SearchButton extends FloatingActionButton{
+  @override
+  Widget build(BuildContext context) {    
+    return FloatingActionButton(
+      backgroundColor: hijauMain,
+      child: Icon(Icons.add), 
+      onPressed: () {},
+    );
+  }
+  
 }
+
+
 
 class AppButton extends StatelessWidget{
   final IconData buttonIcon;
@@ -94,7 +96,7 @@ class AppButton extends StatelessWidget{
       onPressed: () {},
     ); */
     return Container(
-      width: scaling,
+      width: scaling+5,
       child: FlatButton(      
         padding: EdgeInsets.all(0),
         child: Icon(buttonIcon, size : scaling), 

@@ -41,6 +41,23 @@ TextStyle smallerFont(){
 TextStyle tittleHead(){
   return TextStyle(
     fontSize: 14,
-    fontFamily: "calibri",
+    fontFamily: "Roboto",
+    color: textColor,
+  );
+}
+
+TextStyle tittleHeadWhite(){
+  return TextStyle(
+    fontSize: 14,
+    fontFamily: "Roboto",
+    color: putihMain
+  );
+}
+
+TextStyle tittleSmall(){
+  return TextStyle(
+    fontSize: 12,
+    fontFamily: "Roboto",
+    color: textColor,
   );
 }

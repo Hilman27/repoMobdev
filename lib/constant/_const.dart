@@ -1,7 +1,7 @@
 export 'style.dart';
 export 'fontStyle.dart';
 export 'size.dart';
-export 'style.dart';
+export 'color.dart';
 export 'style.dart';
 export 'style.dart';
 export 'style.dart';

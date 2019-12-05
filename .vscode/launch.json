@@ -16,7 +16,10 @@
       "type": "dart",
       "program": "lib/main_Hilman.dart"
     },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a37ade0e282b004589289ba650f363e2d6be56e
     {
       "name": "TriyonoTest",
       "request": "launch",

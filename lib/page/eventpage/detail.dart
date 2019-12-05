@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:religi_app/widgets/textform.da5rt';
-import 'package:religi_app/widgets/_widgets.dart';
+
+import 'package:religi_app/widget/_widgets.dart';
 
 class SilverAppBarContoh extends StatelessWidget {
   @override

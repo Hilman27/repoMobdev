@@ -60,17 +60,49 @@ class MenuBar extends StatelessWidget{
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(Icons.home, size: iconScale,),
+            AppButton(Icons.home, iconScale, functionTest),
             SizedBox(width: 20,),
-            Icon(Icons.tablet, size: iconScale,),
+            AppButton(Icons.tablet, iconScale, null),
             SizedBox(width: 100,),
-            Icon(Icons.photo, size: iconScale,),
+            AppButton(Icons.photo, iconScale, null),
             SizedBox(width: 20,),
-            Icon(Icons.settings, size: iconScale,)
+            AppButton(Icons.settings, iconScale, null)
           ],
         ),
       ),
     );
+  }
+  
+}
+
+void functionTest (){
+
+}
+
+class AppButton extends StatelessWidget{
+  final IconData buttonIcon;
+  final double scaling;
+  final Function response;
+
+  const AppButton(this.buttonIcon, this.scaling, this.response, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {    
+    /* return RaisedButton.icon(
+      icon: Icon(buttonIcon, size : scaling), 
+      label: Text(label), 
+      onPressed: () {},
+    ); */
+    return Container(
+      width: scaling,
+      child: FlatButton(      
+        padding: EdgeInsets.all(0),
+        child: Icon(buttonIcon, size : scaling), 
+      onPressed: response,
+        
+      ),
+    )
+    ;
   }
   
 }

@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 class ButtonTemplate extends StatelessWidget {
   final labelbutton;
   final onpress;
+  final warna;
+  final ukuranPadding;
 
-  const ButtonTemplate({Key key, this.labelbutton, this.onpress})
+  const ButtonTemplate(
+      {Key key, this.labelbutton, this.onpress, this.warna, this.ukuranPadding})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -24,9 +27,9 @@ class ButtonTemplate extends StatelessWidget {
       //     Navigator.pushReplacementNamed(context, '/home'); */
       // }
       ,
-      padding: EdgeInsets.all(12),
+      padding: ukuranPadding ?? EdgeInsets.all(12),
       color: Colors.lightBlueAccent,
-      child: Text(labelbutton, style: TextStyle(color: Colors.white)),
+      child: Text(labelbutton, style: TextStyle(color: warna ?? Colors.white)),
     );
   }
 }

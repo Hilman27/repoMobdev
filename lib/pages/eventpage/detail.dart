@@ -197,11 +197,12 @@ class FloatingButtonTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {},
-      // child: Icon(Icons.add_box),
-      child: Text(
-        'Daftar',
-        style: TextStyle(),
-      ),
+      child: Icon(Icons.input),
+
+      // child: Text(
+      //   'Daftar',
+      //   style: TextStyle(),
+      // ),
     );
   }
 }

@@ -1,63 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:religi_app/constant/_const.dart';
 
-class BarAtas extends StatelessWidget{
+class NavBar extends StatelessWidget{
+  final String topWords;
+  final Widget backgroundWidget;
+
+  const NavBar(this.topWords , this.backgroundWidget, {Key key,}) : super(key: key);
   @override
   Widget build(BuildContext context) {    
-    return Positioned(
-      child: Container(
-        child: Row(
-          children: <Widget>[
-            Text("Beranda", style :tittleHeadWhite(), ),
-            Icon(Icons.filter),
-          ],
+    return Container(
+      //height: 1000,
+      //width: 1000,
+      child: Stack(
+      children: <Widget>[
+        Scaffold(          
+          appBar: AppBar(
+            backgroundColor: hijauMain,
+            title: BarAtas(topWords),
+          ),
+          body: backgroundWidget,
+          bottomNavigationBar:MenuBar() ,
+          floatingActionButton: SearchButton(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         ),
+        //BarAtas(),
+        
+      ],
       ),
-      
     );
+  }
+
+}
+
+class BarAtas extends StatelessWidget{
+  final String words;
+
+  const BarAtas(this.words, {Key key}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {    
+    return  Stack(
+            alignment: Alignment.center,            
+            children: <Widget>[
+              Container(
+                width: 1000,
+              ),
+              Text(words),
+              Positioned(
+                right: 3.0,
+                child: Icon(Icons.filter),
+              )
+            ],                   
+            );
   }
  
   
 }
 
-class NavBar extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {    
-    return Stack(
-      children: <Widget>[
-        Scaffold(          
-          bottomNavigationBar: MenuBar(),
-        )
-      ],
-    );
-  }
-
-}
-
 class MenuBar extends StatelessWidget{
-  final double iconScale =50;
+  final double iconScale =30;
   @override
   Widget build(BuildContext context) {    
-    return BottomAppBar(
-      elevation: 10,           
-      shape: CircularNotchedRectangle(),
-      child: Container(
-        padding : EdgeInsets.all(5.0),
-        height: 55,      
-        color: hijauMain,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AppButton(Icons.home, iconScale, functionTest),
-            SizedBox(width: 20,),
-            AppButton(Icons.search, iconScale, null),
-            SizedBox(width: 100,),
-            AppButton(Icons.bookmark, iconScale, null),
-            SizedBox(width: 20,),
-            AppButton(Icons.settings, iconScale, null)
-          ],
-        ),
-      ),
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,      
+      showUnselectedLabels: true,
+      //selectedItemColor: hijauMain,
+      //unselectedItemColor: hijauMain,
+      //fixedColor: hijauMain,
+      selectedLabelStyle: normalFont(),
+      iconSize: 24,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text("HomePage")
+          ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          title: Text("Search")
+          ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bookmark),
+          title: Text("Bookmark")
+          ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          title: Text("Settings"))
+
+      ],
+
+      backgroundColor: hijauMain,
+      //fixedColor: hijauMain,
+      selectedItemColor: textColor,
+      unselectedItemColor: putihMain,
     );
   }
 
@@ -96,7 +130,7 @@ class AppButton extends StatelessWidget{
       onPressed: () {},
     ); */
     return Container(
-      width: scaling+5,
+      width: scaling+10,
       child: FlatButton(      
         padding: EdgeInsets.all(0),
         child: Icon(buttonIcon, size : scaling), 
@@ -118,3 +152,5 @@ class AppButton extends StatelessWidget{
   }
   
 } */
+
+

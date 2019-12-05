@@ -14,30 +14,39 @@ class PageUtama extends StatelessWidget{
       /* appBar: AppBar(
         title : BarAtas(),
       ), */
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SearchButton(),      
-      bottomNavigationBar: MenuBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          alignment: Alignment.topCenter,
-          color: putihMain,
-          child: Container(
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                 (context,index) => NewsItem(index),
-                  ),
-                )
-              ],
-            )
-          ),
-        ),
-      ),
-      
+      bottomNavigationBar: MenuBar(), */
+      body: NavBar("Beranda", CallNewsFeed()),                    
     );
   }     
+}
+
+class CallNewsFeed extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {    
+    return Container(          
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              alignment: Alignment.topCenter,
+              color: putihMain,
+              child: Container(
+                child: CustomScrollView(
+                  slivers: <Widget>[
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                     (context,index) => NewsItem(index),
+                      ),
+                    )
+                  ],
+                )
+              ),
+            ),
+          ),
+        );
+  }
+  
 }
 
 class NewsItem extends StatelessWidget {
@@ -51,46 +60,58 @@ class NewsItem extends StatelessWidget {
     var feeds = Provider.of<NewsFeed>(context);
     var news = feeds.init(index);
     var textTheme = Theme.of(context).textTheme.title; 
-    return ExpansionTile(
-      initiallyExpanded: true,
-      title: Column(children: <Widget>[        
-        NewsUser(news.user.name, news.user.link,news.event.eventName),
-      ],
-      ),      
+    return Column(
       children: <Widget>[
-          Column(
-            children: <Widget>[              
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: AspectRatio(
-                  aspectRatio: 4/3,
-                  child: SizedBox(                  
-                    width: 400,                                
-                    child: Container(              
-                      color: dummyPicColor,
+      Container(
+        decoration: BoxDecoration(
+            border: Border.all(width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
+        child: ExpansionTile(
+          initiallyExpanded: true,
+          title: Column(children: <Widget>[        
+            NewsUser(news.user.name, news.user.link,news.event.eventName),
+          ],
+          ),      
+          children: <Widget>[
+              Column(
+                children: <Widget>[              
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: AspectRatio(
+                      aspectRatio: 4/3,
+                      child: SizedBox(                  
+                        width: 400,                                
+                        child: Container(              
+                          color: dummyPicColor,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[                            
+                        Text(news.event.eventName, style: normalFont(), textAlign: TextAlign.left,),
+                        SizedBox(height : 4),
+                        Text(news.event.caption,
+                        style: normalFont(),
+                        softWrap: true,
+                        maxLines: 3,
+                        textAlign: TextAlign.justify,)
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[                            
-                    Text(news.event.eventName, style: normalFont(), textAlign: TextAlign.left,),
-                    SizedBox(height : 4),
-                    Text(news.event.caption,
-                    style: normalFont(),
-                    softWrap: true,
-                    maxLines: 3,
-                    textAlign: TextAlign.justify,)
-                  ],
-                ),
-              )
-            ],
-          ),
-        ],                                  
+            ],                                  
+        ),
+      ),
+      SizedBox(height: 5, 
+      child: Container(color: fullWhite,),)
+      ],      
     );
   }
     
@@ -128,10 +149,7 @@ class NewsUser extends StatelessWidget{
             
             Text(username, style: tittleSmall(),),
 
-            SizedBox(width: 96,),
-
             Text(eventName, style: tittleHead(),),
-
           ],
         ),
         ],        

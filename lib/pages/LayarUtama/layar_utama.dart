@@ -4,6 +4,7 @@ import 'package:religi_app/constant/_const.dart';
 import 'package:religi_app/widget/AppBar/appBar.dart';
 import 'package:religi_app/widget/Buttons/searchButton.dart';
 import 'package:religi_app/model/_model.dart';
+import 'package:religi_app/widget/dates.dart';
 
 
 
@@ -190,18 +191,21 @@ class NewsDetail extends StatelessWidget{
         SizedBox(width: 30,),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(// Row Kiri
-            children: <Widget>[
-              Text("Dec", style: TextStyle(color: Colors.red),),
-              Text("23"),
-              SizedBox(height : 4),
-              Icon(Icons.location_on, color: Colors.red)
-            ],
+          child: Container(
+            width: 30,
+            child: Column(// Row Kiri
+              children: <Widget>[
+                Text(intDatesToString(news.event.edateTime.month), style: TextStyle(color: Colors.red),),
+                Text(news.event.edateTime.day.toString()),
+                SizedBox(height : 4),
+                Icon(Icons.location_on, color: Colors.red)
+              ],
+            ),
           ),
         ),
         SizedBox(width: 10,),
         Container(
-          width: 286,
+          width: 280,
           child: Padding(          
             padding: const EdgeInsets.all(8.0),
             child: Column(

@@ -102,6 +102,7 @@ class MenuBar extends StatelessWidget{
 }
 
 class SearchButton extends FloatingActionButton{
+  
   @override
   Widget build(BuildContext context) {    
     return FloatingActionButton(

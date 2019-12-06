@@ -22,10 +22,10 @@ class NewsFeed {
   ];
 
   static List<Event> dummyEvents = [
-    Event(01, "/Path to Image1", "Pengajian Ustad Z" , "Surabaya","Ayo Gabung Sama Event Ustad Z ini!", dateTimes[0],1),
-    Event(02, "/Path to Image2", "Pengajian Ustadza Y" ,"Malang", "Ayo Gabung Sama Event Ustadza Y ini!", dateTimes[1], 1),
-    Event(03, "/Path to Image3", "Pengajian Ustad X" , "Jakarta", "Ayo Gabung Sama Event Ustad X ini!", dateTimes[2],1),
-    Event(04, "/Path to Image3", "Pengajian Ustad" + lorepIpsum , lorepIpsum, lorepIpsum, dateTimes[3], 1),
+    Event(01, "image_1", "Pengajian Ustad Z" , "Surabaya","Ayo Gabung Sama Event Ustad Z ini!", dateTimes[0],1),
+    Event(02, "image_2", "Pengajian Ustadza Y" ,"Malang", "Ayo Gabung Sama Event Ustadza Y ini!", dateTimes[1], 1),
+    Event(03, "image_3", "Pengajian Ustad X" , "Jakarta", "Ayo Gabung Sama Event Ustad X ini!", dateTimes[2],1),
+    Event(04, "image_4", "Pengajian Ustad" + lorepIpsum , lorepIpsum, lorepIpsum, dateTimes[3], 1),
   ];
 
   static List<DateTime> dateTimes = [
@@ -35,7 +35,9 @@ class NewsFeed {
     DateTime(2019,12,31,23,59,59), //31-12-2019 | 23:59:59
   ];
 
-  Feed getByID(int id) => Feed(dummyUsers[id % dummyUsers.length], dummyEvents[id % dummyEvents.length]);
+  //Feed getByID(int id) => Feed(dummyUsers[id % dummyUsers.length], dummyEvents[id % dummyEvents.length]);
+
+  Feed getByID(int id) => Feed(dummyUsers[id], dummyEvents[id]);
 
   Feed init(int id){
     return getByID(id);

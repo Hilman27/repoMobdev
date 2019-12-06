@@ -48,7 +48,7 @@ class BarAtas extends StatelessWidget{
               Text(words),
               Positioned(
                 right: 3.0,
-                child: Icon(Icons.filter),
+                child: Icon(Icons.filter_list),
               )
             ],                   
             );

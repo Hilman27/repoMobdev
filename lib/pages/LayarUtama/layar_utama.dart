@@ -58,7 +58,7 @@ class NewsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {   
     var feeds = Provider.of<NewsFeed>(context);
-    var news = feeds.init(index);
+    Feed news = feeds.init(index);
     var textTheme = Theme.of(context).textTheme.title; 
     return Column(
       children: <Widget>[
@@ -88,7 +88,8 @@ class NewsItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
+                  NewsDetail(news),
+                  /* Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +104,7 @@ class NewsItem extends StatelessWidget {
                         textAlign: TextAlign.justify,)
                       ],
                     ),
-                  ),
+                  ), */
                 ],
               ),
             ],                                  
@@ -147,9 +148,27 @@ class NewsUser extends StatelessWidget{
               ),
             ),
             
-            Text(username, style: tittleSmall(),),
-
-            Text(eventName, style: tittleHead(),),
+            Container(
+              width: 100,
+              child: 
+              Text(username, 
+              style: tittleSmall(),
+              maxLines: 2,
+              textAlign: TextAlign.left,)
+              ),
+              
+            SizedBox(
+              width: 20,
+            ),
+            Container(
+              width: 146,
+              alignment: Alignment.topRight,
+              child: 
+              Text(eventName, 
+              style: tittleHead(),
+              maxLines: 2,
+              textAlign: TextAlign.right,)
+              ),
           ],
         ),
         ],        
@@ -157,4 +176,56 @@ class NewsUser extends StatelessWidget{
     );
   }
 
+}
+
+class NewsDetail extends StatelessWidget{
+  final Feed news;
+
+  const NewsDetail(this.news, {Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {    
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(width: 30,),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(// Row Kiri
+            children: <Widget>[
+              Text("Dec", style: TextStyle(color: Colors.red),),
+              Text("23"),
+              SizedBox(height : 4),
+              Icon(Icons.location_on, color: Colors.red)
+            ],
+          ),
+        ),
+        SizedBox(width: 10,),
+        Container(
+          width: 286,
+          child: Padding(          
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[                            
+                  Text(news.event.eventName, 
+                  style: feedTitle(), 
+                  textAlign: TextAlign.left,
+                  maxLines: 2,),
+
+                  SizedBox(height : 4),
+                  
+                  Text(news.event.eventLocation,
+                  style: feedLoc(),
+                  softWrap: true,
+                  maxLines: 2,
+                  textAlign: TextAlign.justify,)
+                ],
+              ),
+          ),
+        )
+      ],
+    );
+  }
+  
 }

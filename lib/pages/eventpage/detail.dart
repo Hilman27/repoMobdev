@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:religi_app/widget/_widgets.dart';
 // import 'package:religi_app/widgets/textform.da5rt';
 
 // import 'package:religi_app/widget/_widgets.dart';
@@ -52,34 +55,72 @@ class PageDetailEvent extends StatelessWidget {
                       color: Colors.black,
                     ),
                     SizedBox10(),
-                    buildRowIcon(Icon(Icons.photo), 'foto acara'),
-                    SizedBox10(),
                   ],
                 ),
               ),
             ),
           ),
-          SliverGrid(
-            // key: header3,
-            gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200.0,
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
-              childAspectRatio: 1.0,
+          SliverToBoxAdapter(
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  buildTextTemplate('Maps'),
+                  Container(
+                    width: 300,
+                    height: 300,
+                    color: Colors.green,
+                    child: buildTextTemplate('ini maps'),
+                  ),
+                  buildTextTemplate('Photo'),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                          new ContainerKosongan(),
+                          new Sizedbox5(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  buildTextTemplate('Komentar'),
+                  Column(
+                    children: <Widget>[
+                      new CardKomentar(),
+                      new CardKomentar(),
+                      new CardKomentar(),
+                      FormTextBiasa(
+                        namaLabel: 'Komentar',
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
-            delegate: new SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return new Container(
-                  // height: 100,
-                  // width: 50,
-                  alignment: Alignment.center,
-                  color: Colors.teal[100 * (index % 9)],
-                  child: new Text('Foto $index'),
-                );
-              },
-              childCount: 8,
-            ),
-          ),
+          )
         ],
       ),
     );
@@ -100,6 +141,81 @@ class PageDetailEvent extends StatelessWidget {
           ),
         ),
       );
+}
+
+class CardKomentar extends StatelessWidget {
+  const CardKomentar({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.pink[200],
+                        child: Icon(Icons.person),
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        buildTextTemplate('@nama user  ', 20),
+                        Sizedbox5(),
+                        buildTextTemplate('20 desember 2018', 20)
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                      'ini adalah komentar yang panjang, ini adalah komentar yang panjang, ini adalah komentar yang panjang, '),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ContainerKosongan extends StatelessWidget {
+  const ContainerKosongan({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      width: 100,
+      color: Colors.grey,
+    );
+  }
+}
+
+class Sizedbox5 extends StatelessWidget {
+  const Sizedbox5({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 5,
+      height: 5,
+    );
+  }
 }
 
 class RatingStar extends StatelessWidget {
@@ -180,7 +296,7 @@ Row buildRowIcon<Icon, String>(icon, isinya) {
   );
 }
 
-Text buildTextTemplate(String isiString, double size) {
+Text buildTextTemplate(String isiString, [double size]) {
   return Text(
     isiString,
     style: TextStyle(fontSize: size ?? 30),
@@ -198,6 +314,7 @@ class FloatingButtonTemplate extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () {},
       child: Icon(Icons.input),
+      tooltip: 'daftar',
 
       // child: Text(
       //   'Daftar',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/pages/eventpage/detail.dart';
+
+import 'detail.dart';
 
 class TwitterProfilePage extends StatefulWidget {
   @override

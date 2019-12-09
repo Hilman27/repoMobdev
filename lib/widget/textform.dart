@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class FormTextBiasa extends StatelessWidget {
   final namaLabel;
+  final maxLines;
 
-  const FormTextBiasa({Key key, this.namaLabel}) : super(key: key);
+  const FormTextBiasa({Key key, this.namaLabel, this.maxLines})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +13,11 @@ class FormTextBiasa extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: TextField(
         decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: namaLabel,
-            hintText: 'masukkan $namaLabel'.toLowerCase()),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+          labelText: namaLabel,
+          hintText: 'masukkan $namaLabel'.toLowerCase(),
+        ),
+        maxLines: maxLines,
       ),
     );
   }

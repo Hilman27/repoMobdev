@@ -67,8 +67,8 @@ class _TagKateoriState extends State<TagKateori> {
                         borderRadius: BorderRadius.circular(10.0)),
                     filled: true,
                     fillColor: Colors.green.withAlpha(30),
-                    hintText: "Search Tags",
-                    labelText: "Select Tags",
+                    hintText: "Masukkan Tags",
+                    labelText: "Tags",
                   ),
                 ),
                 findSuggestions: LanguageService.getLanguages,
@@ -87,7 +87,7 @@ class _TagKateoriState extends State<TagKateori> {
                         Icons.add_circle,
                         color: Colors.white,
                       ),
-                      label: Text('Add New Tag'),
+                      label: Text('Tambahkan Tag'),
                       labelStyle: TextStyle(
                         color: Colors.white,
                         fontSize: 14.0,
@@ -122,9 +122,11 @@ class _TagKateoriState extends State<TagKateori> {
             ),
             FormTextBiasa(
               namaLabel: 'deskripsi',
+              maxLines: 4,
             ),
             FormTextBiasa(
               namaLabel: 'agenda',
+              maxLines: 4,
             ),
             FormTextBiasa(
               namaLabel: 'nama tempat',

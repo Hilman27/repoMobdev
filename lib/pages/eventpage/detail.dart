@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:religi_app/widget/_widgets.dart';
+import 'package:youtube_player/youtube_player.dart';
 
 // import 'package:religi_app/widgets/textform.da5rt';
 
@@ -89,6 +90,9 @@ class _PageDetailEventState extends State<PageDetailEvent> {
                       child: Image.network(
                           'https://4.bp.blogspot.com/-d8gQCdIByoI/W4aS32boklI/AAAAAAAAAts/6TLWsayjZ9oqW3K5cKeuHc0Gca0OqNxUwCLcBGAs/s1600/peta-rute-coban-bidadari-malang.jpg'),
                     ),
+                    SizedBox10(),
+                    buildTextTemplate('Video'),
+                    VideoSection(),
                     SizedBox10(),
                     buildTextTemplate('Photo'),
                     SingleChildScrollView(
@@ -620,5 +624,49 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
             maxScale: PhotoViewComputedScale.covered * 1.1,
             heroAttributes: PhotoViewHeroAttributes(tag: item.id),
           );
+  }
+}
+
+// start ######################### VIDEO #############
+
+class VideoSection extends StatefulWidget {
+  @override
+  _VideoSectionState createState() => _VideoSectionState();
+}
+
+class _VideoSectionState extends State<VideoSection> {
+  TextEditingController _idController = TextEditingController();
+  String id = "bqgBxuAEscQ";
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        SingleChildScrollView(
+          child: YoutubePlayer(
+            context: context,
+            source: id,
+            quality: YoutubeQuality.HD,
+            autoPlay: false,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormField(
+            controller: _idController,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Enter youtube \<video id\> or \<link\>"),
+          ),
+        ),
+        RaisedButton(
+          onPressed: () {
+            setState(() {
+              id = _idController.text;
+            });
+          },
+          child: Text("Play"),
+        ),
+      ],
+    );
   }
 }

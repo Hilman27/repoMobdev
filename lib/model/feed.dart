@@ -35,9 +35,9 @@ class NewsFeed {
     DateTime(2019,12,31,23,59,59), //31-12-2019 | 23:59:59
   ];
 
-  //Feed getByID(int id) => Feed(dummyUsers[id % dummyUsers.length], dummyEvents[id % dummyEvents.length]);
+  Feed getByID(int id) => Feed(dummyUsers[id % dummyUsers.length], dummyEvents[id % dummyEvents.length]);
 
-  Feed getByID(int id) => Feed(dummyUsers[id], dummyEvents[id]);
+  //Feed getByID(int id) => Feed(dummyUsers[id], dummyEvents[id]);
 
   Feed init(int id){
     return getByID(id);

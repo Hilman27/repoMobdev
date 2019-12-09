@@ -40,7 +40,7 @@ class CallNewsFeed extends StatelessWidget{
                       
                       delegate: SliverChildBuilderDelegate(
                      (context,index) => NewsItem(index),
-                     childCount: 4
+                     childCount: 6
                       ),
                     )
                   ],
@@ -81,45 +81,55 @@ class NewsItem extends StatelessWidget {
                   children: <Widget>[              
                     AspectRatio(
                       aspectRatio: 4/3,
-                      child: ShaderMask(
-                              shaderCallback: (rect){
-                                return LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [Colors.black,Colors.transparent]
-                                ).createShader(Rect.fromLTRB(0, 50, rect.width, rect.height));
-                              },
-                              blendMode: BlendMode.dstIn,
-                              child: SizedBox(                  
-                                    width: 400,                                
-                                    child: Stack(
-                                      children: <Widget>[
-                                      Container(              
-                                      //color: dummyPicColor,
-                                      child: Image(
-                                        image: 
-                                        //AssetImage("asset/image/"+news.event.imagePath+".JPG"),
-                                        AssetImage("asset/image/ImageTest.PNG"),
-                                        //AssetImage("asset/image/Image_1.JPG"),
-                                        
-                                      ),
-                                    ),                              
-                        
-                              
-                              
-                              
-                              /* Positioned(
-                                right: 10,
-                                left: 10,
-                                top: 10,
-                                bottom: 10,
-                                child: Icon(Icons.image, size: 50,) */
-                            ],                          
+                      child: Stack(
+                        children: <Widget>[
+                        Container(              
+                        //color: dummyPicColor,
+                        child: AspectRatio(
+                          aspectRatio: 4/3,
+                          child: ShaderMask(
+                                shaderCallback: (rect){
+                                  return LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [Colors.black,Colors.transparent]
+                                  ).createShader(Rect.fromLTRB(0, rect.height*1/4, rect.width, rect.height-30));
+                                },
+                                blendMode: BlendMode.dstIn,
+                                child: Image(
+                                image: 
+                                AssetImage("asset/image/"+news.event.imagePath+".png"),
+                                //AssetImage("asset/image/ImageTest.PNG"),
+                                //AssetImage("asset/image/Image_3.png"), 
+                                                           
+                            ),
                           ),
                         ),
-                      ),
+                      ),  
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 10,
+                        child: NewsDetail(news),
+                      )                            
+                        
+                      
+                      
+                      
+                      /* Positioned(
+                        right: 10,
+                        left: 10,
+                        top: 10,
+                        bottom: 10,
+                        child: Icon(Icons.image, size: 50,) */
+                            ],                          
+                          ),
                     ),
-                    NewsDetail(news),
+                    //
+
+                    //NewsDetail(news),
+
+                    //
                     /* Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(

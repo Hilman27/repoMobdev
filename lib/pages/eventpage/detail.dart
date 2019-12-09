@@ -64,65 +64,69 @@ class PageDetailEvent extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  buildTextTemplate('Maps'),
-                  // Container(
-                  //   width: 300,
-                  //   height: 300,
-                  //   color: Colors.green,
-                  //   child: buildTextTemplate('ini maps'),
-                  // ),
-                  Container(
-                    child: Image.network(
-                        'https://4.bp.blogspot.com/-d8gQCdIByoI/W4aS32boklI/AAAAAAAAAts/6TLWsayjZ9oqW3K5cKeuHc0Gca0OqNxUwCLcBGAs/s1600/peta-rute-coban-bidadari-malang.jpg'),
-                  ),
-                  buildTextTemplate('Photo'),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: <Widget>[
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                          new GambarContainer(),
-                          new Sizedbox5(),
-                        ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    buildTextTemplate('Maps'),
+                    // Container(
+                    //   width: 300,
+                    //   height: 300,
+                    //   color: Colors.green,
+                    //   child: buildTextTemplate('ini maps'),
+                    // ),
+                    Container(
+                      child: Image.network(
+                          'https://4.bp.blogspot.com/-d8gQCdIByoI/W4aS32boklI/AAAAAAAAAts/6TLWsayjZ9oqW3K5cKeuHc0Gca0OqNxUwCLcBGAs/s1600/peta-rute-coban-bidadari-malang.jpg'),
+                    ),
+                    SizedBox10(),
+                    buildTextTemplate('Photo'),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          children: <Widget>[
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                            new GambarContainer(),
+                            new Sizedbox5(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  buildTextTemplate('Komentar'),
-                  Column(
-                    children: <Widget>[
-                      new CardKomentar(),
-                      new CardKomentar(),
-                      new CardKomentar(),
-                      FormTextBiasa(
-                        namaLabel: 'Komentar',
-                      )
-                    ],
-                  )
-                ],
+                    buildTextTemplate('Komentar'),
+                    Column(
+                      children: <Widget>[
+                        new CardKomentar(),
+                        new CardKomentar(),
+                        new CardKomentar(),
+                        FormTextBiasa(
+                          namaLabel: 'Komentar',
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           )

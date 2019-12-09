@@ -98,7 +98,7 @@ class NewsItem extends StatelessWidget {
                                 blendMode: BlendMode.dstIn,
                                 child: Image(
                                 image: 
-                                AssetImage("asset/image/"+news.event.imagePath+".png"),
+                                AssetImage("assets/images/"+news.event.imagePath+".png"),
                                 //AssetImage("asset/image/ImageTest.PNG"),
                                 //AssetImage("asset/image/Image_3.png"), 
                                                            

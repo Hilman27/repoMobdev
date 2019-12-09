@@ -61,3 +61,19 @@ TextStyle tittleSmall(){
     color: textColor,
   );
 }
+
+TextStyle feedTitle(){
+  return TextStyle(
+    fontSize: 18,
+    fontFamily: "Roboto",
+    color: textColor,
+  );
+}
+
+TextStyle feedLoc(){
+  return TextStyle(
+    fontSize: 16,
+    fontFamily: "Roboto",
+    color: textColor,
+  );
+}

@@ -636,7 +636,7 @@ class VideoSection extends StatefulWidget {
 
 class _VideoSectionState extends State<VideoSection> {
   TextEditingController _idController = TextEditingController();
-  String id = "bqgBxuAEscQ";
+  String id = "pCGBHSyP1bo"; // link youtube
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -649,23 +649,23 @@ class _VideoSectionState extends State<VideoSection> {
             autoPlay: false,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            controller: _idController,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Enter youtube \<video id\> or \<link\>"),
-          ),
-        ),
-        RaisedButton(
-          onPressed: () {
-            setState(() {
-              id = _idController.text;
-            });
-          },
-          child: Text("Play"),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: TextFormField(
+        //     controller: _idController,
+        //     decoration: InputDecoration(
+        //         border: OutlineInputBorder(),
+        //         hintText: "Enter youtube \<video id\> or \<link\>"),
+        //   ),
+        // ),
+        // RaisedButton(
+        //   onPressed: () {
+        //     setState(() {
+        //       id = _idController.text;
+        //     });
+        //   },
+        //   child: Text("Play"),
+        // ),
       ],
     );
   }

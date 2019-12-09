@@ -50,9 +50,12 @@ class PageDetailEvent extends StatelessWidget {
                     buildTextTemplate(
                         'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse ',
                         20),
-                    Divider(
-                      thickness: 10.0,
-                      color: Colors.black,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Divider(
+                        thickness: 5.0,
+                        color: Colors.black,
+                      ),
                     ),
                     SizedBox10(),
                   ],
@@ -65,11 +68,15 @@ class PageDetailEvent extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   buildTextTemplate('Maps'),
+                  // Container(
+                  //   width: 300,
+                  //   height: 300,
+                  //   color: Colors.green,
+                  //   child: buildTextTemplate('ini maps'),
+                  // ),
                   Container(
-                    width: 300,
-                    height: 300,
-                    color: Colors.green,
-                    child: buildTextTemplate('ini maps'),
+                    child: Image.network(
+                        'https://4.bp.blogspot.com/-d8gQCdIByoI/W4aS32boklI/AAAAAAAAAts/6TLWsayjZ9oqW3K5cKeuHc0Gca0OqNxUwCLcBGAs/s1600/peta-rute-coban-bidadari-malang.jpg'),
                   ),
                   buildTextTemplate('Photo'),
                   SingleChildScrollView(
@@ -78,29 +85,27 @@ class PageDetailEvent extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: <Widget>[
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
-                          new ContainerKosongan(),
-                          new Sizedbox5(),
-                          new ContainerKosongan(),
+                          new GambarContainer(),
                           new Sizedbox5(),
                         ],
                       ),
@@ -141,6 +146,22 @@ class PageDetailEvent extends StatelessWidget {
           ),
         ),
       );
+}
+
+class GambarContainer extends StatelessWidget {
+  const GambarContainer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150,
+      height: 150,
+      child: Image.network(
+          'https://gunung.id/wp-content/uploads/2018/08/gunung-prau.jpg'),
+    );
+  }
 }
 
 class CardKomentar extends StatelessWidget {

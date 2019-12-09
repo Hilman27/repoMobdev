@@ -77,76 +77,48 @@ class NewsItem extends StatelessWidget {
             ],
             ),      
             children: <Widget>[
-                Column(
-                  children: <Widget>[              
+                AspectRatio(
+                  aspectRatio: 4/3,
+                  child: Stack(
+                    children: <Widget>[
                     AspectRatio(
                       aspectRatio: 4/3,
-                      child: Stack(
-                        children: <Widget>[
-                        Container(              
-                        //color: dummyPicColor,
-                        child: AspectRatio(
-                          aspectRatio: 4/3,
-                          child: ShaderMask(
-                                shaderCallback: (rect){
-                                  return LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [Colors.black,Colors.transparent]
-                                  ).createShader(Rect.fromLTRB(0, rect.height*1/4, rect.width, rect.height-30));
-                                },
-                                blendMode: BlendMode.dstIn,
-                                child: Image(
-                                image: 
-                                AssetImage("assets/images/"+news.event.imagePath+".png"),
-                                //AssetImage("asset/image/ImageTest.PNG"),
-                                //AssetImage("asset/image/Image_3.png"), 
-                                                           
-                            ),
-                          ),
+                      child: ShaderMask(
+                            shaderCallback: (rect){
+                              return LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Colors.black,Colors.transparent]
+                              ).createShader(Rect.fromLTRB(0, rect.height*1/4, rect.width, rect.height-30));
+                            },
+                            blendMode: BlendMode.dstIn,
+                            child: Image(
+                            image: 
+                            AssetImage("assets/images/"+news.event.imagePath+".png"),
+                            //AssetImage("asset/image/ImageTest.PNG"),
+                            //AssetImage("asset/image/Image_3.png"), 
+                                                       
                         ),
-                      ),  
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 10,
-                        child: NewsDetail(news),
-                      )                            
-                        
-                      
-                      
-                      
-                      /* Positioned(
-                        right: 10,
-                        left: 10,
-                        top: 10,
-                        bottom: 10,
-                        child: Icon(Icons.image, size: 50,) */
-                            ],                          
-                          ),
-                    ),
-                    //
-
-                    //NewsDetail(news),
-
-                    //
-                    /* Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[                            
-                          Text(news.event.eventName, style: normalFont(), textAlign: TextAlign.left,),
-                          SizedBox(height : 4),
-                          Text(news.event.caption,
-                          style: normalFont(),
-                          softWrap: true,
-                          maxLines: 3,
-                          textAlign: TextAlign.justify,)
-                        ],
                       ),
-                    ), */
-                  ],
+                    ),                                            
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 10,
+                    child: NewsDetail(news),
+                  )                            
+                    
+                  
+                  
+                  
+                  /* Positioned(
+                    right: 10,
+                    left: 10,
+                    top: 10,
+                    bottom: 10,
+                    child: Icon(Icons.image, size: 50,) */
+                        ],                          
+                      ),
                 ),
               ],                                  
           ),

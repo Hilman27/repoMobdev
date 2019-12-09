@@ -21,169 +21,179 @@ class _PageDetailEventState extends State<PageDetailEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: new FloatingButtonTemplate(),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 400,
-            pinned: true,
-            // floating: true,
-            // snap: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text('Nama Event'),
-              background: Image.network(
-                'https://gunung.id/wp-content/uploads/2018/08/gunung-prau.jpg', // <===   Add your own image to assets or use a .network image instead.
-                fit: BoxFit.cover,
+      body: buildCustomScrollTampilan(context),
+    );
+  }
+
+  CustomScrollView buildCustomScrollTampilan(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        buildSliverAppBar(),
+        buildSliverFillRemaining(context),
+        buildSliverToBoxAdapter(context)
+      ],
+    );
+  }
+
+  SliverToBoxAdapter buildSliverToBoxAdapter(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              buildTextTemplate('Maps'),
+              // Container(
+              //   width: 300,
+              //   height: 300,
+              //   color: Colors.green,
+              //   child: buildTextTemplate('ini maps'),
+              // ),
+              Container(
+                child: Image.network(
+                    'https://4.bp.blogspot.com/-d8gQCdIByoI/W4aS32boklI/AAAAAAAAAts/6TLWsayjZ9oqW3K5cKeuHc0Gca0OqNxUwCLcBGAs/s1600/peta-rute-coban-bidadari-malang.jpg'),
               ),
-            ),
+              SizedBox10(),
+              buildTextTemplate('Video'),
+              VideoSection(),
+              SizedBox10(),
+              buildTextTemplate('Photo'),
+              buildPhotoSection(context),
+              buildTextTemplate('Komentar'),
+              Column(
+                children: <Widget>[
+                  new CardKomentar(),
+                  new CardKomentar(),
+                  new CardKomentar(),
+                  FormTextBiasa(
+                    namaLabel: 'Komentar',
+                  )
+                ],
+              )
+            ],
           ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Padding(
+        ),
+      ),
+    );
+  }
+
+  SingleChildScrollView buildPhotoSection(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: buildContohGallery(context),
+      ),
+    );
+  }
+
+  Row buildContohGallery(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        GalleryExampleItemThumbnail(
+          galleryExampleItem: galleryItems[0],
+          onTap: () {
+            open(context, 0);
+          },
+        ),
+        GalleryExampleItemThumbnail(
+          galleryExampleItem: galleryItems[2],
+          onTap: () {
+            open(context, 2);
+          },
+        ),
+        GalleryExampleItemThumbnail(
+          galleryExampleItem: galleryItems[3],
+          onTap: () {
+            open(context, 3);
+          },
+        ),
+        GalleryExampleItemThumbnail(
+          galleryExampleItem: galleryItems[4],
+          onTap: () {
+            open(context, 4);
+          },
+        ),
+        GalleryExampleItemThumbnail(
+          galleryExampleItem: galleryItems[5],
+          onTap: () {
+            open(context, 5);
+          },
+        ),
+        GalleryExampleItemThumbnail(
+          galleryExampleItem: galleryItems[6],
+          onTap: () {
+            open(context, 6);
+          },
+        ),
+        GalleryExampleItemThumbnail(
+          galleryExampleItem: galleryItems[7],
+          onTap: () {
+            open(context, 7);
+          },
+        ),
+        GalleryExampleItemThumbnail(
+          galleryExampleItem: galleryItems[1],
+          onTap: () {
+            open(context, 1);
+          },
+        ),
+      ],
+    );
+  }
+
+  SliverFillRemaining buildSliverFillRemaining(BuildContext context) {
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              buildRowIcon(Icon(Icons.date_range), 'tanggal 4 Juli 2020'),
+              SizedBox10(),
+              buildRowIcon(Icon(Icons.home), 'masjid jami\' '),
+              new SizedBox10(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[Icon(Icons.star), new RatingStar()],
+              ),
+              new SizedBox10(),
+              buildTextTemplate('keterangan event', 30),
+              Divider(
+                color: Colors.black,
+              ),
+              buildTextTemplate(
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse ',
+                  20),
+              Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    buildRowIcon(Icon(Icons.date_range), 'tanggal 4 Juli 2020'),
-                    SizedBox10(),
-                    buildRowIcon(Icon(Icons.home), 'masjid jami\' '),
-                    new SizedBox10(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[Icon(Icons.star), new RatingStar()],
-                    ),
-                    new SizedBox10(),
-                    buildTextTemplate('keterangan event', 30),
-                    Divider(
-                      color: Colors.black,
-                    ),
-                    buildTextTemplate(
-                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse ',
-                        20),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Divider(
-                        thickness: 5.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox10(),
-                  ],
+                child: Divider(
+                  thickness: 5.0,
+                  color: Colors.black,
                 ),
               ),
-            ),
+              SizedBox10(),
+            ],
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    buildTextTemplate('Maps'),
-                    // Container(
-                    //   width: 300,
-                    //   height: 300,
-                    //   color: Colors.green,
-                    //   child: buildTextTemplate('ini maps'),
-                    // ),
-                    Container(
-                      child: Image.network(
-                          'https://4.bp.blogspot.com/-d8gQCdIByoI/W4aS32boklI/AAAAAAAAAts/6TLWsayjZ9oqW3K5cKeuHc0Gca0OqNxUwCLcBGAs/s1600/peta-rute-coban-bidadari-malang.jpg'),
-                    ),
-                    SizedBox10(),
-                    buildTextTemplate('Video'),
-                    VideoSection(),
-                    SizedBox10(),
-                    buildTextTemplate('Photo'),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          children: <Widget>[
-                            // new GambarContainer(),
-                            // new Sizedbox5(),
-                            // new GambarContainer(),
-                            // new Sizedbox5(),
-                            // new GambarContainer(),
-                            // new Sizedbox5(),
-                            // new GambarContainer(),
-                            // new Sizedbox5(),
-                            // new GambarContainer(),
-                            // new Sizedbox5(),
-                            // new GambarContainer(),
-                            // new Sizedbox5(),
-                            // new GambarContainer(),
-                            // new Sizedbox5(),
-                            GalleryExampleItemThumbnail(
-                              galleryExampleItem: galleryItems[0],
-                              onTap: () {
-                                open(context, 0);
-                              },
-                            ),
-                            GalleryExampleItemThumbnail(
-                              galleryExampleItem: galleryItems[2],
-                              onTap: () {
-                                open(context, 2);
-                              },
-                            ),
-                            GalleryExampleItemThumbnail(
-                              galleryExampleItem: galleryItems[3],
-                              onTap: () {
-                                open(context, 3);
-                              },
-                            ),
-                            GalleryExampleItemThumbnail(
-                              galleryExampleItem: galleryItems[4],
-                              onTap: () {
-                                open(context, 4);
-                              },
-                            ),
-                            GalleryExampleItemThumbnail(
-                              galleryExampleItem: galleryItems[5],
-                              onTap: () {
-                                open(context, 5);
-                              },
-                            ),
-                            GalleryExampleItemThumbnail(
-                              galleryExampleItem: galleryItems[6],
-                              onTap: () {
-                                open(context, 6);
-                              },
-                            ),
-                            GalleryExampleItemThumbnail(
-                              galleryExampleItem: galleryItems[7],
-                              onTap: () {
-                                open(context, 7);
-                              },
-                            ),
-                            GalleryExampleItemThumbnail(
-                              galleryExampleItem: galleryItems[1],
-                              onTap: () {
-                                open(context, 1);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    buildTextTemplate('Komentar'),
-                    Column(
-                      children: <Widget>[
-                        new CardKomentar(),
-                        new CardKomentar(),
-                        new CardKomentar(),
-                        FormTextBiasa(
-                          namaLabel: 'Komentar',
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
+        ),
+      ),
+    );
+  }
+
+  SliverAppBar buildSliverAppBar() {
+    return SliverAppBar(
+      expandedHeight: 400,
+      pinned: true,
+      // floating: true,
+      // snap: true,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text('Nama Event'),
+        background: Image.network(
+          'https://gunung.id/wp-content/uploads/2018/08/gunung-prau.jpg', // <===   Add your own image to assets or use a .network image instead.
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -264,7 +274,7 @@ class CardKomentar extends StatelessWidget {
                       children: <Widget>[
                         buildTextTemplate('@nama user  ', 20),
                         Sizedbox5(),
-                        buildTextTemplate('20 desember 2018', 20)
+                        buildTextTemplate('20 des 2018', 20)
                       ],
                     ),
                   ],

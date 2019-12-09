@@ -47,66 +47,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
               namaLabel: 'judul',
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FlutterTagging<Language>(
-                initialItems: _selectedLanguages,
-                textFieldConfiguration: TextFieldConfiguration(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    filled: true,
-                    fillColor: Colors.green.withAlpha(30),
-                    hintText: "Masukkan Tags",
-                    labelText: "Tags",
-                  ),
-                ),
-                findSuggestions: LanguageService.getLanguages,
-                additionCallback: (value) {
-                  return Language(
-                    name: value,
-                    position: 0,
-                  );
-                },
-                configureSuggestion: (lang) {
-                  return SuggestionConfiguration(
-                    title: Text(lang.name),
-                    subtitle: Text(lang.position.toString()),
-                    additionWidget: Chip(
-                      avatar: Icon(
-                        Icons.add_circle,
-                        color: Colors.white,
-                      ),
-                      label: Text('Tambahkan Tag'),
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w300,
-                      ),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                },
-                configureChip: (lang) {
-                  return ChipConfiguration(
-                    label: Text(lang.name),
-                    backgroundColor: Colors.green,
-                    labelStyle: TextStyle(color: Colors.white),
-                    deleteIconColor: Colors.white,
-                  );
-                },
-                onChanged: () {
-                  setState(() {
-                    // _selectedValuesJson = _selectedLanguages
-                    //     .map<String>((lang) => '\n${lang.toJson()}')
-                    //     .toList()
-                    //     .toString();
-                    // _selectedValuesJson =
-                    //     _selectedValuesJson.replaceFirst('}]', '}\n]');
-                  });
-                },
-              ),
-            ),
+            buildFormTags(),
             SizedBox(
               height: 20.0,
             ),
@@ -138,6 +79,69 @@ class _CreateEventPageState extends State<CreateEventPage> {
             // ),
           ],
         ),
+      ),
+    );
+  }
+
+  Padding buildFormTags() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FlutterTagging<Language>(
+        initialItems: _selectedLanguages,
+        textFieldConfiguration: TextFieldConfiguration(
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            // filled: true,
+            // fillColor: Colors.green.withAlpha(30),
+            hintText: "Masukkan Tags",
+            labelText: "Tags",
+          ),
+        ),
+        findSuggestions: LanguageService.getLanguages,
+        additionCallback: (value) {
+          return Language(
+            name: value,
+            position: 0,
+          );
+        },
+        configureSuggestion: (lang) {
+          return SuggestionConfiguration(
+            title: Text(lang.name),
+            subtitle: Text(lang.position.toString()),
+            additionWidget: Chip(
+              avatar: Icon(
+                Icons.add_circle,
+                color: Colors.white,
+              ),
+              label: Text('Tambahkan Tag'),
+              labelStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 14.0,
+                fontWeight: FontWeight.w300,
+              ),
+              backgroundColor: Colors.green,
+            ),
+          );
+        },
+        configureChip: (lang) {
+          return ChipConfiguration(
+            label: Text(lang.name),
+            backgroundColor: Colors.green,
+            labelStyle: TextStyle(color: Colors.white),
+            deleteIconColor: Colors.white,
+          );
+        },
+        onChanged: () {
+          setState(() {
+            // _selectedValuesJson = _selectedLanguages
+            //     .map<String>((lang) => '\n${lang.toJson()}')
+            //     .toList()
+            //     .toString();
+            // _selectedValuesJson =
+            //     _selectedValuesJson.replaceFirst('}]', '}\n]');
+          });
+        },
       ),
     );
   }

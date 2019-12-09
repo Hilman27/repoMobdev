@@ -48,7 +48,7 @@ class BarAtas extends StatelessWidget{
               Text(words),
               Positioned(
                 right: 3.0,
-                child: Icon(Icons.filter),
+                child: Icon(Icons.filter_list),
               )
             ],                   
             );
@@ -102,6 +102,7 @@ class MenuBar extends StatelessWidget{
 }
 
 class SearchButton extends FloatingActionButton{
+  
   @override
   Widget build(BuildContext context) {    
     return FloatingActionButton(

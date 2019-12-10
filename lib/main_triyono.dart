@@ -11,9 +11,9 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(home: PageDetailEvent());
-    // return MaterialApp(home: TwitterProfilePage());
-    // return MaterialApp(home: CreateEvent());
+    //return MaterialApp(home: PageDetailEvent());
+    //return MaterialApp(home: TwitterProfilePage());
+    //return MaterialApp(home: CreateEvent());
     return MaterialApp(home: TagKateori());
     // return MaterialApp(
     //     home: EasyGoogleMaps(

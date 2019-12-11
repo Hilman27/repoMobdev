@@ -153,12 +153,11 @@ class LanguageService {
   static Future<List<Language>> getLanguages(String query) async {
     await Future.delayed(Duration(milliseconds: 500), null);
     return <Language>[
-      Language(name: 'JavaScript', position: 1),
-      Language(name: 'Python', position: 2),
-      Language(name: 'Java', position: 3),
-      Language(name: 'PHP', position: 4),
-      Language(name: 'C#', position: 5),
-      Language(name: 'C++', position: 6),
+      Language(name: 'Pengajian', position: 1),
+      Language(name: 'Ceramah', position: 2),
+      Language(name: 'Sholat', position: 3),
+      Language(name: 'Perayaan', position: 4),
+      Language(name: 'Event', position: 5),
     ]
         .where((lang) => lang.name.toLowerCase().contains(query.toLowerCase()))
         .toList();

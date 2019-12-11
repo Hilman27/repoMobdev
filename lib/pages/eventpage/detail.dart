@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import 'package:provider/provider.dart';
+import 'package:religi_app/model/_model.dart';
+import 'package:religi_app/pages/LayarUtama/layar_utama.dart';
 import 'package:religi_app/widget/_widgets.dart';
 import 'package:youtube_player/youtube_player.dart';
 
@@ -11,12 +14,19 @@ import 'package:youtube_player/youtube_player.dart';
 // import 'package:religi_app/widget/_widgets.dart';
 
 class PageDetailEvent extends StatefulWidget {
+  final index;
+
+  const PageDetailEvent({Key key, this.index}) : super(key: key);
   @override
-  _PageDetailEventState createState() => _PageDetailEventState();
+  _PageDetailEventState createState() => _PageDetailEventState(index);
 }
 
 class _PageDetailEventState extends State<PageDetailEvent> {
   bool verticalGallery = false;
+  final index;
+
+  _PageDetailEventState(this.index);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +46,8 @@ class _PageDetailEventState extends State<PageDetailEvent> {
   }
 
   SliverToBoxAdapter buildSliverToBoxAdapter(BuildContext context) {
+    var feeds = Provider.of<NewsFeed>(context);
+    Feed news = feeds.init(index);
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -143,6 +155,9 @@ class _PageDetailEventState extends State<PageDetailEvent> {
   }
 
   SliverFillRemaining buildSliverFillRemaining(BuildContext context) {
+    var feeds = Provider.of<NewsFeed>(context);
+    Feed news = feeds.init(index);
+    // var textTheme = Theme.of(context).textTheme.title;
     return SliverFillRemaining(
       hasScrollBody: false,
       child: Container(
@@ -151,14 +166,17 @@ class _PageDetailEventState extends State<PageDetailEvent> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              buildRowIcon(Icon(Icons.date_range), 'tanggal 4 Juli 2020'),
+              buildRowIcon(
+                  Icon(Icons.date_range), (news.event.edateTime.toString())),
               SizedBox10(),
-              buildRowIcon(Icon(Icons.home), 'masjid jami\' '),
+              buildRowIcon(
+                  Icon(Icons.home), (news.event.eventLocation.toString())),
               new SizedBox10(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[Icon(Icons.star), new RatingStar()],
               ),
+              new SizedBox10(),
               new SizedBox10(),
               buildTextTemplate('keterangan event', 30),
               Divider(
@@ -183,18 +201,25 @@ class _PageDetailEventState extends State<PageDetailEvent> {
   }
 
   SliverAppBar buildSliverAppBar() {
+    var feeds = Provider.of<NewsFeed>(context);
+    Feed news = feeds.init(index);
     return SliverAppBar(
       expandedHeight: 400,
       pinned: true,
       // floating: true,
       // snap: true,
       flexibleSpace: FlexibleSpaceBar(
-        title: Text('Nama Event'),
-        background: Image.network(
-          'https://gunung.id/wp-content/uploads/2018/08/gunung-prau.jpg', // <===   Add your own image to assets or use a .network image instead.
-          fit: BoxFit.cover,
-        ),
-      ),
+          title: Text(news.event.eventName),
+          background:
+              //  Image.network(
+              //   'https://gunung.id/wp-content/uploads/2018/08/gunung-prau.jpg', // <===   Add your own image to assets or use a .network image instead.
+
+              //   fit: BoxFit.cover,
+              // ),
+              Image.asset(
+            "assets/images/" + news.event.imagePath + ".png",
+            fit: BoxFit.cover,
+          )),
     );
   }
 

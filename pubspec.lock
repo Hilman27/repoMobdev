@@ -7,7 +7,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.0"
+    version: "2.3.0"
   bloc:
     dependency: transitive
     description:
@@ -130,6 +130,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0+1"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.0"
   provider:
     dependency: "direct main"
     description:
@@ -143,7 +150,7 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2+1"
+    version: "2.0.5"
   rxdart:
     dependency: transitive
     description:
@@ -151,6 +158,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.22.6"
+  share:
+    dependency: transitive
+    description:
+      name: share
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.3+4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -212,6 +226,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  youtube_player:
+    dependency: "direct main"
+    description:
+      name: youtube_player
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.5.0"
 sdks:
   dart: ">=2.5.0 <3.0.0"
-  flutter: ">=1.5.0 <2.0.0"
+  flutter: ">=1.6.7 <2.0.0"

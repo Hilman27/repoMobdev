@@ -1,25 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:religi_app/pages/eventpage/create.dart';
+import 'package:provider/provider.dart';
+import 'package:religi_app/pages/LayarUtama/layar_utama.dart';
+import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/pages/eventpage/create2.dart';
-import 'package:religi_app/pages/eventpage/maps_sample.dart';
-
-import 'pages/eventpage/detail.dart';
-import 'pages/eventpage/detail_2.dart';
+import 'package:religi_app/pages/eventpage/detail.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    //return MaterialApp(home: PageDetailEvent());
-    //return MaterialApp(home: TwitterProfilePage());
-    //return MaterialApp(home: CreateEvent());
-    return MaterialApp(home: TagKateori());
-    // return MaterialApp(
-    //     home: EasyGoogleMaps(
-    //   title: 'Apple Campus',
-    //   apiKey: 'AIzaSyCMq-kco6YAp2GqfE3MIqyMQOYjQQPLEGw',
-    //   address: 'Infinite Loop, Cupertino, CA 95014',
-    // ));
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => NewsFeed()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: /* SafeArea(
+          child: PageUtama(),
+        ),  */
+            PageUtama(),
+        routes: <String, WidgetBuilder>{
+          // '/menu1': (BuildContext context) => TwitterProfilePage(),
+          // '/menu2': (BuildContext context) => CreateEvent(),
+          '/create_event': (BuildContext context) => CreateEventPage(),
+          '/detail_event': (BuildContext context) => PageDetailEvent(),
+          // '/menu4': (BuildContext context) => PageDetailEvent(),
+        },
+      ),
+    );
   }
 }

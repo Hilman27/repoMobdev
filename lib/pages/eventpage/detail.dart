@@ -5,7 +5,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'package:religi_app/model/_model.dart';
-import 'package:religi_app/pages/LayarUtama/layar_utama.dart';
+import 'package:religi_app/pages/HomePage/HomePage.dart';
 import 'package:religi_app/widget/_widgets.dart';
 import 'package:youtube_player/youtube_player.dart';
 

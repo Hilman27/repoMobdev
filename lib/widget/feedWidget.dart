@@ -1,70 +1,154 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:religi_app/constant/_const.dart';
-import 'package:religi_app/widget/AppBar/appBar.dart';
-import 'package:religi_app/widget/Buttons/searchButton.dart';
 import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/widget/_widgets.dart';
-import 'package:religi_app/widget/dates.dart';
+import 'dart:developer' as developer; 
 
+class FeedListWidget extends StatefulWidget {  
 
-
-class PageUtama extends StatelessWidget{
   @override
-  Widget build(BuildContext context) {    
-    return Scaffold(      
-      /* appBar: AppBar(
-        title : BarAtas(),
-      ), */
-      /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: SearchButton(),      
-      bottomNavigationBar: MenuBar(), */
-      body: NavBar("Beranda", CallNewsFeed()),                    
-    );
-  }     
-}
-
-class CallNewsFeed extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {    
-    return Container(          
-      color: putihBack,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),            
-            child: Container(
-              alignment: Alignment.topCenter,              
-              child: Container(
-                child: FeedListWidget(),
-                /*CustomScrollView(
-                  slivers: <Widget>[
-                    SliverList(
-                      
-                      delegate: SliverChildBuilderDelegate(
-                     (context,index) => NewsItem(index),
-                     childCount: 6
-                      ),
-                    )
-                  ],
-                 )*/
-              ),
-            ),
-          ),
-        );
-  }
+  FeedListWidgetState createState() => FeedListWidgetState();
   
 }
 
-class NewsItem extends StatelessWidget {
+class FeedListWidgetState extends State<FeedListWidget>{
+  List status = List<bool>.filled(0, true, growable: true);
+  //List<bool> status;
+
+  @override
+  void initState() {    
+    super.initState();    
+    
+  }
+
+  @override
+  Widget build(BuildContext context) {    
+    return CustomScrollView(
+          slivers: <Widget>[
+            SliverList(              
+              delegate: SliverChildBuilderDelegate(
+            (context,index) => NewsItem( index: index, onPressed: _statusToogle, statusCheck: statusCheck, initialize: initList, ),
+            childCount: 6
+              ),
+            )
+          ],
+        );
+  }
+
+  initList(int index){
+    //status[index];
+    //status.add(false);  
+    try{
+      bool test = status[index];
+    }catch(e){
+      status.add(true);
+    }
+  }
+  
+  _statusToogle(int index){
+    if (status[index] == null){
+        status[index] = false;
+      }
+      else{if(status[index] == false){
+       status[index] = true; 
+      } else status[index] = false; 
+      }     
+    for(int i =0; i<status.length; i++){
+      developer.log("Index $i set to ${status[i]}");  
+    }
+    
+    //return true;
+  }
+  
+
+  bool statusCheck(int index){    
+    return status[index];
+  }
+}
+
+class NewsItem extends StatefulWidget{
+  final ValueChanged<int> onPressed;  
+  final ValueChanged<int> initialize;  
+  final Function statusCheck;   
   final int index;
+  
 
-  const NewsItem(this.index, {Key key}) : super(key: key);
+  const NewsItem( {Key key, 
+                  @required this.index,                   
+                  @required this.onPressed, 
+                  @required this.initialize, 
+                  @required this.statusCheck, 
+                  }) : super(key: key);
 
+  @override
+  NewsItemState createState() => NewsItemState();
+  
+}
+
+class NewsItemState extends State<NewsItem> {
+  int _index;
+  bool _expanded;
+  Function(int) parentPress;
+  Function(int) initialList;
+  Function(int) expandCheck;
+  
+  void initState(){
+    super.initState();
+    _index = widget.index;
+    _expanded = true;
+    parentPress = widget.onPressed;
+    //widget.initialize(_index);
+    initialList = widget.initialize;
+    expandCheck = widget.statusCheck;
+    initialList(_index);
+    
+    developer.log("Check $_index and $_expanded Has been Initilaized");
+    //developer.log("Check ${expandCheck(_index)}");
+    
+  }
+
+  changeExpandCollapse(bool){
+    widget.onPressed(_index);
+  }
+
+  bool checkCollapseState (){
+    if(widget.statusCheck(_index) == null)
+      {developer.log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
+      return widget.statusCheck(_index);      
+      }
+    else{
+      developer.log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
+      return true;
+    }
+    
+  }
+
+  checkExpandCollapse(bool input){    
+    if(input==true){
+      if(expandCheck(_index)==false){
+        parentPress(_index);
+      }
+      developer.log("Index $_index Is expanded");
+    }else if (input ==false){
+      if(expandCheck(_index)==true){
+        parentPress(_index);
+      }
+      developer.log("Index $_index Is Collapsed");
+    }else 
+      developer.log("Index $_index ????");
+    
+  }
 
   @override
   Widget build(BuildContext context) {   
+    //widget.onPressed(index);
+    _expanded = expandCheck(_index);
+    developer.log("Index is at $_index and Expansion is $_expanded");
     var feeds = Provider.of<NewsFeed>(context);
-    Feed news = feeds.init(index);
-    var textTheme = Theme.of(context).textTheme.title; 
+    Feed news = feeds.init(_index);
+    //var textTheme = Theme.of(context).textTheme.title; 
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(3.0)),   
       child: Column(
@@ -72,8 +156,9 @@ class NewsItem extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width,
           color: putihMain,
-          child: CustomExpansionTile(            
-            initiallyExpanded: true,
+          child: CustomExpansionTile(           
+            onExpansionChanged: checkExpandCollapse,   //checkExpandCollapse(), 
+            initiallyExpanded: _expanded??true,//checkCollapseState(),
             title: NewsUser(news.user.name, news.user.link,news.event.eventName),      
             //trailing: Icon(Icons.swap_calls),
             children: <Widget>[                

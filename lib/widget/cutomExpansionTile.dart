@@ -91,6 +91,8 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
   Animation<double> _iconTurns;
   double _cWidth;
   double _cHeight;
+  ScrollController _scrollController;
+
 
   bool _isExpanded = false;
 
@@ -105,6 +107,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
     _iconColor = ColorTween();
     _iconTurns = Tween<double>(begin: 0.0, end: 0.5).animate(_easeInAnimation);
     _backgroundColor = ColorTween();
+    _scrollController = ScrollController();
     //_cWidth = cWidth;
     //_cHeight = cHeight;
 
@@ -125,7 +128,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
       if (_isExpanded)
         _controller.forward();
       else
-        _controller.reverse().then<void>((int ) {
+        _controller.reverse().then<void>((void value ) {
           setState(() {
             // Rebuild without widget.children.
           });
@@ -217,6 +220,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> with SingleTi
 
     final bool closed = !_isExpanded && _controller.isDismissed;
     return AnimatedBuilder(
+      
       animation: _controller.view,
       builder: _buildChildren,
       child: closed ? null : Column(children: widget.children),

@@ -71,15 +71,18 @@ class ImageContainer extends StatelessWidget{
         ).createShader(Rect.fromLTRB(0, rect.height*1/4, rect.width, rect.height-30));
       },
       blendMode: BlendMode.dstIn,
-      child: Image(
-        width: MediaQuery.of(context).size.width,
-      image: 
-      //FadeInImage.assetNetwork()
-      AssetImage(imagePath),
-      //AssetImage("asset/image/ImageTest.PNG"),
-      //AssetImage("asset/image/Image_3.png"), 
-                                      
+      child: FittedBox(
+        fit : BoxFit.fill,
+        child: Image(
+          //width: MediaQuery.of(context).size.width,
+        image: 
+        //FadeInImage.assetNetwork()
+        AssetImage(imagePath),
+        //AssetImage("asset/image/ImageTest.PNG"),
+        //AssetImage("asset/image/Image_3.png"), 
+                                        
         ),
+      ),
       ),
     );
     

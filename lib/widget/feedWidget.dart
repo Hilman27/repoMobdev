@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:religi_app/constant/_const.dart';
 import 'package:religi_app/model/_model.dart';
+import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
 import 'dart:developer' as developer; 
 
@@ -149,7 +150,14 @@ class NewsItemState extends State<NewsItem> {
     var feeds = Provider.of<NewsFeed>(context);
     Feed news = feeds.init(_index);
     //var textTheme = Theme.of(context).textTheme.title; 
-    return ClipRRect(
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => PageDetailEvent(
+                  index: _index,
+                )));
+      },
+      child:ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(3.0)),   
       child: Column(
         children: <Widget>[
@@ -190,6 +198,7 @@ class NewsItemState extends State<NewsItem> {
         child: Container(color: putihBack,),)
         ],      
       ),
+    )
     );
   }
     

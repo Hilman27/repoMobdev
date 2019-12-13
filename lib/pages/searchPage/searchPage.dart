@@ -13,7 +13,20 @@ class SearchPage extends StatelessWidget {
       /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SearchButton(),      
       bottomNavigationBar: MenuBar(), */
-      body: NavBar("Beranda", CallNewsFeed()),
+      body: NavBar(
+            topWords : "Search Page", 
+            backgroundWidget : CallSearchPage(),
+            pageIndex : 1),        
+      );
+  }
+}
+
+class CallSearchPage extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {    
+    return Center(
+      child: Text("This is Search Page"),
     );
   }
+  
 }

@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:religi_app/constant/_const.dart';
+import 'package:religi_app/main.dart';
+import 'package:religi_app/pages/HomePage/HomePage.dart';
+import 'package:religi_app/pages/searchPage/searchPage.dart';
 
 class NavBar extends StatelessWidget {
   final String topWords;
   final Widget backgroundWidget;
+  final int pageIndex;
 
   const NavBar(
+    {
+    Key key, 
     this.topWords,
-    this.backgroundWidget, {
-    Key key,
+    this.backgroundWidget,
+    this.pageIndex, 
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,12 +30,18 @@ class NavBar extends StatelessWidget {
               title: BarAtas(topWords),
             ),
             body: backgroundWidget,
-            bottomNavigationBar: MenuBar(),
+            bottomNavigationBar: 
+            /* BottomAppBar(
+              child: Text("Test"),
+              shape: CircularNotchedRectangle(),
+            ), */
+            MenuBar(currentIndex: pageIndex,),
             floatingActionButton: SearchButton(
               routing: '/create_event',
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
+            extendBody: true,
           ),
           //BarAtas(),
         ],
@@ -60,33 +73,84 @@ class BarAtas extends StatelessWidget {
   }
 }
 
-class MenuBar extends StatelessWidget {
+class MenuBar extends StatefulWidget{
+  final int currentIndex;
+
+  const MenuBar({Key key, this.currentIndex}) : super(key: key); 
+  
+  @override
+  MenuBarState createState() => MenuBarState();
+
+}
+
+class MenuBarState extends State<MenuBar> {
   final double iconScale = 30;
+  int currentIndex=0;
+  int pageIndex;
+
+  @override
+  void initState() {    
+    super.initState();    
+    pageIndex=widget.currentIndex;
+    currentIndex=widget.currentIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      showUnselectedLabels: true,
-      //selectedItemColor: hijauMain,
-      //unselectedItemColor: hijauMain,
-      //fixedColor: hijauMain,
-      selectedLabelStyle: normalFont(),
-      iconSize: 24,
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-            icon: Icon(Icons.home), title: Text("HomePage")),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.search), title: Text("Search")),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark), title: Text("Bookmark")),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.settings), title: Text("Settings"))
-      ],
+    return Theme(
+      data: ThemeData(
+        primaryColor: hijauMain,
+        canvasColor:  hijauMain
+      ),
+      child: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        clipBehavior: Clip.antiAlias,                
+        child: BottomNavigationBar(
+          
+          currentIndex: currentIndex,
+          //backgroundColor: hijauMain,
+          //fixedColor: hijauMain,
+          selectedItemColor: textColor,
+          //unselectedItemColor: putihMain,
+          type: BottomNavigationBarType.fixed,
+          //showUnselectedLabels: true,
+          //selectedItemColor: hijauMain,
+          //unselectedItemColor: hijauMain,
+          //fixedColor: hijauMain,
+          selectedLabelStyle: normalFont(),
+          iconSize: 24,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), title: Text("HomePage")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search), title: Text("Search")),            
+            BottomNavigationBarItem(
+                icon: Icon(Icons.bookmark), title: Text("Bookmark")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), title: Text("Settings"))
+          ],
 
-      backgroundColor: hijauMain,
-      //fixedColor: hijauMain,
-      selectedItemColor: textColor,
-      unselectedItemColor: putihMain,
+          
+
+          onTap: (index){
+            setState(() {
+              currentIndex=index;
+            });
+            if(index!=pageIndex){
+              if(index==0){
+                Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => HomePage()));
+              }else if(index==1){
+                Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => SearchPage()));
+              }
+            }
+            
+
+
+          },
+        ),
+      ),
     );
   }
 

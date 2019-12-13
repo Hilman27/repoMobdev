@@ -129,9 +129,6 @@ class MenuBarState extends State<MenuBar> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.settings), title: Text("Settings"))
           ],
-
-          
-
           onTap: (index){
             setState(() {
               currentIndex=index;

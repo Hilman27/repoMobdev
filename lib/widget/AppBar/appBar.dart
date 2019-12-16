@@ -40,8 +40,8 @@ class NavBar extends StatelessWidget {
               currentIndex: pageIndex,
             ),
             floatingActionButton: SearchButton(
-              routing: '/create_event',
-            ),
+                // routing: '/create_event',
+                ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             extendBody: true,

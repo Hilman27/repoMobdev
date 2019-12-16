@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tagging/flutter_tagging.dart';
 
 import 'dart:async';
-import 'package:flutter_syntax_view/flutter_syntax_view.dart';
+
 import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
@@ -18,7 +18,7 @@ class CreateEventPage extends StatefulWidget {
 
 class _CreateEventPageState extends State<CreateEventPage> {
   // String _selectedValuesJson = "Nothing to show";
-  List<Language> _selectedLanguages;
+  List<Kategori> _selectedKategoris;
   TextEditingController eventID = TextEditingController(text: '1');
   TextEditingController imagePath =
       TextEditingController(text: 'placeholderImage');
@@ -31,19 +31,18 @@ class _CreateEventPageState extends State<CreateEventPage> {
       TextEditingController(text: '1974-03-20 00:00:00.000');
   @override
   void initState() {
-    _selectedLanguages = [];
+    _selectedKategoris = [];
     super.initState();
   }
 
   @override
   void dispose() {
-    _selectedLanguages.clear();
+    _selectedKategoris.clear();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var dataEvent = List<Event>();
     return Scaffold(
       floatingActionButton: FloatingButton(
         onpress: () {
@@ -154,8 +153,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
   Padding buildFormTags() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: FlutterTagging<Language>(
-        initialItems: _selectedLanguages,
+      child: FlutterTagging<Kategori>(
+        initialItems: _selectedKategoris,
         textFieldConfiguration: TextFieldConfiguration(
           decoration: InputDecoration(
             border:
@@ -166,17 +165,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
             labelText: "Tags",
           ),
         ),
-        findSuggestions: LanguageService.getLanguages,
+        findSuggestions: KategoriService.getKategoris,
         additionCallback: (value) {
-          return Language(
+          return Kategori(
             name: value,
             position: 0,
           );
         },
-        configureSuggestion: (lang) {
+        configureSuggestion: (kategori) {
           return SuggestionConfiguration(
-            title: Text(lang.name),
-            subtitle: Text(lang.position.toString()),
+            title: Text(kategori.name),
+            subtitle: Text(kategori.position.toString()),
             additionWidget: Chip(
               avatar: Icon(
                 Icons.add_circle,
@@ -192,9 +191,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
             ),
           );
         },
-        configureChip: (lang) {
+        configureChip: (kategori) {
           return ChipConfiguration(
-            label: Text(lang.name),
+            label: Text(kategori.name),
             backgroundColor: Colors.green,
             labelStyle: TextStyle(color: Colors.white),
             deleteIconColor: Colors.white,
@@ -202,8 +201,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
         },
         onChanged: () {
           setState(() {
-            // _selectedValuesJson = _selectedLanguages
-            //     .map<String>((lang) => '\n${lang.toJson()}')
+            // _selectedValuesJson = _selectedKategoris
+            //     .map<String>((kategori) => '\n${kategori.toJson()}')
             //     .toList()
             //     .toString();
             // _selectedValuesJson =
@@ -215,33 +214,34 @@ class _CreateEventPageState extends State<CreateEventPage> {
   }
 }
 
-/// LanguageService
-class LanguageService {
-  /// Mocks fetching language from network API with delay of 500ms.
-  static Future<List<Language>> getLanguages(String query) async {
+/// KategoriService
+class KategoriService {
+  /// Mocks fetching Kategori from network API with delay of 500ms.
+  static Future<List<Kategori>> getKategoris(String query) async {
     await Future.delayed(Duration(milliseconds: 500), null);
-    return <Language>[
-      Language(name: 'Pengajian', position: 1),
-      Language(name: 'Ceramah', position: 2),
-      Language(name: 'Sholat', position: 3),
-      Language(name: 'Perayaan', position: 4),
-      Language(name: 'Event', position: 5),
+    return <Kategori>[
+      Kategori(name: 'Pengajian', position: 1),
+      Kategori(name: 'Ceramah', position: 2),
+      Kategori(name: 'Sholat', position: 3),
+      Kategori(name: 'Perayaan', position: 4),
+      Kategori(name: 'Event', position: 5),
     ]
-        .where((lang) => lang.name.toLowerCase().contains(query.toLowerCase()))
+        .where((kategori) =>
+            kategori.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
 }
 
-/// Language Class
-class Language extends Taggable {
+/// Kategori Class
+class Kategori extends Taggable {
   ///
   final String name;
 
   ///
   final int position;
 
-  /// Creates Language
-  Language({
+  /// Creates Kategori
+  Kategori({
     this.name,
     this.position,
   });

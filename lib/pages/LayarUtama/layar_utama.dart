@@ -18,7 +18,7 @@ class PageUtama extends StatelessWidget {
       /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SearchButton(),      
       bottomNavigationBar: MenuBar(), */
-      body: NavBar("Beranda", CallNewsFeed()),
+      body: NavBar(),
     );
   }
 }

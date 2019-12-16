@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tagging/flutter_tagging.dart';
 
 import 'dart:async';
-import 'package:flutter_syntax_view/flutter_syntax_view.dart';
+
+import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,17 +18,26 @@ class CreateEventPage extends StatefulWidget {
 
 class _CreateEventPageState extends State<CreateEventPage> {
   // String _selectedValuesJson = "Nothing to show";
-  List<Language> _selectedLanguages;
-
+  List<Kategori> _selectedKategoris;
+  TextEditingController eventID = TextEditingController(text: '1');
+  TextEditingController imagePath =
+      TextEditingController(text: 'placeholderImage');
+  TextEditingController eventName = TextEditingController(text: 'nama event');
+  TextEditingController eventLocation = TextEditingController(text: 'jogja');
+  TextEditingController caption =
+      TextEditingController(text: 'pengajian bersama dengan isinya');
+  TextEditingController newsType = TextEditingController(text: '1');
+  TextEditingController edateTime =
+      TextEditingController(text: '1974-03-20 00:00:00.000');
   @override
   void initState() {
-    _selectedLanguages = [];
+    _selectedKategoris = [];
     super.initState();
   }
 
   @override
   void dispose() {
-    _selectedLanguages.clear();
+    _selectedKategoris.clear();
     super.dispose();
   }
 
@@ -35,6 +45,20 @@ class _CreateEventPageState extends State<CreateEventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingButton(
+        onpress: () {
+          var event = Event(
+              eventID: int.parse(eventID.text),
+              imagePath: imagePath.text,
+              eventName: eventName.text,
+              eventLocation: eventLocation.text,
+              caption: caption.text,
+              newsType: int.parse(newsType.text),
+              edateTime: DateTime.parse(edateTime.text));
+          NewsFeed.dummyEvents.add(event);
+          Navigator.pop(context);
+
+          // print(event.toString());
+        },
         icon: Icon(Icons.save),
       ),
       appBar: AppBar(
@@ -45,7 +69,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
           children: <Widget>[
             PilihImage(),
             FormTextBiasa(
+              namaLabel: 'image*',
+              controller: imagePath,
+            ),
+            FormTextBiasa(
+              tipeInput: TextInputType.number,
+              namaLabel: 'event id',
+              controller: eventID,
+            ),
+            FormTextBiasa(
               namaLabel: 'judul',
+              controller: eventName,
             ),
 
             buildFormTags(),
@@ -53,14 +87,20 @@ class _CreateEventPageState extends State<CreateEventPage> {
               height: 20.0,
             ),
             FormTextBiasa(
+              controller: caption,
               namaLabel: 'deskripsi',
               maxLines: 4,
             ),
             FormTextBiasa(
-              namaLabel: 'agenda',
-              maxLines: 4,
+              namaLabel: 'tanggal',
+              controller: edateTime,
             ),
             FormTextBiasa(
+              namaLabel: 'news type',
+              controller: newsType,
+            ),
+            FormTextBiasa(
+              controller: eventLocation,
               namaLabel: 'nama tempat',
             ),
             FormTextBiasa(
@@ -113,8 +153,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
   Padding buildFormTags() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: FlutterTagging<Language>(
-        initialItems: _selectedLanguages,
+      child: FlutterTagging<Kategori>(
+        initialItems: _selectedKategoris,
         textFieldConfiguration: TextFieldConfiguration(
           decoration: InputDecoration(
             border:
@@ -125,17 +165,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
             labelText: "Tags",
           ),
         ),
-        findSuggestions: LanguageService.getLanguages,
+        findSuggestions: KategoriService.getKategoris,
         additionCallback: (value) {
-          return Language(
+          return Kategori(
             name: value,
             position: 0,
           );
         },
-        configureSuggestion: (lang) {
+        configureSuggestion: (kategori) {
           return SuggestionConfiguration(
-            title: Text(lang.name),
-            subtitle: Text(lang.position.toString()),
+            title: Text(kategori.name),
+            subtitle: Text(kategori.position.toString()),
             additionWidget: Chip(
               avatar: Icon(
                 Icons.add_circle,
@@ -151,9 +191,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
             ),
           );
         },
-        configureChip: (lang) {
+        configureChip: (kategori) {
           return ChipConfiguration(
-            label: Text(lang.name),
+            label: Text(kategori.name),
             backgroundColor: Colors.green,
             labelStyle: TextStyle(color: Colors.white),
             deleteIconColor: Colors.white,
@@ -161,8 +201,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
         },
         onChanged: () {
           setState(() {
-            // _selectedValuesJson = _selectedLanguages
-            //     .map<String>((lang) => '\n${lang.toJson()}')
+            // _selectedValuesJson = _selectedKategoris
+            //     .map<String>((kategori) => '\n${kategori.toJson()}')
             //     .toList()
             //     .toString();
             // _selectedValuesJson =
@@ -174,33 +214,34 @@ class _CreateEventPageState extends State<CreateEventPage> {
   }
 }
 
-/// LanguageService
-class LanguageService {
-  /// Mocks fetching language from network API with delay of 500ms.
-  static Future<List<Language>> getLanguages(String query) async {
+/// KategoriService
+class KategoriService {
+  /// Mocks fetching Kategori from network API with delay of 500ms.
+  static Future<List<Kategori>> getKategoris(String query) async {
     await Future.delayed(Duration(milliseconds: 500), null);
-    return <Language>[
-      Language(name: 'Pengajian', position: 1),
-      Language(name: 'Ceramah', position: 2),
-      Language(name: 'Sholat', position: 3),
-      Language(name: 'Perayaan', position: 4),
-      Language(name: 'Event', position: 5),
+    return <Kategori>[
+      Kategori(name: 'Pengajian', position: 1),
+      Kategori(name: 'Ceramah', position: 2),
+      Kategori(name: 'Sholat', position: 3),
+      Kategori(name: 'Perayaan', position: 4),
+      Kategori(name: 'Event', position: 5),
     ]
-        .where((lang) => lang.name.toLowerCase().contains(query.toLowerCase()))
+        .where((kategori) =>
+            kategori.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
 }
 
-/// Language Class
-class Language extends Taggable {
+/// Kategori Class
+class Kategori extends Taggable {
   ///
   final String name;
 
   ///
   final int position;
 
-  /// Creates Language
-  Language({
+  /// Creates Kategori
+  Kategori({
     this.name,
     this.position,
   });
@@ -257,12 +298,7 @@ class _PilihImageState extends State<PilihImage> {
                   width: MediaQuery.of(context).size.width,
                   // width: 200,
                   child: _imageFile == null
-                      ? Container(
-                          color: Colors.grey,
-                          width: MediaQuery.of(context).size.width,
-                          height: 200,
-                          child: Center(child: Text('Silahkan pilih Gambar')),
-                        )
+                      ? new PlaceHolderImage()
                       : Image.file(_imageFile),
                 ),
                 Row(
@@ -315,6 +351,22 @@ class _PilihImageState extends State<PilihImage> {
       return result;
     }
     return null;
+  }
+}
+
+class PlaceHolderImage extends StatelessWidget {
+  const PlaceHolderImage({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Center(child: buildTextTemplate('silahkan pilih gambar')),
+        Image.asset('assets/images/placeholder-image-icon-14.jpg'),
+      ],
+    );
   }
 }
 

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         home: /* SafeArea(
           child: PageUtama(),
         ),  */
-            PageUtama(),
+            HomePage(),
         routes: <String, WidgetBuilder>{
           // '/menu1': (BuildContext context) => TwitterProfilePage(),
           // '/menu2': (BuildContext context) => CreateEvent(),

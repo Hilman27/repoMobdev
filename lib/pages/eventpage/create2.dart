@@ -5,6 +5,7 @@ import 'package:flutter_tagging/flutter_tagging.dart';
 
 import 'dart:async';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
+import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -65,10 +66,36 @@ class _CreateEventPageState extends State<CreateEventPage> {
             FormTextBiasa(
               namaLabel: 'lokasi',
             ),
-            FormTextBiasa(
-              namaLabel: 'format tiket',
+            // FormTextBiasa(
+            //   namaLabel: 'format tiket',
+            // ),
+            buildTextTemplate('tiket'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Radio(
+                      value: 'gratis',
+                      groupValue: '',
+                      onChanged: (String nilai) {
+                        setState(() {});
+                      },
+                    ),
+                    Text('gratis'),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Radio(
+                      value: 'donasi',
+                      groupValue: '',
+                    ),
+                    Text('donasi'),
+                  ],
+                ),
+              ],
             ),
-
             // Expanded(
             //   child: SyntaxView(
             //     code: _selectedValuesJson,
@@ -231,10 +258,10 @@ class _PilihImageState extends State<PilihImage> {
                   // width: 200,
                   child: _imageFile == null
                       ? Container(
-                          color: Colors.green,
+                          color: Colors.grey,
                           width: MediaQuery.of(context).size.width,
                           height: 200,
-                          child: Center(child: Text('No image selected.')),
+                          child: Center(child: Text('Silahkan pilih Gambar')),
                         )
                       : Image.file(_imageFile),
                 ),
@@ -288,5 +315,16 @@ class _PilihImageState extends State<PilihImage> {
       return result;
     }
     return null;
+  }
+}
+
+class TEsttt extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[],
+      ),
+    );
   }
 }

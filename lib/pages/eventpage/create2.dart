@@ -5,6 +5,7 @@ import 'package:flutter_tagging/flutter_tagging.dart';
 
 import 'dart:async';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
+import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,7 +19,16 @@ class CreateEventPage extends StatefulWidget {
 class _CreateEventPageState extends State<CreateEventPage> {
   // String _selectedValuesJson = "Nothing to show";
   List<Language> _selectedLanguages;
-
+  TextEditingController eventID = TextEditingController(text: '1');
+  TextEditingController imagePath =
+      TextEditingController(text: 'placeholderImage');
+  TextEditingController eventName = TextEditingController(text: 'nama event');
+  TextEditingController eventLocation = TextEditingController(text: 'jogja');
+  TextEditingController caption =
+      TextEditingController(text: 'pengajian bersama dengan isinya');
+  TextEditingController newsType = TextEditingController(text: '1');
+  TextEditingController edateTime =
+      TextEditingController(text: '1974-03-20 00:00:00.000');
   @override
   void initState() {
     _selectedLanguages = [];
@@ -33,8 +43,23 @@ class _CreateEventPageState extends State<CreateEventPage> {
 
   @override
   Widget build(BuildContext context) {
+    var dataEvent = List<Event>();
     return Scaffold(
       floatingActionButton: FloatingButton(
+        onpress: () {
+          var event = Event(
+              eventID: int.parse(eventID.text),
+              imagePath: imagePath.text,
+              eventName: eventName.text,
+              eventLocation: eventLocation.text,
+              caption: caption.text,
+              newsType: int.parse(newsType.text),
+              edateTime: DateTime.parse(edateTime.text));
+          NewsFeed.dummyEvents.add(event);
+          Navigator.pop(context);
+
+          // print(event.toString());
+        },
         icon: Icon(Icons.save),
       ),
       appBar: AppBar(
@@ -45,7 +70,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
           children: <Widget>[
             PilihImage(),
             FormTextBiasa(
+              namaLabel: 'image*',
+              controller: imagePath,
+            ),
+            FormTextBiasa(
+              tipeInput: TextInputType.number,
+              namaLabel: 'event id',
+              controller: eventID,
+            ),
+            FormTextBiasa(
               namaLabel: 'judul',
+              controller: eventName,
             ),
 
             buildFormTags(),
@@ -53,14 +88,20 @@ class _CreateEventPageState extends State<CreateEventPage> {
               height: 20.0,
             ),
             FormTextBiasa(
+              controller: caption,
               namaLabel: 'deskripsi',
               maxLines: 4,
             ),
             FormTextBiasa(
-              namaLabel: 'agenda',
-              maxLines: 4,
+              namaLabel: 'tanggal',
+              controller: edateTime,
             ),
             FormTextBiasa(
+              namaLabel: 'news type',
+              controller: newsType,
+            ),
+            FormTextBiasa(
+              controller: eventLocation,
               namaLabel: 'nama tempat',
             ),
             FormTextBiasa(
@@ -257,12 +298,7 @@ class _PilihImageState extends State<PilihImage> {
                   width: MediaQuery.of(context).size.width,
                   // width: 200,
                   child: _imageFile == null
-                      ? Container(
-                          color: Colors.grey,
-                          width: MediaQuery.of(context).size.width,
-                          height: 200,
-                          child: Center(child: Text('Silahkan pilih Gambar')),
-                        )
+                      ? new PlaceHolderImage()
                       : Image.file(_imageFile),
                 ),
                 Row(
@@ -315,6 +351,22 @@ class _PilihImageState extends State<PilihImage> {
       return result;
     }
     return null;
+  }
+}
+
+class PlaceHolderImage extends StatelessWidget {
+  const PlaceHolderImage({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Center(child: buildTextTemplate('silahkan pilih gambar')),
+        Image.asset('assets/images/placeholder-image-icon-14.jpg'),
+      ],
+    );
   }
 }
 

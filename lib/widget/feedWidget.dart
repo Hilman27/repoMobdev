@@ -33,7 +33,7 @@ class FeedListWidgetState extends State<FeedListWidget> {
                     statusCheck: statusCheck,
                     initialize: initList,
                   ),
-              childCount: 6),
+              childCount: NewsFeed.dummyEvents.length),
         )
       ],
     );

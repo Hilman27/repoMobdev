@@ -14,3 +14,5 @@ export 'cardKomentar.dart';
 export 'Star/starEmpty.dart';
 export 'Star/starFull.dart';
 export 'Star/starHalf.dart';
+export 'gallery/pilihGambar.dart';
+export 'gallery/placeHolderGambar.dart';

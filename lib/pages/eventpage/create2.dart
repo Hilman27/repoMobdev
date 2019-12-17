@@ -1,14 +1,12 @@
-import 'dart:io';
+// import 'dart:io';
+// import 'dart:async';
+// import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tagging/flutter_tagging.dart';
-
-import 'dart:async';
-
 import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
-import 'package:image_picker/image_picker.dart';
 
 ///
 class CreateEventPage extends StatefulWidget {
@@ -215,168 +213,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
 }
 
 /// KategoriService
-class KategoriService {
-  /// Mocks fetching Kategori from network API with delay of 500ms.
-  static Future<List<Kategori>> getKategoris(String query) async {
-    await Future.delayed(Duration(milliseconds: 500), null);
-    return <Kategori>[
-      Kategori(name: 'Pengajian', position: 1),
-      Kategori(name: 'Ceramah', position: 2),
-      Kategori(name: 'Sholat', position: 3),
-      Kategori(name: 'Perayaan', position: 4),
-      Kategori(name: 'Event', position: 5),
-    ]
-        .where((kategori) =>
-            kategori.name.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-  }
-}
 
 /// Kategori Class
-class Kategori extends Taggable {
-  ///
-  final String name;
-
-  ///
-  final int position;
-
-  /// Creates Kategori
-  Kategori({
-    this.name,
-    this.position,
-  });
-
-  @override
-  List<Object> get props => [name];
-
-  /// Converts the class to json string.
-  String toJson() => '''  {
-    "name": $name,\n
-    "position": $position\n
-  }''';
-}
 
 // start ############# pilih Image ##############
-class PilihImage extends StatefulWidget {
-  @override
-  _PilihImageState createState() => _PilihImageState();
-}
-
-class _PilihImageState extends State<PilihImage> {
-  File _imageFile;
-  dynamic _pickImageError;
-  String _retrieveDataError;
-
-  Future getImageCamera() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _imageFile = image;
-    });
-  }
-
-  Future getImageGallery() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _imageFile = image;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  // width: 200,
-                  child: _imageFile == null
-                      ? new PlaceHolderImage()
-                      : Image.file(_imageFile),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: getImageCamera,
-                      tooltip: 'pilih foto',
-                      icon: Icon(Icons.add_a_photo),
-                    ),
-                    IconButton(
-                      onPressed: getImageGallery,
-                      tooltip: 'pilih foto',
-                      icon: Icon(Icons.image),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _previewImage() {
-    final Text retrieveError = _getRetrieveErrorWidget();
-    if (retrieveError != null) {
-      return retrieveError;
-    }
-    if (_imageFile != null) {
-      return Image.file(_imageFile);
-    } else if (_pickImageError != null) {
-      return Text(
-        'Pick image error: $_pickImageError',
-        textAlign: TextAlign.center,
-      );
-    } else {
-      return const Text(
-        'You have not yet picked an image.',
-        textAlign: TextAlign.center,
-      );
-    }
-  }
-
-  Text _getRetrieveErrorWidget() {
-    if (_retrieveDataError != null) {
-      final Text result = Text(_retrieveDataError);
-      _retrieveDataError = null;
-      return result;
-    }
-    return null;
-  }
-}
-
-class PlaceHolderImage extends StatelessWidget {
-  const PlaceHolderImage({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Center(child: buildTextTemplate('silahkan pilih gambar')),
-        Image.asset('assets/images/placeholder-image-icon-14.jpg'),
-      ],
-    );
-  }
-}
-
-class TEsttt extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[],
-      ),
-    );
-  }
-}

@@ -1,7 +1,14 @@
 //import 'package:religi_app/Model/LayarUtama/feed.dart';
 
+import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
+import 'package:json_annotation/json_annotation.dart';
+part 'feed.g.dart';
 
+
+
+@JsonSerializable(explicitToJson: true)
 class Feed {
   User user;  
   Event event; 
@@ -9,6 +16,9 @@ class Feed {
 
   User get fUser => user;
   Event get fEvent => event;
+
+  factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
+  Map<String, dynamic> toJson() => _$FeedToJson(this);
 
 }
 
@@ -35,6 +45,22 @@ class NewsFeed {
     DateTime(2019,12,31,23,59,59), //31-12-2019 | 23:59:59
   ];
 
+  //Read from JSON
+  readJson(){
+    Map userMap = jsonDecode("assets/jsons/FeedData.json");
+    var user = Feed.fromJson(userMap);
+  }
+  //Write from JSON
+  writeToJSON(Feed input){
+    String input = jsonEncode("assets/jsons/FeedData.json");
+  }
+  
+
+  
+
+  
+  
+
   Feed getByID(int id) => Feed(dummyUsers[id % dummyUsers.length], dummyEvents[id % dummyEvents.length]);
 
   //Feed getByID(int id) => Feed(dummyUsers[id], dummyEvents[id]);
@@ -45,12 +71,17 @@ class NewsFeed {
   
 }
 
+@JsonSerializable()
 class User{
   String name;
   String link;
   User (this.name, this.link);
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }
 
+@JsonSerializable()
 class Event{
   int eventID;
   String imagePath;
@@ -61,6 +92,8 @@ class Event{
   DateTime edateTime;
   Event (this.eventID, this.imagePath, this.eventName, this.eventLocation, this.caption,this.edateTime, this.newsType);  
 
+  factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
+  Map<String, dynamic> toJson() => _$EventToJson(this);
   //NewsType : 1 = Joinable Event, 2 = Normal Status Update, 3 = Event Annoucement
 }
 

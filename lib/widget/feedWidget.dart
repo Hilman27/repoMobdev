@@ -56,9 +56,9 @@ class FeedListWidgetState extends State<FeedListWidget>{
        status[index] = true; 
       } else status[index] = false; 
       }     
-    for(int i =0; i<status.length; i++){
+   /*  for(int i =0; i<status.length; i++){
       developer.log("Index $i set to ${status[i]}");  
-    }
+    } */
     
     //return true;
   }
@@ -105,7 +105,7 @@ class NewsItemState extends State<NewsItem> {
     expandCheck = widget.statusCheck;
     initialList(_index);
     
-    developer.log("Check $_index and $_expanded Has been Initilaized");
+    //developer.log("Check $_index and $_expanded Has been Initilaized");
     //developer.log("Check ${expandCheck(_index)}");
     
   }
@@ -146,7 +146,7 @@ class NewsItemState extends State<NewsItem> {
   Widget build(BuildContext context) {   
     //widget.onPressed(index);
     _expanded = expandCheck(_index);
-    developer.log("Index is at $_index and Expansion is $_expanded");
+    //developer.log("Index is at $_index and Expansion is $_expanded");
     var feeds = Provider.of<NewsFeed>(context);
     Feed news = feeds.init(_index);
     //var textTheme = Theme.of(context).textTheme.title; 
@@ -262,11 +262,11 @@ class NewsUser extends StatelessWidget{
 }
 
 class NewsDetail extends StatelessWidget{
-  final Feed news;
-
+  final Feed news;  
   const NewsDetail(this.news, {Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {    
+    JsonCRUD jsonstuff;
     return Container(
       //width: MediaQuery.of(context).size.width,
       child: Column(
@@ -343,10 +343,58 @@ class NewsDetail extends StatelessWidget{
                   ],
                 ),
             ),
-          )
+          ),
+          FlatButton(
+            onPressed:(){
+              print("To JSON");
+              jsonstuff = JsonCRUD(news.toJson());
+              //jsonStuff.writeMethod("Hello There");
+              //jsonstuff = JsonCRUD(news.toJson());
+              //print("Taken Directory : ${jsonstuff.dir.path}");
+              jsonstuff.printstuff();
+              print("Write to JSON ");
+              //jsonstuff.writeToJSON();
+            }, 
+            child: Text("Send to JSON"), 
+          ),
         ],
       ),
     );
   }
   
+}
+
+class FeedShowWidget extends StatefulWidget{
+  @override
+  FeedShowWidgetState createState() => FeedShowWidgetState();
+}
+
+class FeedShowWidgetState extends State<FeedShowWidget>{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[                            
+      //SizedBox(width: 40,),
+      Container(
+      width: MediaQuery.of(context).size.width*1/4,
+      child: 
+      Icon(Icons.location_on, color: Colors.red),
+      ) ,
+      //SizedBox(width : 20),
+      
+      Container(
+        width: MediaQuery.of(context).size.width*3/4 -10,        
+        child: Text(news.event.eventLocation,
+        style: feedLoc(),
+        softWrap: true,
+        maxLines: 2,
+        textAlign: TextAlign.left,),
+      ),                  
+    ],
+  );
+  }
+
 }

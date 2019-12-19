@@ -16,6 +16,7 @@ class FeedListWidget extends StatefulWidget {
 
 class FeedListWidgetState extends State<FeedListWidget>{
   List status = List<bool>.filled(0, true, growable: true);
+  final FeedBloc _feedBloc = FeedBloc();    
   //List<bool> status;
 
   @override
@@ -26,16 +27,21 @@ class FeedListWidgetState extends State<FeedListWidget>{
 
   @override
   Widget build(BuildContext context) {    
-    return CustomScrollView(
-          slivers: <Widget>[
-            SliverList(              
-              delegate: SliverChildBuilderDelegate(
-            (context,index) => NewsItem( index: index, onPressed: _statusToogle, statusCheck: statusCheck, initialize: initList, ),
-            childCount: 6
-              ),
-            )
-          ],
-        );
+    final newsfeedProvider = FeedProvider.of(context);
+    return StreamBuilder<List<Feed>>(
+      stream: newsfeedProvider.items,
+      initialData: List<Feed>(),
+      builder: (context, snapshot) => CustomScrollView(
+        slivers: <Widget>[
+          SliverList(              
+            delegate: SliverChildBuilderDelegate(
+          (context,index) => NewsItem( index: index, onPressed: _statusToogle, statusCheck: statusCheck, initialize: initList, feed: newsfeedProvider.getFeed(index), ),
+          childCount: newsfeedProvider.getSize()
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   initList(int index){
@@ -74,6 +80,7 @@ class NewsItem extends StatefulWidget{
   final ValueChanged<int> initialize;  
   final Function statusCheck;   
   final int index;
+  final Feed feed;
   
 
   const NewsItem( {Key key, 
@@ -81,6 +88,7 @@ class NewsItem extends StatefulWidget{
                   @required this.onPressed, 
                   @required this.initialize, 
                   @required this.statusCheck, 
+                  @required this.feed, 
                   }) : super(key: key);
 
   @override
@@ -94,11 +102,13 @@ class NewsItemState extends State<NewsItem> {
   Function(int) parentPress;
   Function(int) initialList;
   Function(int) expandCheck;
+  Feed _feed;
   
   void initState(){
     super.initState();
     _index = widget.index;
     _expanded = true;
+    _feed=widget.feed;
     parentPress = widget.onPressed;
     //widget.initialize(_index);
     initialList = widget.initialize;
@@ -146,9 +156,8 @@ class NewsItemState extends State<NewsItem> {
   Widget build(BuildContext context) {   
     //widget.onPressed(index);
     _expanded = expandCheck(_index);
-    //developer.log("Index is at $_index and Expansion is $_expanded");
-    var feeds = Provider.of<NewsFeed>(context);
-    Feed news = feeds.init(_index);
+    //developer.log("Index is at $_index and Expansion is $_expanded");    
+    Feed news = _feed;
     //var textTheme = Theme.of(context).textTheme.title; 
     return GestureDetector(
       onTap: () {
@@ -364,37 +373,3 @@ class NewsDetail extends StatelessWidget{
   
 }
 
-class FeedShowWidget extends StatefulWidget{
-  @override
-  FeedShowWidgetState createState() => FeedShowWidgetState();
-}
-
-class FeedShowWidgetState extends State<FeedShowWidget>{
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: <Widget>[                            
-      //SizedBox(width: 40,),
-      Container(
-      width: MediaQuery.of(context).size.width*1/4,
-      child: 
-      Icon(Icons.location_on, color: Colors.red),
-      ) ,
-      //SizedBox(width : 20),
-      
-      Container(
-        width: MediaQuery.of(context).size.width*3/4 -10,        
-        child: Text(news.event.eventLocation,
-        style: feedLoc(),
-        softWrap: true,
-        maxLines: 2,
-        textAlign: TextAlign.left,),
-      ),                  
-    ],
-  );
-  }
-
-}

@@ -1,17 +1,16 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
-import 'package:provider/provider.dart';
-import 'package:religi_app/model/_model.dart';
-import 'package:religi_app/pages/HomePage/HomePage.dart';
-import 'package:religi_app/widget/_widgets.dart';
-import 'package:youtube_player/youtube_player.dart';
-
+// import 'dart:math';
+// import 'package:photo_view/photo_view.dart';
+// import 'package:photo_view/photo_view_gallery.dart';
+// import 'package:religi_app/pages/HomePage/HomePage.dart';
+// import 'package:youtube_player/youtube_player.dart';
+// import 'package:religi_app/widget/galleryPhotoviewer.dart';
+// import 'package:religi_app/widget/_widgets.dart';
 // import 'package:religi_app/widgets/textform.da5rt';
 
-// import 'package:religi_app/widget/_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:religi_app/model/_model.dart';
+import 'package:religi_app/widget/_widgets.dart';
 
 class PageDetailEvent extends StatefulWidget {
   final index;
@@ -46,8 +45,8 @@ class _PageDetailEventState extends State<PageDetailEvent> {
   }
 
   SliverToBoxAdapter buildSliverToBoxAdapter(BuildContext context) {
-    var feeds = Provider.of<NewsFeed>(context);
-    Feed news = feeds.init(index);
+    // var feeds = Provider.of<NewsFeed>(context);
+    // Feed news = feeds.init(index);
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -256,96 +255,50 @@ class _PageDetailEventState extends State<PageDetailEvent> {
   }
 }
 
-class GambarContainer extends StatelessWidget {
-  const GambarContainer({
-    Key key,
-  }) : super(key: key);
+// class GambarContainer extends StatelessWidget {
+//   const GambarContainer({
+//     Key key,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 150,
-      child: Image.network(
-          'https://gunung.id/wp-content/uploads/2018/08/gunung-prau.jpg'),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 150,
+//       height: 150,
+//       child: Image.network(
+//           'https://gunung.id/wp-content/uploads/2018/08/gunung-prau.jpg'),
+//     );
+//   }
+// }
 
-class CardKomentar extends StatelessWidget {
-  const CardKomentar({
-    Key key,
-  }) : super(key: key);
+// class ContainerKosongan extends StatelessWidget {
+//   const ContainerKosongan({
+//     Key key,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.pink[200],
-                        child: Icon(Icons.person),
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        buildTextTemplate('@nama user  ', 20),
-                        Sizedbox5(),
-                        buildTextTemplate('20 des 2018', 20)
-                      ],
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                      'ini adalah komentar yang panjang, ini adalah komentar yang panjang, ini adalah komentar yang panjang, '),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 100,
+//       width: 100,
+//       color: Colors.grey,
+//     );
+//   }
+// }
 
-class ContainerKosongan extends StatelessWidget {
-  const ContainerKosongan({
-    Key key,
-  }) : super(key: key);
+// class Sizedbox5 extends StatelessWidget {
+//   const Sizedbox5({
+//     Key key,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: 100,
-      color: Colors.grey,
-    );
-  }
-}
-
-class Sizedbox5 extends StatelessWidget {
-  const Sizedbox5({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 5,
-      height: 5,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       width: 5,
+//       height: 5,
+//     );
+//   }
+// }
 
 class RatingStar extends StatelessWidget {
   const RatingStar({
@@ -362,45 +315,6 @@ class RatingStar extends StatelessWidget {
         new StarEmpty(),
         new StarEmpty(),
       ],
-    );
-  }
-}
-
-class StarEmpty extends StatelessWidget {
-  const StarEmpty({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(Icons.star_border);
-  }
-}
-
-class StarHalf extends StatelessWidget {
-  const StarHalf({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
-      Icons.star_half,
-      color: Colors.yellow[700],
-    );
-  }
-}
-
-class StarFull extends StatelessWidget {
-  const StarFull({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
-      Icons.star,
-      color: Colors.yellow,
     );
   }
 }
@@ -462,246 +376,6 @@ class SizedBox10 extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 10,
-    );
-  }
-}
-
-class GalleryExampleItem {
-  GalleryExampleItem({this.id, this.resource, this.isSvg = false});
-
-  final String id;
-  final String resource;
-  final bool isSvg;
-}
-
-class GalleryExampleItemThumbnail extends StatelessWidget {
-  const GalleryExampleItemThumbnail(
-      {Key key, this.galleryExampleItem, this.onTap})
-      : super(key: key);
-
-  final GalleryExampleItem galleryExampleItem;
-
-  final GestureTapCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Hero(
-          tag: galleryExampleItem.id,
-          child: Image.asset(galleryExampleItem.resource, height: 200.0),
-        ),
-      ),
-    );
-  }
-}
-
-List<GalleryExampleItem> galleryItems = <GalleryExampleItem>[
-  GalleryExampleItem(
-    id: "tag1",
-    resource: "assets/images/profil.png",
-  ),
-  GalleryExampleItem(id: "tag2", resource: "assets/images/profil.png"),
-  GalleryExampleItem(
-    id: "tag3",
-    resource: "assets/images/profil.png",
-  ),
-  GalleryExampleItem(
-    id: "tag5",
-    resource: "assets/images/profil.png",
-  ),
-  GalleryExampleItem(
-    id: "tag6",
-    resource: "assets/images/profil.png",
-  ),
-  GalleryExampleItem(
-    id: "tag7",
-    resource: "assets/images/profil.png",
-  ),
-  GalleryExampleItem(
-    id: "tag8",
-    resource: "assets/images/profil.png",
-  ),
-  GalleryExampleItem(
-    id: "tag9",
-    resource: "assets/images/profil.png",
-  ),
-];
-
-class GalleryGambar extends StatefulWidget {
-  @override
-  _GalleryGambarState createState() => _GalleryGambarState();
-}
-
-class _GalleryGambarState extends State<GalleryGambar> {
-  bool verticalGallery = false;
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-
-  void open(BuildContext context, final int index) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => GalleryPhotoViewWrapper(
-          galleryItems: galleryItems,
-          backgroundDecoration: const BoxDecoration(
-            color: Colors.black,
-          ),
-          initialIndex: index,
-          scrollDirection: verticalGallery ? Axis.vertical : Axis.horizontal,
-        ),
-      ),
-    );
-  }
-}
-
-class GalleryPhotoViewWrapper extends StatefulWidget {
-  GalleryPhotoViewWrapper({
-    this.loadingChild,
-    this.backgroundDecoration,
-    this.minScale,
-    this.maxScale,
-    this.initialIndex,
-    @required this.galleryItems,
-    this.scrollDirection = Axis.horizontal,
-  }) : pageController = PageController(initialPage: initialIndex);
-
-  final Widget loadingChild;
-  final Decoration backgroundDecoration;
-  final dynamic minScale;
-  final dynamic maxScale;
-  final int initialIndex;
-  final PageController pageController;
-  final List<GalleryExampleItem> galleryItems;
-  final Axis scrollDirection;
-
-  @override
-  State<StatefulWidget> createState() {
-    return _GalleryPhotoViewWrapperState();
-  }
-}
-
-class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
-  int currentIndex;
-
-  @override
-  void initState() {
-    currentIndex = widget.initialIndex;
-    super.initState();
-  }
-
-  void onPageChanged(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: widget.backgroundDecoration,
-        constraints: BoxConstraints.expand(
-          height: MediaQuery.of(context).size.height,
-        ),
-        child: Stack(
-          alignment: Alignment.bottomRight,
-          children: <Widget>[
-            PhotoViewGallery.builder(
-              scrollPhysics: const BouncingScrollPhysics(),
-              builder: _buildItem,
-              itemCount: galleryItems.length,
-              loadingChild: widget.loadingChild,
-              backgroundDecoration: widget.backgroundDecoration,
-              pageController: widget.pageController,
-              onPageChanged: onPageChanged,
-              scrollDirection: widget.scrollDirection,
-            ),
-            Container(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                "Image ${currentIndex + 1}",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
-                  decoration: null,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  PhotoViewGalleryPageOptions _buildItem(BuildContext context, int index) {
-    final GalleryExampleItem item = widget.galleryItems[index];
-    return item.isSvg
-        ? PhotoViewGalleryPageOptions.customChild(
-            child: Container(
-              width: 300,
-              height: 300,
-            ),
-            childSize: const Size(300, 300),
-            initialScale: PhotoViewComputedScale.contained,
-            minScale: PhotoViewComputedScale.contained * (0.5 + index / 10),
-            maxScale: PhotoViewComputedScale.covered * 1.1,
-            heroAttributes: PhotoViewHeroAttributes(tag: item.id),
-          )
-        : PhotoViewGalleryPageOptions(
-            imageProvider: AssetImage(item.resource),
-            initialScale: PhotoViewComputedScale.contained,
-            minScale: PhotoViewComputedScale.contained * (0.5 + index / 10),
-            maxScale: PhotoViewComputedScale.covered * 1.1,
-            heroAttributes: PhotoViewHeroAttributes(tag: item.id),
-          );
-  }
-}
-
-// start ######################### VIDEO #############
-
-class VideoSection extends StatefulWidget {
-  @override
-  _VideoSectionState createState() => _VideoSectionState();
-}
-
-class _VideoSectionState extends State<VideoSection> {
-  TextEditingController _idController = TextEditingController();
-  String id = "pCGBHSyP1bo"; // link youtube
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        SingleChildScrollView(
-          child: YoutubePlayer(
-            context: context,
-            source: id,
-            quality: YoutubeQuality.HD,
-            autoPlay: false,
-          ),
-        ),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: TextFormField(
-        //     controller: _idController,
-        //     decoration: InputDecoration(
-        //         border: OutlineInputBorder(),
-        //         hintText: "Enter youtube \<video id\> or \<link\>"),
-        //   ),
-        // ),
-        // RaisedButton(
-        //   onPressed: () {
-        //     setState(() {
-        //       id = _idController.text;
-        //     });
-        //   },
-        //   child: Text("Play"),
-        // ),
-      ],
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:religi_app/widget/_widgets.dart';
 
 class FeedBloc {
   final List<Feed> _feeds = List<Feed>();
+  JsonCRUD cruds;
 
   FeedBloc() {
     _additionStreamController.stream.listen(_handleAddition);
@@ -15,15 +16,35 @@ class FeedBloc {
     for(int i=0; i< 6; i++){
       _feeds.add(dummy.init(i));
     }
+
+    print("FeedBloc Init");
+
   }
 
+//Fungsi untuk Status
   Feed getFeed (int index){
     return _feeds[index];
   }
-
   int getSize(){
     return _feeds.length;
   }
+  List<Feed> getAll(){
+    return _feeds;
+  }
+//Fungsi untuk JSON
+  changeNewContent(Map<String, dynamic> newStuff){
+    cruds.changeNewContent(newStuff);
+  }
+
+  String readNewContent(){
+    return cruds.printstuff();
+  }
+
+  addTest(Feed stuff){
+    _feeds.add(stuff);
+    print("FeedBloc Add : ${stuff.event.eventName}");
+  }
+
 
   _handleAddition(Feed item) {
     _itemsSubject.add(_feeds..add(item));

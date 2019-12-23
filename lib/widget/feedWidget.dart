@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:core';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,13 +19,13 @@ class FeedListWidget extends StatefulWidget {
 
 class FeedListWidgetState extends State<FeedListWidget>{
   List status = List<bool>.filled(0, true, growable: true);
-  final FeedBloc _feedBloc = FeedBloc();    
+  ScrollController scrollController;
+  //final FeedBloc _feedBloc = FeedBloc();    
   //List<bool> status;
 
   @override
   void initState() {    
-    super.initState();    
-    
+    super.initState();        
   }
 
   @override
@@ -30,13 +33,21 @@ class FeedListWidgetState extends State<FeedListWidget>{
     final newsfeedProvider = FeedProvider.of(context);
     return StreamBuilder<List<Feed>>(
       stream: newsfeedProvider.items,
-      initialData: List<Feed>(),
+      initialData: newsfeedProvider.getAll(),
       builder: (context, snapshot) => CustomScrollView(
+        controller: scrollController,
         slivers: <Widget>[
           SliverList(              
             delegate: SliverChildBuilderDelegate(
-          (context,index) => NewsItem( index: index, onPressed: _statusToogle, statusCheck: statusCheck, initialize: initList, feed: newsfeedProvider.getFeed(index), ),
-          childCount: newsfeedProvider.getSize()
+          (context,index) => NewsItem( index: index, 
+                                        onPressed: _statusToogle, 
+                                        statusCheck: statusCheck, 
+                                        initialize: initList, 
+                                        feed: snapshot.data.elementAt(index),
+                                        changeData: newsfeedProvider.changeNewContent,
+                                        //scrollingOnTap: scrollByIndex, 
+                                        ),
+          childCount: snapshot.data.length
             ),
           )
         ],
@@ -45,6 +56,7 @@ class FeedListWidgetState extends State<FeedListWidget>{
   }
 
   initList(int index){
+    
     //status[index];
     //status.add(false);  
     try{
@@ -73,14 +85,50 @@ class FeedListWidgetState extends State<FeedListWidget>{
   bool statusCheck(int index){    
     return status[index];
   }
+
+
+
+  //Scroll Functions
+  /* scrollByIndex(int index){
+    print("ScrollTest");
+    scrollTo(calcHeight());
+  }
+
+  scrollTo(double pixelHeight){
+    scrollController.jumpTo(pixelHeight);
+    //scrollController.animateTo(pixelHeight, curve: Curves.linear, duration: Duration(milliseconds: 500));
+  }
+
+  double calcHeight(){
+    double height=0;
+    double heightFac1= srcHeight();
+    double heightFac2= tittleHead().fontSize + 5;
+    for(int i=0; i<status.length; i++){
+      if(status[i]){
+        height+=heightFac1;
+      }else {
+        height+=heightFac2;
+      }
+    }
+    return height;
+  }
+
+  double srcHeight(){//Search Height based on Width
+    double width = MediaQuery.of(context).size.width;
+    double height = 4/3*width;
+    return height;
+  } */
+
 }
 
 class NewsItem extends StatefulWidget{
   final ValueChanged<int> onPressed;  
   final ValueChanged<int> initialize;  
   final Function statusCheck;   
+  //final ValueChanged<int> scrollingOnTap;   
   final int index;
   final Feed feed;
+  final Function changeData;
   
 
   const NewsItem( {Key key, 
@@ -89,6 +137,8 @@ class NewsItem extends StatefulWidget{
                   @required this.initialize, 
                   @required this.statusCheck, 
                   @required this.feed, 
+                  this.changeData
+                  //this.scrollingOnTap, 
                   }) : super(key: key);
 
   @override
@@ -97,6 +147,7 @@ class NewsItem extends StatefulWidget{
 }
 
 class NewsItemState extends State<NewsItem> {
+  //GlobalKey _keyRed = GlobalKey();
   int _index;
   bool _expanded;
   Function(int) parentPress;
@@ -104,21 +155,42 @@ class NewsItemState extends State<NewsItem> {
   Function(int) expandCheck;
   Feed _feed;
   
+  //Function(int) _scrollonTap;
+  
   void initState(){
-    super.initState();
+    
     _index = widget.index;
     _expanded = true;
     _feed=widget.feed;
+    //_scrollonTap = widget.scrollingOnTap;
     parentPress = widget.onPressed;
     //widget.initialize(_index);
     initialList = widget.initialize;
     expandCheck = widget.statusCheck;
+    
     initialList(_index);
+    super.initState();
     
     //developer.log("Check $_index and $_expanded Has been Initilaized");
     //developer.log("Check ${expandCheck(_index)}");
     
   }
+
+  //Doesn't work. Delete Later
+  /* _afterLayout(_){    
+    _getPositions();
+  }
+
+  _getPositions() {
+    try{
+      final RenderBox renderBoxRed = _keyRed.currentContext.findRenderObject();
+    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
+    print("POSITION of Red: $positionRed ");
+    }catch(e){
+      print("$e");
+    }
+    
+  } */
 
   changeExpandCollapse(bool){
     widget.onPressed(_index);
@@ -142,6 +214,7 @@ class NewsItemState extends State<NewsItem> {
         parentPress(_index);
       }
       developer.log("Index $_index Is expanded");
+      //_scrollonTap(_index);
     }else if (input ==false){
       if(expandCheck(_index)==true){
         parentPress(_index);
@@ -155,7 +228,10 @@ class NewsItemState extends State<NewsItem> {
   @override
   Widget build(BuildContext context) {   
     //widget.onPressed(index);
-    _expanded = expandCheck(_index);
+    
+    _expanded = expandCheck(_index);    
+    //WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+    //print("Test for $_index Height ${context.size}");
     //developer.log("Index is at $_index and Expansion is $_expanded");    
     Feed news = _feed;
     //var textTheme = Theme.of(context).textTheme.title; 
@@ -275,6 +351,8 @@ class NewsDetail extends StatelessWidget{
   const NewsDetail(this.news, {Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {    
+    //FeedProvider    
+    final newsfeedProvider = FeedProvider.of(context);
     JsonCRUD jsonstuff;
     return Container(
       //width: MediaQuery.of(context).size.width,
@@ -354,18 +432,24 @@ class NewsDetail extends StatelessWidget{
             ),
           ),
           FlatButton(
-            onPressed:(){
-              print("To JSON");
-              jsonstuff = JsonCRUD(news.toJson());
-              //jsonStuff.writeMethod("Hello There");
-              //jsonstuff = JsonCRUD(news.toJson());
-              //print("Taken Directory : ${jsonstuff.dir.path}");
-              jsonstuff.printstuff();
-              print("Write to JSON ");
-              //jsonstuff.writeToJSON();
-            }, 
-            child: Text("Send to JSON"), 
-          ),
+                onPressed:(){                  
+                  newsfeedProvider.addTest(news);
+                  
+                  print("Test adding ${news.event.eventName}");
+
+
+                  /* print("To JSON");
+                  
+                  jsonstuff.changeNewContent(news.toJson());
+                  //jsonStuff.writeMethod("Hello There");
+                  //jsonstuff = JsonCRUD(news.toJson());
+                  //print("Taken Directory : ${jsonstuff.dir.path}");
+                  jsonstuff.printstuff();
+                  print("Write to JSON ");
+                  //jsonstuff.writeToJSON(); */
+                }, 
+                child: Text("Send to JSON"), 
+              )          
         ],
       ),
     );

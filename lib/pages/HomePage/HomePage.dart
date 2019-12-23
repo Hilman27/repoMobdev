@@ -47,9 +47,9 @@ class CallNewsFeed extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Container(
           alignment: Alignment.topCenter,
-          child: FeedProvider(
-            child: FeedListWidget(), 
-            feedBloc: _feedBloc,)
+          child: FeedProvider(            
+            feedBloc: _feedBloc,
+            child: FeedListWidget()), 
           ),
         ),      
     );

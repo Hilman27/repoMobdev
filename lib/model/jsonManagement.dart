@@ -16,13 +16,22 @@ class JsonCRUD{
   Map<String, dynamic> newContent;
   AssetBundle bundle;
 
-  JsonCRUD(this.newContent){
+
+  
+  JsonCRUD(){
     //bundle = DefaultAssetBundle.of(context).bundle;
    /*  dir = Directory(path);
     jsonFile = new File(path+filename);//("assets/jsons/");//
     fileExists = jsonFile.existsSync();
-    print("Json file " + path+filename + " Is " + fileExists.toString()); */
-    
+    print("Json file " + path+filename + " Is " + fileExists.toString()); */    
+    initialize();        
+  }
+
+  changeNewContent( Map<String, dynamic> newStuff){
+    this.newContent=newStuff;
+  }
+
+  initialize(){
     getApplicationDocumentsDirectory().then((Directory directory) {
       print("Init----------");
       testBool =true;
@@ -39,8 +48,6 @@ class JsonCRUD{
       
       print("Json file " + dir.path + " Is " + fileExists.toString());
     });
-    
-    
   }
 
   printstuff(){

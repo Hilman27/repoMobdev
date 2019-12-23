@@ -41,6 +41,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
 
   @override
   Widget build(BuildContext context) {
+    var value;
     return Scaffold(
       floatingActionButton: FloatingButton(
         onpress: () {
@@ -126,6 +127,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                 Row(
                   children: <Widget>[
                     Radio(
+                      onChanged: value,
                       value: 'donasi',
                       groupValue: '',
                     ),

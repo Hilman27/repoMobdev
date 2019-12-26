@@ -6,5 +6,4 @@ export 'dates.dart';
 export 'loadImage.dart';
 export 'cutomExpansionTile.dart';
 export 'feedWidget.dart';
-export 'feedProvider.dart';
-export 'feedBloc.dart';
+export 'feedbloc/bloc.dart';

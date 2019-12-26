@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
 }
 
 class CallNewsFeed extends StatelessWidget {
-  final FeedBloc _feedBloc = FeedBloc();
+  
   
   @override
   Widget build(BuildContext context) {    
@@ -47,9 +47,9 @@ class CallNewsFeed extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Container(
           alignment: Alignment.topCenter,
-          child: FeedProvider(            
+          child: FeedListWidget() /* FeedProvider(            
             feedBloc: _feedBloc,
-            child: FeedListWidget()), 
+            child: FeedListWidget()),  */
           ),
         ),      
     );

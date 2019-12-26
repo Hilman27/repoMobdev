@@ -6,6 +6,7 @@ export 'dates.dart';
 export 'loadImage.dart';
 export 'cutomExpansionTile.dart';
 export 'feedWidget.dart';
+export 'feedbloc/bloc.dart';
 export 'gallery/galleryGambar.dart';
 export 'gallery/galleryPhotoviewer.dart';
 export 'gallery/galleryThumbnail.dart';

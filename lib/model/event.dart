@@ -1,3 +1,7 @@
+import '_model.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'event.g.dart';
+@JsonSerializable()
 class Event {
   int eventID;
   String imagePath = 'placeholderImage';
@@ -15,6 +19,8 @@ class Event {
       this.edateTime,
       this.newsType});
 
+  factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
+  Map<String, dynamic> toJson() => _$EventToJson(this);
   // @override
   // String toString() {
   //   return "$eventLocation";

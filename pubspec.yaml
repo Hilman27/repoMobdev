@@ -31,7 +31,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   provider: ^3.0.0
   json_annotation: ^3.0.0
-  path_provider: any
+  path_provider: ^1.5.1
   
 
 dev_dependencies:

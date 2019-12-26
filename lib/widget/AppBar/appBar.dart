@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:religi_app/constant/_const.dart';
 import 'package:religi_app/main.dart';
 import 'package:religi_app/pages/HomePage/HomePage.dart';
+import 'package:religi_app/pages/eventpage/create.dart';
+import 'package:religi_app/pages/eventpage/create2.dart';
 import 'package:religi_app/pages/searchPage/searchPage.dart';
 
 class NavBar extends StatelessWidget {
@@ -9,12 +11,11 @@ class NavBar extends StatelessWidget {
   final Widget backgroundWidget;
   final int pageIndex;
 
-  const NavBar(
-    {
-    Key key, 
+  const NavBar({
+    Key key,
     this.topWords,
     this.backgroundWidget,
-    this.pageIndex, 
+    this.pageIndex,
   }) : super(key: key);
 
   @override
@@ -30,15 +31,17 @@ class NavBar extends StatelessWidget {
               title: BarAtas(topWords),
             ),
             body: backgroundWidget,
-            bottomNavigationBar: 
-            /* BottomAppBar(
+            bottomNavigationBar:
+                /* BottomAppBar(
               child: Text("Test"),
               shape: CircularNotchedRectangle(),
             ), */
-            MenuBar(currentIndex: pageIndex,),
-            floatingActionButton: SearchButton(
-              routing: '/create_event',
+                MenuBar(
+              currentIndex: pageIndex,
             ),
+            floatingActionButton: SearchButton(
+                // routing: '/create_event',
+                ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             extendBody: true,
@@ -73,40 +76,35 @@ class BarAtas extends StatelessWidget {
   }
 }
 
-class MenuBar extends StatefulWidget{
+class MenuBar extends StatefulWidget {
   final int currentIndex;
 
-  const MenuBar({Key key, this.currentIndex}) : super(key: key); 
-  
+  const MenuBar({Key key, this.currentIndex}) : super(key: key);
+
   @override
   MenuBarState createState() => MenuBarState();
-
 }
 
 class MenuBarState extends State<MenuBar> {
   final double iconScale = 30;
-  int currentIndex=0;
+  int currentIndex = 0;
   int pageIndex;
 
   @override
-  void initState() {    
-    super.initState();    
-    pageIndex=widget.currentIndex;
-    currentIndex=widget.currentIndex;
+  void initState() {
+    super.initState();
+    pageIndex = widget.currentIndex;
+    currentIndex = widget.currentIndex;
   }
 
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData(
-        primaryColor: hijauMain,
-        canvasColor:  hijauMain
-      ),
+      data: ThemeData(primaryColor: hijauMain, canvasColor: hijauMain),
       child: BottomAppBar(
         shape: CircularNotchedRectangle(),
-        clipBehavior: Clip.antiAlias,                
+        clipBehavior: Clip.antiAlias,
         child: BottomNavigationBar(
-          
           currentIndex: currentIndex,
           //backgroundColor: hijauMain,
           //fixedColor: hijauMain,
@@ -123,28 +121,25 @@ class MenuBarState extends State<MenuBar> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.home), title: Text("HomePage")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.search), title: Text("Search")),            
+                icon: Icon(Icons.search), title: Text("Search")),
             BottomNavigationBarItem(
                 icon: Icon(Icons.bookmark), title: Text("Bookmark")),
             BottomNavigationBarItem(
                 icon: Icon(Icons.settings), title: Text("Settings"))
           ],
-          onTap: (index){
+          onTap: (index) {
             setState(() {
-              currentIndex=index;
+              currentIndex = index;
             });
-            if(index!=pageIndex){
-              if(index==0){
+            if (index != pageIndex) {
+              if (index == 0) {
                 Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => HomePage()));
-              }else if(index==1){
+                    builder: (BuildContext context) => HomePage()));
+              } else if (index == 1) {
                 Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => SearchPage()));
+                    builder: (BuildContext context) => SearchPage()));
               }
             }
-            
-
-
           },
         ),
       ),
@@ -164,7 +159,11 @@ class SearchButton extends FloatingActionButton {
       backgroundColor: hijauMain,
       child: Icon(Icons.add),
       onPressed: () {
-        Navigator.of(context).pushNamed(routing);
+        // Navigator.of(context).pushNamed(routing);
+        // Navigator.of(context).pushNamed('/create_event');
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => CreateEventPage()));
+        print('create event di klik');
       },
     );
   }

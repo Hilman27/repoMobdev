@@ -10,9 +10,9 @@ part 'feed.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Feed {
-  User user;  
-  Event event; 
-  Feed(this.user,this.event);
+  User user;
+  Event event;
+  Feed(this.user, this.event);
 
   User get fUser => user;
   Event get fEvent => event;

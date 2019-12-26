@@ -1,12 +1,12 @@
-import 'dart:io';
+// import 'dart:io';
+// import 'dart:async';
+// import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tagging/flutter_tagging.dart';
-
-import 'dart:async';
-import 'package:flutter_syntax_view/flutter_syntax_view.dart';
+import 'package:religi_app/model/_model.dart';
+import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
-import 'package:image_picker/image_picker.dart';
 
 ///
 class CreateEventPage extends StatefulWidget {
@@ -16,24 +16,48 @@ class CreateEventPage extends StatefulWidget {
 
 class _CreateEventPageState extends State<CreateEventPage> {
   // String _selectedValuesJson = "Nothing to show";
-  List<Language> _selectedLanguages;
-
+  List<Kategori> _selectedKategoris;
+  TextEditingController eventID = TextEditingController(text: '1');
+  TextEditingController imagePath =
+      TextEditingController(text: 'placeholderImage');
+  TextEditingController eventName = TextEditingController(text: 'nama event');
+  TextEditingController eventLocation = TextEditingController(text: 'jogja');
+  TextEditingController caption =
+      TextEditingController(text: 'pengajian bersama dengan isinya');
+  TextEditingController newsType = TextEditingController(text: '1');
+  TextEditingController edateTime =
+      TextEditingController(text: '1974-03-20 00:00:00.000');
   @override
   void initState() {
-    _selectedLanguages = [];
+    _selectedKategoris = [];
     super.initState();
   }
 
   @override
   void dispose() {
-    _selectedLanguages.clear();
+    _selectedKategoris.clear();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    var value;
     return Scaffold(
       floatingActionButton: FloatingButton(
+        onpress: () {
+          var event = Event(
+              eventID: int.parse(eventID.text),
+              imagePath: imagePath.text,
+              eventName: eventName.text,
+              eventLocation: eventLocation.text,
+              caption: caption.text,
+              newsType: int.parse(newsType.text),
+              edateTime: DateTime.parse(edateTime.text));
+          NewsFeed.dummyEvents.add(event);
+          Navigator.pop(context);
+
+          // print(event.toString());
+        },
         icon: Icon(Icons.save),
       ),
       appBar: AppBar(
@@ -44,7 +68,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
           children: <Widget>[
             PilihImage(),
             FormTextBiasa(
+              namaLabel: 'image*',
+              controller: imagePath,
+            ),
+            FormTextBiasa(
+              tipeInput: TextInputType.number,
+              namaLabel: 'event id',
+              controller: eventID,
+            ),
+            FormTextBiasa(
               namaLabel: 'judul',
+              controller: eventName,
             ),
 
             buildFormTags(),
@@ -52,23 +86,56 @@ class _CreateEventPageState extends State<CreateEventPage> {
               height: 20.0,
             ),
             FormTextBiasa(
+              controller: caption,
               namaLabel: 'deskripsi',
               maxLines: 4,
             ),
             FormTextBiasa(
-              namaLabel: 'agenda',
-              maxLines: 4,
+              namaLabel: 'tanggal',
+              controller: edateTime,
             ),
             FormTextBiasa(
+              namaLabel: 'news type',
+              controller: newsType,
+            ),
+            FormTextBiasa(
+              controller: eventLocation,
               namaLabel: 'nama tempat',
             ),
             FormTextBiasa(
               namaLabel: 'lokasi',
             ),
-            FormTextBiasa(
-              namaLabel: 'format tiket',
+            // FormTextBiasa(
+            //   namaLabel: 'format tiket',
+            // ),
+            buildTextTemplate('tiket'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Radio(
+                      value: 'gratis',
+                      groupValue: '',
+                      onChanged: (String nilai) {
+                        setState(() {});
+                      },
+                    ),
+                    Text('gratis'),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Radio(
+                      onChanged: value,
+                      value: 'donasi',
+                      groupValue: '',
+                    ),
+                    Text('donasi'),
+                  ],
+                ),
+              ],
             ),
-
             // Expanded(
             //   child: SyntaxView(
             //     code: _selectedValuesJson,
@@ -86,8 +153,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
   Padding buildFormTags() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: FlutterTagging<Language>(
-        initialItems: _selectedLanguages,
+      child: FlutterTagging<Kategori>(
+        initialItems: _selectedKategoris,
         textFieldConfiguration: TextFieldConfiguration(
           decoration: InputDecoration(
             border:
@@ -98,17 +165,17 @@ class _CreateEventPageState extends State<CreateEventPage> {
             labelText: "Tags",
           ),
         ),
-        findSuggestions: LanguageService.getLanguages,
+        findSuggestions: KategoriService.getKategoris,
         additionCallback: (value) {
-          return Language(
+          return Kategori(
             name: value,
             position: 0,
           );
         },
-        configureSuggestion: (lang) {
+        configureSuggestion: (kategori) {
           return SuggestionConfiguration(
-            title: Text(lang.name),
-            subtitle: Text(lang.position.toString()),
+            title: Text(kategori.name),
+            subtitle: Text(kategori.position.toString()),
             additionWidget: Chip(
               avatar: Icon(
                 Icons.add_circle,
@@ -124,9 +191,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
             ),
           );
         },
-        configureChip: (lang) {
+        configureChip: (kategori) {
           return ChipConfiguration(
-            label: Text(lang.name),
+            label: Text(kategori.name),
             backgroundColor: Colors.green,
             labelStyle: TextStyle(color: Colors.white),
             deleteIconColor: Colors.white,
@@ -134,8 +201,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
         },
         onChanged: () {
           setState(() {
-            // _selectedValuesJson = _selectedLanguages
-            //     .map<String>((lang) => '\n${lang.toJson()}')
+            // _selectedValuesJson = _selectedKategoris
+            //     .map<String>((kategori) => '\n${kategori.toJson()}')
             //     .toList()
             //     .toString();
             // _selectedValuesJson =
@@ -147,146 +214,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
   }
 }
 
-/// LanguageService
-class LanguageService {
-  /// Mocks fetching language from network API with delay of 500ms.
-  static Future<List<Language>> getLanguages(String query) async {
-    await Future.delayed(Duration(milliseconds: 500), null);
-    return <Language>[
-      Language(name: 'Pengajian', position: 1),
-      Language(name: 'Ceramah', position: 2),
-      Language(name: 'Sholat', position: 3),
-      Language(name: 'Perayaan', position: 4),
-      Language(name: 'Event', position: 5),
-    ]
-        .where((lang) => lang.name.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-  }
-}
+/// KategoriService
 
-/// Language Class
-class Language extends Taggable {
-  ///
-  final String name;
-
-  ///
-  final int position;
-
-  /// Creates Language
-  Language({
-    this.name,
-    this.position,
-  });
-
-  @override
-  List<Object> get props => [name];
-
-  /// Converts the class to json string.
-  String toJson() => '''  {
-    "name": $name,\n
-    "position": $position\n
-  }''';
-}
+/// Kategori Class
 
 // start ############# pilih Image ##############
-class PilihImage extends StatefulWidget {
-  @override
-  _PilihImageState createState() => _PilihImageState();
-}
-
-class _PilihImageState extends State<PilihImage> {
-  File _imageFile;
-  dynamic _pickImageError;
-  String _retrieveDataError;
-
-  Future getImageCamera() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _imageFile = image;
-    });
-  }
-
-  Future getImageGallery() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _imageFile = image;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  // width: 200,
-                  child: _imageFile == null
-                      ? Container(
-                          color: Colors.green,
-                          width: MediaQuery.of(context).size.width,
-                          height: 200,
-                          child: Center(child: Text('No image selected.')),
-                        )
-                      : Image.file(_imageFile),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: getImageCamera,
-                      tooltip: 'pilih foto',
-                      icon: Icon(Icons.add_a_photo),
-                    ),
-                    IconButton(
-                      onPressed: getImageGallery,
-                      tooltip: 'pilih foto',
-                      icon: Icon(Icons.image),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _previewImage() {
-    final Text retrieveError = _getRetrieveErrorWidget();
-    if (retrieveError != null) {
-      return retrieveError;
-    }
-    if (_imageFile != null) {
-      return Image.file(_imageFile);
-    } else if (_pickImageError != null) {
-      return Text(
-        'Pick image error: $_pickImageError',
-        textAlign: TextAlign.center,
-      );
-    } else {
-      return const Text(
-        'You have not yet picked an image.',
-        textAlign: TextAlign.center,
-      );
-    }
-  }
-
-  Text _getRetrieveErrorWidget() {
-    if (_retrieveDataError != null) {
-      final Text result = Text(_retrieveDataError);
-      _retrieveDataError = null;
-      return result;
-    }
-    return null;
-  }
-}

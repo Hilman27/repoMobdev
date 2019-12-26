@@ -27,9 +27,9 @@ class HomePage extends StatelessWidget {
           floatingActionButton: SearchButton(),      
           bottomNavigationBar: MenuBar(), */
           body: NavBar(
-            topWords : "Beranda", 
-            backgroundWidget : CallNewsFeed(),
-            pageIndex : 0),
+              topWords: "Beranda",
+              backgroundWidget: CallNewsFeed(),
+              pageIndex: 0),
         ),
       ),
     );
@@ -55,4 +55,3 @@ class CallNewsFeed extends StatelessWidget {
     );
   }
 }
-

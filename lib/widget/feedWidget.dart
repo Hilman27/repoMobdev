@@ -10,16 +10,14 @@ import 'package:religi_app/constant/_const.dart';
 import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
-import 'dart:developer' as developer; 
+import 'dart:developer' as developer;
 
-class FeedListWidget extends StatefulWidget {  
-
+class FeedListWidget extends StatefulWidget {
   @override
   FeedListWidgetState createState() => FeedListWidgetState();
-  
 }
 
-class FeedListWidgetState extends State<FeedListWidget>{
+class FeedListWidgetState extends State<FeedListWidget> {
   List status = List<bool>.filled(0, true, growable: true);
   ScrollController scrollController;
   final feedbloc = FeedblocBloc();
@@ -72,16 +70,21 @@ class FeedListWidgetState extends State<FeedListWidget>{
   initList(int index){
     
     //status[index];
-    //status.add(false);  
-    try{
+    //status.add(false);
+    try {
       bool test = status[index];
-    }catch(e){
+    } catch (e) {
       status.add(true);
     }
   }
-  
-  _statusToogle(int index){
-    if (status[index] == null){
+
+  _statusToogle(int index) {
+    if (status[index] == null) {
+      status[index] = false;
+    } else {
+      if (status[index] == false) {
+        status[index] = true;
+      } else
         status[index] = false;
       }
       else{if(status[index] == false){
@@ -94,9 +97,8 @@ class FeedListWidgetState extends State<FeedListWidget>{
     
     //return true;
   }
-  
 
-  bool statusCheck(int index){    
+  bool statusCheck(int index) {
     return status[index];
   }
 
@@ -157,7 +159,6 @@ class NewsItem extends StatefulWidget{
 
   @override
   NewsItemState createState() => NewsItemState();
-  
 }
 
 class NewsItemState extends State<NewsItem> {
@@ -188,7 +189,6 @@ class NewsItemState extends State<NewsItem> {
     
     //developer.log("Check $_index and $_expanded Has been Initilaized");
     //developer.log("Check ${expandCheck(_index)}");
-    
   }
 
   //Doesn't work. Delete Later
@@ -211,21 +211,21 @@ class NewsItemState extends State<NewsItem> {
     widget.onPressed(_index);
   }
 
-  bool checkCollapseState (){
-    if(widget.statusCheck(_index) == null)
-      {developer.log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
-      return widget.statusCheck(_index);      
-      }
-    else{
-      developer.log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
+  bool checkCollapseState() {
+    if (widget.statusCheck(_index) == null) {
+      developer
+          .log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
+      return widget.statusCheck(_index);
+    } else {
+      developer
+          .log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
       return true;
     }
-    
   }
 
-  checkExpandCollapse(bool input){    
-    if(input==true){
-      if(expandCheck(_index)==false){
+  checkExpandCollapse(bool input) {
+    if (input == true) {
+      if (expandCheck(_index) == false) {
         parentPress(_index);
       }
       developer.log("Index $_index Is expanded");
@@ -235,13 +235,12 @@ class NewsItemState extends State<NewsItem> {
         parentPress(_index);
       }
       developer.log("Index $_index Is Collapsed");
-    }else 
+    } else
       developer.log("Index $_index ????");
-    
   }
 
   @override
-  Widget build(BuildContext context) {   
+  Widget build(BuildContext context) {
     //widget.onPressed(index);
     
     _expanded = expandCheck(_index);    
@@ -309,6 +308,7 @@ class NewsItemState extends State<NewsItem> {
   }
     
   }
+}
 
 class NewsUser extends StatelessWidget{
   final Feed feed;  
@@ -316,25 +316,26 @@ class NewsUser extends StatelessWidget{
   const NewsUser(this.feed, {Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width -50,
+      width: MediaQuery.of(context).size.width - 50,
       color: putihMain,
       child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,                
-      children: <Widget>[                  
-        Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 3),
-              child: SizedBox(
-                width: 25,            
-                height: 25,
-                child: Container(     
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: dummyPicColor,
-                  ),                              
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 3),
+                child: SizedBox(
+                  width: 25,
+                  height: 25,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: dummyPicColor,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -358,11 +359,20 @@ class NewsUser extends StatelessWidget{
           maxLines: 1,
           textAlign: TextAlign.right,)
           ),
-      ],
-        ),
+          //Spacer(),
+          Container(
+              width: 146,
+              alignment: Alignment.topRight,
+              child: Text(
+                eventName,
+                style: tittleHead(),
+                maxLines: 1,
+                textAlign: TextAlign.right,
+              )),
+        ],
+      ),
     );
   }
-
 }
 
 class NewsDetail extends StatelessWidget{
@@ -379,73 +389,76 @@ class NewsDetail extends StatelessWidget{
         children: <Widget>[
           //SizedBox(width: 30,),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical : 4.0),
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Container(
-              width : MediaQuery.of(context).size.width,
-              child: Row(// Row Kiri
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                // Row Kiri
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 //crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   //SizedBox(width: 40,),
                   Container(
-                    width: MediaQuery.of(context).size.width*1/4,
+                    width: MediaQuery.of(context).size.width * 1 / 4,
                     child: Column(
                       children: <Widget>[
-                        Text(intDatesToString(news.event.edateTime.month), 
-                        style: TextStyle(color: Colors.red),
-                        textAlign: TextAlign.left,),
-                        Text(news.event.edateTime.day.toString()),                      
+                        Text(
+                          intDatesToString(news.event.edateTime.month),
+                          style: TextStyle(color: Colors.red),
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(news.event.edateTime.day.toString()),
                       ],
                     ),
                   ),
                   //SizedBox(width : 20),
                   Container(
-                    width: MediaQuery.of(context).size.width*3/4 -10,                   
+                      width: MediaQuery.of(context).size.width * 3 / 4 - 10,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(news.event.eventName, 
-                          style: feedTitle(), 
-                          textAlign: TextAlign.left,
-                          maxLines: 2,),
-                          SizedBox(height : 4),
+                          Text(
+                            news.event.eventName,
+                            style: feedTitle(),
+                            textAlign: TextAlign.left,
+                            maxLines: 2,
+                          ),
+                          SizedBox(height: 4),
                         ],
-                      )
-                      
-                    ),
-                  
+                      )),
                 ],
               ),
             ),
           ),
           //SizedBox(width: 10,),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical : 4.0),
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[                            
-                    //SizedBox(width: 40,),
-                    Container(
-                    width: MediaQuery.of(context).size.width*1/4,
-                    child: 
-                    Icon(Icons.location_on, color: Colors.red),
-                    ) ,
-                    //SizedBox(width : 20),
-                    
-                    Container(
-                      width: MediaQuery.of(context).size.width*3/4 -10,        
-                      child: Text(news.event.eventLocation,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  //SizedBox(width: 40,),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 1 / 4,
+                    child: Icon(Icons.location_on, color: Colors.red),
+                  ),
+                  //SizedBox(width : 20),
+
+                  Container(
+                    width: MediaQuery.of(context).size.width * 3 / 4 - 10,
+                    child: Text(
+                      news.event.eventLocation,
                       style: feedLoc(),
                       softWrap: true,
                       maxLines: 2,
-                      textAlign: TextAlign.left,),
-                    ),                  
-                  ],
-                ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           BlocBuilder <FeedblocBloc, FeedblocState>(

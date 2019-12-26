@@ -87,10 +87,7 @@ class FeedListWidgetState extends State<FeedListWidget> {
       } else
         status[index] = false;
       }
-      else{if(status[index] == false){
-       status[index] = true; 
-      } else status[index] = false; 
-      }     
+      
    /*  for(int i =0; i<status.length; i++){
       developer.log("Index $i set to ${status[i]}");  
     } */
@@ -305,10 +302,9 @@ class NewsItemState extends State<NewsItem> {
               
       )
     );
-  }
-    
-  }
+  }    
 }
+
 
 class NewsUser extends StatelessWidget{
   final Feed feed;  
@@ -338,8 +334,7 @@ class NewsUser extends StatelessWidget{
                   ),
                 ),
               ),
-            ),
-            Container(
+              Container(
               width: 100,
               child: 
               Text(feed.user.name, 
@@ -347,8 +342,10 @@ class NewsUser extends StatelessWidget{
               maxLines: 1,
               textAlign: TextAlign.left,)
             ),
-          ],
-        ),                
+            ]
+            ),
+            
+                        
         //Spacer(),
         Container(
           width: 146,
@@ -360,15 +357,7 @@ class NewsUser extends StatelessWidget{
           textAlign: TextAlign.right,)
           ),
           //Spacer(),
-          Container(
-              width: 146,
-              alignment: Alignment.topRight,
-              child: Text(
-                eventName,
-                style: tittleHead(),
-                maxLines: 1,
-                textAlign: TextAlign.right,
-              )),
+          
         ],
       ),
     );

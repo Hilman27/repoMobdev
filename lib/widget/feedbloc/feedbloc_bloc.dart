@@ -3,30 +3,36 @@ import 'package:bloc/bloc.dart';
 import 'package:religi_app/model/_model.dart';
 import './bloc.dart';
 
-class FeedblocBloc extends Bloc<FeedblocEvent, FeedblocState> {
-  void onIncrement() {
-    add(GetFeedListEvent());
-  }
+//enum FeedblocEvent {addFeedListEvent,remFeedListEvent}
 
-  void onDecrement() {
-    add(GiveFeedListEvent());
-  }
+class FeedblocBloc extends Bloc<FeedblocEvent, FeedblocState> {
+  
   
   @override
   //FeedblocState get initialState => InitialFeedblocState();
-  FeedblocState get initialState => InitialFeedblocState(List<Feed>());
+  FeedblocState get initialState => InitialFeedblocState();
 
   @override
   Stream<FeedblocState> mapEventToState(
     FeedblocEvent event,
-  ) async* {
-    final List<Feed> _feeds = List<Feed>();
-    JsonCRUD cruds;
+  ) async* {    
     
-    if (event is GiveFeedListEvent) {
-      yield InitialFeedblocState(_feeds);
-    } else if (event is GetFeedListEvent) {
-      yield InitialFeedblocState(_feeds);
+    if (event is AddFeedListEvent) {//Add Feed
+      state.addFeed(event.newData);            
+      print("Adding data : ${event.newData.event.eventName}");
+      yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
+    } else if (event is RemFeedListEvent) {//Remove Feed
+      state.removeFeed(event.remIndex);
+      yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
+    }else if (event is InitExpansionStatus) {//Init Expansion Status
+      state.initList(event.index);          
+      yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
+    }else if (event is CheckExpansionCollapse) {//Check Expansion Collapse Status
+      state.checkExpandCollapse(event.input,event.index);      
+      yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
+    }
+    else if (event is GetFeedListEvent) {
+      yield InitialFeedblocState();
     }
   }
 }

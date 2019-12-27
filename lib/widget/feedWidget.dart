@@ -3,7 +3,6 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:religi_app/constant/_const.dart';
@@ -49,9 +48,9 @@ class FeedListWidgetState extends State<FeedListWidget> {
                           SliverList(              
                             delegate: SliverChildBuilderDelegate(
                           (context,index) => NewsItem( index: index, 
-                                                        onPressed: _statusToogle, 
-                                                        statusCheck: statusCheck, 
-                                                        initialize: initList, 
+                                                        //onPressed: _statusToogle, 
+                                                        //statusCheck: statusCheck, 
+                                                        //initialize: initList, 
                                                         //feed: snapshot.data.elementAt(index),
                                                         //changeData: newsfeedProvider.changeNewContent,
                                                         //scrollingOnTap: scrollByIndex, 
@@ -67,10 +66,7 @@ class FeedListWidgetState extends State<FeedListWidget> {
     );
   }
 
-  initList(int index){
-    
-    //status[index];
-    //status.add(false);
+  initList(int index){    
     try {
       bool test = status[index];
     } catch (e) {
@@ -97,6 +93,10 @@ class FeedListWidgetState extends State<FeedListWidget> {
 
   bool statusCheck(int index) {
     return status[index];
+  }
+
+  shiftFirstOrder(){
+    status.removeAt(0);
   }
 
 
@@ -135,9 +135,9 @@ class FeedListWidgetState extends State<FeedListWidget> {
 }
 
 class NewsItem extends StatefulWidget{
-  final ValueChanged<int> onPressed;  
-  final ValueChanged<int> initialize;  
-  final Function statusCheck;   
+  //final ValueChanged<int> onPressed;  
+  //final ValueChanged<int> initialize;  
+  //final Function statusCheck;   
   //final ValueChanged<int> scrollingOnTap;   
   final int index;
   //final Feed feed;
@@ -146,9 +146,9 @@ class NewsItem extends StatefulWidget{
 
   const NewsItem( {Key key, 
                   @required this.index,                   
-                  @required this.onPressed, 
-                  @required this.initialize, 
-                  @required this.statusCheck, 
+                  //@required this.onPressed, 
+                  //@required this.initialize, 
+                  //@required this.statusCheck, 
                   //@required this.feed, 
                   this.changeData
                   //this.scrollingOnTap, 
@@ -161,11 +161,11 @@ class NewsItem extends StatefulWidget{
 class NewsItemState extends State<NewsItem> {
   //GlobalKey _keyRed = GlobalKey();
   int _index;
-  bool _expanded;
-  Function(int) parentPress;
-  Function(int) initialList;
+  //bool _expanded;
+  //Function(int) parentPress;
+  //Function(int) initialList;
   Function(int) expandCheck;
-  Feed _feed;
+  //Feed _feed;
   
   
   //Function(int) _scrollonTap;
@@ -173,15 +173,15 @@ class NewsItemState extends State<NewsItem> {
   void initState(){
     
     _index = widget.index;
-    _expanded = true;
+    //_expanded = true;
     //_feed=widget.feed;
     //_scrollonTap = widget.scrollingOnTap;
-    parentPress = widget.onPressed;
+    //parentPress = widget.onPressed;
     //widget.initialize(_index);
-    initialList = widget.initialize;
-    expandCheck = widget.statusCheck;
+    //initialList = BlocProvider.of<FeedblocBloc>(context).add(RemFeedListEvent(0));
     
-    initialList(_index);
+    
+    BlocProvider.of<FeedblocBloc>(context).add(InitExpansionStatus(_index));    
     super.initState();
     
     //developer.log("Check $_index and $_expanded Has been Initilaized");
@@ -204,11 +204,11 @@ class NewsItemState extends State<NewsItem> {
     
   } */
 
-  changeExpandCollapse(bool){
+  /* changeExpandCollapse(bool){
     widget.onPressed(_index);
-  }
+  } */
 
-  bool checkCollapseState() {
+  /* bool checkCollapseState() {
     if (widget.statusCheck(_index) == null) {
       developer
           .log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
@@ -218,9 +218,9 @@ class NewsItemState extends State<NewsItem> {
           .log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
       return true;
     }
-  }
+  } */
 
-  checkExpandCollapse(bool input) {
+  /* checkExpandCollapse(bool input) {
     if (input == true) {
       if (expandCheck(_index) == false) {
         parentPress(_index);
@@ -234,13 +234,13 @@ class NewsItemState extends State<NewsItem> {
       developer.log("Index $_index Is Collapsed");
     } else
       developer.log("Index $_index ????");
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
     //widget.onPressed(index);
     
-    _expanded = expandCheck(_index);    
+    //_expanded = expandCheck(_index);    
     //WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
     //print("Test for $_index Height ${context.size}");
     //developer.log("Index is at $_index and Expansion is $_expanded");    
@@ -264,8 +264,8 @@ class NewsItemState extends State<NewsItem> {
                           width: MediaQuery.of(context).size.width,
                           color: putihMain,
                           child: CustomExpansionTile(           
-                            onExpansionChanged: checkExpandCollapse,   //checkExpandCollapse(), 
-                            initiallyExpanded: _expanded??true,//checkCollapseState(),
+                            onExpansionChanged: (input) => BlocProvider.of<FeedblocBloc>(context).add(CheckExpansionCollapse(input, _index)),   //checkExpandCollapse(), 
+                            initiallyExpanded: state.status.elementAt(_index),//checkCollapseState(),
                             title: NewsUser(state.feeds.elementAt(_index)),      
                             //trailing: Icon(Icons.swap_calls),
                             children: <Widget>[                
@@ -274,12 +274,12 @@ class NewsItemState extends State<NewsItem> {
                                   aspectRatio: 4/3,
                                   child: Stack(
                                     children: <Widget>[
-                                      ImageContainer(state.feeds[_index], "assets/images/"+state.feeds[_index].event.imagePath+".png"),                               
+                                      ImageContainer(state.feeds.elementAt(_index), "assets/images/"+state.feeds.elementAt(_index).event.imagePath+".png"),                               
                                       Positioned(
                                         left: 0,
                                         right: 0,
                                         bottom: 10,
-                                        child: NewsDetail(state.feeds[_index]),
+                                        child: NewsDetail(state.feeds.elementAt(_index)),
                                       )                                              
                                   /* Positioned(
                                     right: 10,
@@ -366,7 +366,8 @@ class NewsUser extends StatelessWidget{
 
 class NewsDetail extends StatelessWidget{
   final Feed news;  
-  const NewsDetail(this.news, {Key key}) : super(key: key);
+  final VoidCallback onPressed; //Delete this Later
+  const NewsDetail(this.news, {Key key, this.onPressed}) : super(key: key);
   @override
   Widget build(BuildContext context) {    
     //FeedProvider        
@@ -457,9 +458,12 @@ class NewsDetail extends StatelessWidget{
                         onPressed:(){                  
                           //newsfeedProvider.addTest(news);
                           
-                          print("Test adding ${news.event.eventName}");
+                          /* print("Test adding ${news.event.eventName}");
+                          BlocProvider.of<FeedblocBloc>(context)                            
+                            .add(AddFeedListEvent(news)); */
 
-
+                          BlocProvider.of<FeedblocBloc>(context)                            
+                            .add(RemFeedListEvent(0));
                           /* print("To JSON");
                           
                           jsonstuff.changeNewContent(news.toJson());

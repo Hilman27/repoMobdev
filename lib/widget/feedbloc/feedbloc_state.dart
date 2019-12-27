@@ -32,6 +32,7 @@ abstract class FeedblocState {
   }
 
   void removeFeed(int index){
+    remStatusExpand(index);
     feeds.removeAt(index);
     //remStatusExpand(index);
   }

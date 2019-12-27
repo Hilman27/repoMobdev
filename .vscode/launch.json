@@ -16,6 +16,9 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main_Hilman.dart",
+      /*"args": [
+        "--profile"
+      ]*/
       
     },
     {

@@ -16,6 +16,11 @@ class Feed {
   Event event;
   Feed(this.user, this.event);
 
+  Feed.fromFeed(Feed newfeed){
+    this.user = newfeed.user;
+    this.event = newfeed.event;
+  }
+
   User get fUser => user;
   Event get fEvent => event;
 

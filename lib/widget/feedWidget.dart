@@ -462,8 +462,18 @@ class NewsDetail extends StatelessWidget{
                           BlocProvider.of<FeedblocBloc>(context)                            
                             .add(AddFeedListEvent(news)); */
 
+                          /* BlocProvider.of<FeedblocBloc>(context)                            
+                            .add(RemFeedListEvent(0)); */
+                          
+                          /* BlocProvider.of<FeedblocBloc>(context)                            
+                            .add(JsonClear()); */
+
                           BlocProvider.of<FeedblocBloc>(context)                            
-                            .add(RemFeedListEvent(0));
+                            .add(JsonWrite("Test"));
+
+                          BlocProvider.of<FeedblocBloc>(context)                            
+                          .add(JsonRead());
+                          
                           /* print("To JSON");
                           
                           jsonstuff.changeNewContent(news.toJson());

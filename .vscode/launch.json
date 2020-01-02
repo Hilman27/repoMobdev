@@ -15,7 +15,7 @@
       "name": "HilmanTest",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_Hilman.dart",
+      "program": "lib/main_Hilman.dart"
       /*"args": [
         "--profile"
       ]*/

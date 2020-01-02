@@ -23,12 +23,24 @@ class FeedblocBloc extends Bloc<FeedblocEvent, FeedblocState> {
       yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
     } else if (event is RemFeedListEvent) {//Remove Feed
       state.removeFeed(event.remIndex);
+
       yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
     }else if (event is InitExpansionStatus) {//Init Expansion Status
       state.initList(event.index);          
       yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
     }else if (event is CheckExpansionCollapse) {//Check Expansion Collapse Status
       state.checkExpandCollapse(event.input,event.index);      
+      yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
+
+    }else if (event is JsonWrite) {//Write to JSON
+      state.writeToJson();
+      //state.crud.writeToJSON();    
+      yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
+    }else if (event is JsonRead) {//Read from JSON
+      state.readJson();
+      yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
+    }else if (event is JsonClear) {//Read from JSON
+       state.clearJson();  
       yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
     }
     else if (event is GetFeedListEvent) {

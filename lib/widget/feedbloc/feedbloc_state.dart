@@ -41,6 +41,11 @@ abstract class FeedblocState {
     return feeds[index];
   }
 
+  overwriteAll(List<Feed> newData){
+    feeds.clear();
+    feeds.addAll(newData);
+  }
+
   List<Feed> getAll(){
     return feeds;
   }
@@ -49,6 +54,8 @@ abstract class FeedblocState {
     //feeds.clear();
     feeds.addAll(newData);
   }
+
+  
 
   
   void pushCrud(){
@@ -113,6 +120,43 @@ abstract class FeedblocState {
       developer.log("Index $index ????");
   }
 
+  //Json Functions
+  void writeToJson(){
+    //List<Map> dataToJson = List<Map>();
+    Map<String,dynamic> tempDataToJSON = Map<String,dynamic>();
+    for(int i=0; i<feeds.length;i++){      
+      print("Making data no.$i.");
+      tempDataToJSON = feeds.elementAt(i).toJson();
+      crud.writeToFile("Feed_$i",tempDataToJSON);
+      //dataToJson.add(tempDataToJSON);
+            
+      //print("Making data no.$i, creating ${dataToJson.elementAt(i).toString()}");
+    }
+    //crud.mapWriteToFile(tempDataToJSON);
+    
+  }
+
+  void clearJson(){
+    crud.clearJsonData();
+  }
+
+  void readJson(){
+    Map<String, dynamic> tempMap = crud.readJsonData();
+    print("Data check1 is ${tempMap.length}");
+    //NewsFeed testFeed = NewsFeed.fromJson(tempMap);
+    List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
+    tempMap.forEach((key,value) => testFeed.add(value)); 
+    print("Data check2 is ${testFeed.elementAt(0)}");
+    print("Checking Test Feed ");    
+    List<Feed> feedListTest =List<Feed>();
+    Feed dummyFeed;
+    for(int i=0; i<testFeed.length;i++){
+      dummyFeed = Feed.fromJson(testFeed[i]);
+      feedListTest.add(dummyFeed);
+      print("Data $i is ${feedListTest[i].event.eventName}");
+    }
+    
+  }
 }
   
 class InitialFeedblocState extends FeedblocState {
@@ -151,9 +195,11 @@ class InitialFeedblocState extends FeedblocState {
 }
 
 class ContinousFeedBlocState extends FeedblocState{
-  final List<Feed> feeds ; //Variable dari FeedblocState perlu di deklarasikan di sini
+  final List<Feed> feeds ; //Variable dari FeedblocState perlu dideklarasikan di sini
   final JsonCRUD crud;
   final List<bool> status;
 
   ContinousFeedBlocState(this.feeds,this.crud, this.status);
+
+  
 }

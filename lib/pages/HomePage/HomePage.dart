@@ -9,7 +9,11 @@ import 'package:religi_app/widget/_widgets.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => NewsFeed()),
+      ],
+      child:MaterialApp(
       /* initialRoute: '/',
       routes: {
         '/' : (context) => PageUtama(),
@@ -27,6 +31,7 @@ class HomePage extends StatelessWidget {
             backgroundWidget: CallNewsFeed(),
             pageIndex: 0),
       ),
+    ),
     );
   }
 }

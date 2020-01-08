@@ -12,6 +12,7 @@ import 'package:religi_app/widget/_widgets.dart';
 import 'dart:developer' as developer;
 
 class FeedListWidget extends StatefulWidget {
+  
   @override
   FeedListWidgetState createState() => FeedListWidgetState();
 }
@@ -19,12 +20,16 @@ class FeedListWidget extends StatefulWidget {
 class FeedListWidgetState extends State<FeedListWidget> {
   List status = List<bool>.filled(0, true, growable: true);
   ScrollController scrollController;
-  final feedbloc = FeedblocBloc();
+  static int source=0;
+  final feedbloc = FeedblocBloc(source);
+
+  
+  
   //final FeedBloc _feedBloc = FeedBloc();    
   //List<bool> status;
 
   @override
-  void initState() {    
+  void initState() {        
     super.initState();        
   }
 
@@ -61,77 +66,9 @@ class FeedListWidgetState extends State<FeedListWidget> {
                         ],          
                         );    
               }        
-          )
-       
+          )       
     );
-  }
-
-  initList(int index){    
-    try {
-      bool test = status[index];
-    } catch (e) {
-      status.add(true);
-    }
-  }
-
-  _statusToogle(int index) {
-    if (status[index] == null) {
-      status[index] = false;
-    } else {
-      if (status[index] == false) {
-        status[index] = true;
-      } else
-        status[index] = false;
-      }
-      
-   /*  for(int i =0; i<status.length; i++){
-      developer.log("Index $i set to ${status[i]}");  
-    } */
-    
-    //return true;
-  }
-
-  bool statusCheck(int index) {
-    return status[index];
-  }
-
-  shiftFirstOrder(){
-    status.removeAt(0);
-  }
-
-
-
-  //Scroll Functions
-  /* scrollByIndex(int index){
-    print("ScrollTest");
-    scrollTo(calcHeight());
-  }
-
-  scrollTo(double pixelHeight){
-    scrollController.jumpTo(pixelHeight);
-    //scrollController.animateTo(pixelHeight, curve: Curves.linear, duration: Duration(milliseconds: 500));
-  }
-
-  double calcHeight(){
-    double height=0;
-    double heightFac1= srcHeight();
-    double heightFac2= tittleHead().fontSize + 5;
-    for(int i=0; i<status.length; i++){
-      if(status[i]){
-        height+=heightFac1;
-      }else {
-        height+=heightFac2;
-      }
-    }
-    return height;
-  }
-
-  double srcHeight(){//Search Height based on Width
-    double width = MediaQuery.of(context).size.width;
-    double height = 4/3*width;
-    return height;
-  } */
-
+  }  
 }
 
 class NewsItem extends StatefulWidget{
@@ -467,9 +404,11 @@ class NewsDetail extends StatelessWidget{
                           
                           /* BlocProvider.of<FeedblocBloc>(context)                            
                             .add(JsonClear()); */
+                         /*  BlocProvider.of<FeedblocBloc>(context)                            
+                            .add(JsonClear()); */
 
                           BlocProvider.of<FeedblocBloc>(context)                            
-                            .add(JsonWrite("Test"));
+                            .add(JsonWrite(news));
 
                           BlocProvider.of<FeedblocBloc>(context)                            
                           .add(JsonRead());

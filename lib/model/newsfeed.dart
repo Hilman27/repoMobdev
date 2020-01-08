@@ -6,7 +6,7 @@ import '_model.dart';
 
 //@JsonSerializable(explicitToJson: true)
 class NewsFeed {
-  // List<Feed> feedList = List<Feed>();
+  List<Feed> feedList = List<Feed>();
   NewsFeed();
 
   /* NewsFeed.fromNewsFeed(NewsFeed newData){

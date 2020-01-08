@@ -6,13 +6,7 @@ import 'package:religi_app/widget/AppBar/appBar.dart';
 class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      /* appBar: AppBar(
-        title : BarAtas(),
-      ), */
-      /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: SearchButton(),      
-      bottomNavigationBar: MenuBar(), */
+    return Scaffold(      
       body: NavBar(
             topWords : "Search Page", 
             backgroundWidget : CallSearchPage(),

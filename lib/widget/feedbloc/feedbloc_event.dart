@@ -36,9 +36,9 @@ class CheckExpansionCollapse extends FeedblocEvent{
 }
 
 class JsonWrite extends FeedblocEvent{
-  final String stringInput;
+  final Feed feedInput;
 
-  JsonWrite(this.stringInput);
+  JsonWrite(this.feedInput);
 }
 
 class JsonRead extends FeedblocEvent{

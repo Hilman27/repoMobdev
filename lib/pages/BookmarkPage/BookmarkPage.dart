@@ -6,34 +6,21 @@ import 'package:religi_app/pages/searchPage/searchPage.dart';
 import 'package:religi_app/widget/AppBar/appBar.dart';
 import 'package:religi_app/widget/_widgets.dart';
 
-class HomePage extends StatelessWidget {
+class BookmarkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      /* initialRoute: '/',
-      routes: {
-        '/' : (context) => PageUtama(),
-        '/Search' : (context) => SearchPage(),
-      }, */
-      home: Scaffold(
-        /* appBar: AppBar(
-          title : BarAtas(),
-        ), */
-        /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: SearchButton(),      
-        bottomNavigationBar: MenuBar(), */
+    return MaterialApp(        
+      home: Scaffold(         
         body: NavBar(
-            topWords: "Beranda",
-            backgroundWidget: CallNewsFeed(),
-            pageIndex: 0),
+            topWords: "Bookmark",
+            backgroundWidget: CallBookmarkNewsFeed(),
+            pageIndex: 2),
       ),
     );
   }
 }
 
-class CallNewsFeed extends StatelessWidget {
-  
-  
+class CallBookmarkNewsFeed extends StatelessWidget {    
   @override
   Widget build(BuildContext context) {    
     return Container(
@@ -42,7 +29,7 @@ class CallNewsFeed extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Container(
           alignment: Alignment.topCenter,
-          child: FeedListWidget() /* FeedProvider(            
+          child: FeedListWidgetBookmark() /* FeedProvider(            
             feedBloc: _feedBloc,
             child: FeedListWidget()),  */
           ),

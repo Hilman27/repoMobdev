@@ -1,23 +1,32 @@
+import 'dart:async';
+import 'dart:ffi';
+
 import 'package:meta/meta.dart';
 import 'package:religi_app/model/_model.dart';
 import 'feedbloc_bloc.dart';
 import 'dart:developer' as developer;
+import 'package:http/http.dart' as http;
 
 @immutable
 abstract class FeedblocState {
   final List<Feed> feeds ;
+  final List<Feed> bookmarkedFeeds ;
   final JsonCRUD crud;
   final List<bool> status ;
+  
+  
   //final JsonCRUD cruds;    
 
   const FeedblocState(  {
     this.feeds, 
     this.crud,
     this.status,
+    this.bookmarkedFeeds,
     //Key key
     //@required this.cruds,    
   }) 
   : super();
+  
   //const NewsUser(this.feed, {Key key}) : super(key: key);    
 
   /* void initialize(){
@@ -121,33 +130,36 @@ abstract class FeedblocState {
   }
 
   //Json Functions
-  void writeToJson(){
+  void writeToJson(Feed input){
     //List<Map> dataToJson = List<Map>();
     Map<String,dynamic> tempDataToJSON = Map<String,dynamic>();
-    for(int i=0; i<feeds.length;i++){      
+    /* for(int i=0; i<feeds.length;i++){      
       print("Making data no.$i.");
       tempDataToJSON = feeds.elementAt(i).toJson();
-      crud.writeToFile("Feed_$i",tempDataToJSON);
+      crud.writeToFile(feeds.elementAt(i).event.eventID.toString(),tempDataToJSON,1);
       //dataToJson.add(tempDataToJSON);
             
       //print("Making data no.$i, creating ${dataToJson.elementAt(i).toString()}");
-    }
+    } */
+    print("Making data no.${input.event.eventID}.");
+    tempDataToJSON = input.toJson();
+    crud.writeToFile(input.event.eventID.toString(),tempDataToJSON,1);
     //crud.mapWriteToFile(tempDataToJSON);
     
   }
 
-  void clearJson(){
-    crud.clearJsonData();
+  void clearJson(int source){
+    crud.clearJsonData(source);
   }
 
-  void readJson(){
-    Map<String, dynamic> tempMap = crud.readJsonData();
-    print("Data check1 is ${tempMap.length}");
+  List<Feed> readJson(source){    
+    Map<String, dynamic> tempMap = crud.readJsonData(source);
+    //print("Data check1 is ${tempMap.length}");
     //NewsFeed testFeed = NewsFeed.fromJson(tempMap);
     List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
     tempMap.forEach((key,value) => testFeed.add(value)); 
-    print("Data check2 is ${testFeed.elementAt(0)}");
-    print("Checking Test Feed ");    
+    //print("Data check2 is ${testFeed.last}");
+    //print("Checking Test Feed ");    
     List<Feed> feedListTest =List<Feed>();
     Feed dummyFeed;
     for(int i=0; i<testFeed.length;i++){
@@ -155,28 +167,88 @@ abstract class FeedblocState {
       feedListTest.add(dummyFeed);
       print("Data $i is ${feedListTest[i].event.eventName}");
     }
+    return feedListTest;
     
   }
+
+  Future<List<Feed>> fReadJson(source) async {        
+    Map<String, dynamic> tempMap = await crud.fReadJsonData(source);
+
+    List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
+    tempMap.forEach((key,value) => testFeed.add(value)); 
+    
+    List<Feed> feedListTest =List<Feed>();
+    Feed dummyFeed;
+    for(int i=0; i<testFeed.length;i++){
+      dummyFeed = Feed.fromJson(testFeed[i]);
+      feedListTest.add(dummyFeed);
+      print("Data $i is ${feedListTest[i].event.eventName}");
+    }
+    return Future<List<Feed>>(() => feedListTest);
+    
+  }
+
+  
+  
 }
   
 class InitialFeedblocState extends FeedblocState {
+  final int source;  
   final List<Feed> feeds = List<Feed>() ; //Variable dari FeedblocState perlu di deklarasikan di sini
+  final Map<int, Feed> bookmarkFeeds = Map<int, Feed>() ; //Untuk simpan FeedBlock
   final JsonCRUD crud = JsonCRUD();
-  final List<bool> status = List<bool>.filled(0, true, growable: true);
-  InitialFeedblocState(){
-    //List<Feed> initfeeds = List<Feed>();
-
-    //Filling Dummies
-    //addAllFeed(dummies());
-    //addAll(initfeeds);
-    NewsFeed dummy = NewsFeed();
-    for(int i=0; i< NewsFeed.dummyEvents.length; i++){
+  final List<bool> status = List<bool>.filled(0, true, growable: true);      
+    
+  InitialFeedblocState(this.source){
+    if(source==0){
+      NewsFeed dummy = NewsFeed();
+      for(int i=0; i< NewsFeed.dummyEvents.length; i++){
       addFeed(dummy.init(i));
       print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");
     }
+    print("Init data Done!");  
 
-    print("Init data Done!");    
+    } else if(source==1){       
+      print("Set to Bookmark");      
+      JsonCRUD tempcrud = JsonCRUD();
+      Map<String,dynamic> tempInitData = Map<String,dynamic>();
+      Future<List<Feed>>( () => readJson(source))
+      .then((value) {
+        print("values are :");
+        List<Feed> dummy = List<Feed>();   
+        dummy.addAll(value);
+        //value.forEach((valueIn) => dummy.addAll(valueIn)); 
+        
+        for(int i=0; i< dummy.length; i++){
+        addFeed(dummy.elementAt(i));
+        print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");        
+      }
+      });
+      //Future.wait([_loadSettings(), _loadOtherStuff()]).then((_) => _doMoreStuff());
+      
+      /* Future<List<Feed>>( () => readJson(source))
+      .then((value) {
+        print("values are :");
+        List<Feed> dummy = List<Feed>();   
+        dummy.addAll(value);
+        tempInitData.forEach((key,value) => dummy.add(value)); 
+        
+        for(int i=0; i< dummy.length; i++){
+        addFeed(dummy.elementAt(i));
+        print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");        
+        }                
+      }).catchError((error) => print("$error"));
+ */
+      
+      
+    }
+    //readJson(source);
+      
   }   
+
+  InitialFeedblocState.withData(this.source,List<Feed> input){
+    feeds.addAll(input);
+  }
 
   List<Feed> dummies() {
     List<Feed> dummyfeeds = List<Feed>();

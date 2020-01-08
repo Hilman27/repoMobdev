@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:religi_app/constant/_const.dart';
 import 'package:religi_app/main.dart';
+import 'package:religi_app/pages/BookmarkPage/BookmarkPage.dart';
 import 'package:religi_app/pages/HomePage/HomePage.dart';
 import 'package:religi_app/pages/eventpage/create.dart';
 import 'package:religi_app/pages/eventpage/create2.dart';
@@ -102,7 +103,7 @@ class MenuBarState extends State<MenuBar> {
     return Theme(
       data: ThemeData(primaryColor: hijauMain, canvasColor: hijauMain),
       child: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: CircularNotchedRectangle(), 
         clipBehavior: Clip.antiAlias,
         child: BottomNavigationBar(
           currentIndex: currentIndex,
@@ -138,6 +139,9 @@ class MenuBarState extends State<MenuBar> {
               } else if (index == 1) {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => SearchPage()));
+              }else if (index == 2) {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => BookmarkPage()));
               }
             }
           },

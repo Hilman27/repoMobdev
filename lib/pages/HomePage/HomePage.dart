@@ -9,7 +9,7 @@ import 'package:religi_app/widget/_widgets.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiProvider(//Don't delete! for routing purpose.
       providers: [
         Provider(create: (context) => NewsFeed()),
       ],

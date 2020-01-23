@@ -13,18 +13,18 @@ import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/widget/_widgets.dart';
 
 class PageDetailEvent extends StatefulWidget {
-  final index;
+  final Feed inputNews;
 
-  const PageDetailEvent({Key key, this.index}) : super(key: key);
+  const PageDetailEvent({Key key, this.inputNews}) : super(key: key);
   @override
-  _PageDetailEventState createState() => _PageDetailEventState(index);
+  _PageDetailEventState createState() => _PageDetailEventState(inputNews);
 }
 
 class _PageDetailEventState extends State<PageDetailEvent> {
   bool verticalGallery = false;
-  final index;
+  final Feed inputNews;
 
-  _PageDetailEventState(this.index);
+  _PageDetailEventState(this.inputNews);
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +154,8 @@ class _PageDetailEventState extends State<PageDetailEvent> {
   }
 
   SliverFillRemaining buildSliverFillRemaining(BuildContext context) {
-    var feeds = Provider.of<NewsFeed>(context);
-    Feed news = feeds.init(index);
+    //var feeds = Provider.of<NewsFeed>(context);
+    Feed news = inputNews;
     // var textTheme = Theme.of(context).textTheme.title;
     return SliverFillRemaining(
       hasScrollBody: false,
@@ -200,8 +200,8 @@ class _PageDetailEventState extends State<PageDetailEvent> {
   }
 
   SliverAppBar buildSliverAppBar() {
-    var feeds = Provider.of<NewsFeed>(context);
-    Feed news = feeds.init(index);
+    //var feeds = Provider.of<NewsFeed>(context);
+    Feed news = inputNews;
     return SliverAppBar(
       expandedHeight: 400,
       pinned: true,

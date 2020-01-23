@@ -171,7 +171,7 @@ abstract class FeedblocState {
     
   }
 
-  Future<List<Feed>> fReadJson(source) async {        
+  Future<void> fReadJson(source) async {        
     Map<String, dynamic> tempMap = await crud.fReadJsonData(source);
 
     List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
@@ -184,8 +184,14 @@ abstract class FeedblocState {
       feedListTest.add(dummyFeed);
       print("Data $i is ${feedListTest[i].event.eventName}");
     }
-    return Future<List<Feed>>(() => feedListTest);
+
+    overwriteAll(feedListTest);
+    //return Future<List<Feed>>(() => feedListTest);
     
+  }
+
+  update(int source) async {
+    await fReadJson(source);
   }
 
   
@@ -210,9 +216,10 @@ class InitialFeedblocState extends FeedblocState {
 
     } else if(source==1){       
       print("Set to Bookmark");      
-      JsonCRUD tempcrud = JsonCRUD();
-      Map<String,dynamic> tempInitData = Map<String,dynamic>();
-      Future<List<Feed>>( () => readJson(source))
+      /* JsonCRUD tempcrud = JsonCRUD();
+      Map<String,dynamic> tempInitData = Map<String,dynamic>(); */      
+      update(source);
+      /* Future<List<Feed>>( () => readJson(source))
       .then((value) {
         print("values are :");
         List<Feed> dummy = List<Feed>();   
@@ -223,7 +230,7 @@ class InitialFeedblocState extends FeedblocState {
         addFeed(dummy.elementAt(i));
         print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");        
       }
-      });
+      }); */
       //Future.wait([_loadSettings(), _loadOtherStuff()]).then((_) => _doMoreStuff());
       
       /* Future<List<Feed>>( () => readJson(source))

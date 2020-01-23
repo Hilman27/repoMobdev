@@ -9,18 +9,13 @@ import 'package:religi_app/widget/_widgets.dart';
 class BookmarkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider(create: (context) => NewsFeed()),
-      ],
-      child : MaterialApp(        
-      home: Scaffold(         
-        body: NavBar(
-            topWords: "Bookmark",
-            backgroundWidget: CallBookmarkNewsFeed(),
-            pageIndex: 2),
-      ),
-      )
+    return MaterialApp(        
+    home: Scaffold(         
+      body: NavBar(
+          topWords: "Bookmark",
+          backgroundWidget: CallBookmarkNewsFeed(),
+          pageIndex: 2),
+    ),
     );
   }
 }

@@ -183,62 +183,64 @@ class NewsItemState extends State<NewsItem> {
     //developer.log("Index is at $_index and Expansion is $_expanded");    
     
     //var textTheme = Theme.of(context).textTheme.title; 
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => PageDetailEvent(
-                  index: _index,
-                )));
-      },
-      child:BlocBuilder<FeedblocBloc, FeedblocState>(
+    return BlocBuilder<FeedblocBloc, FeedblocState>(
             //bloc: BlocProvider.of<FeedblocBloc>(context),
             builder: (context, state) {
-              return ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(3.0)),   
-                      child: Column(
-                        children: <Widget>[
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          color: putihMain,
-                          child: CustomExpansionTile(           
-                            onExpansionChanged: (input) => BlocProvider.of<FeedblocBloc>(context).add(CheckExpansionCollapse(input, _index)),   //checkExpandCollapse(), 
-                            initiallyExpanded: state.status.elementAt(_index),//checkCollapseState(),
-                            title: NewsUser(state.feeds.elementAt(_index)),      
-                            //trailing: Icon(Icons.swap_calls),
-                            children: <Widget>[                
-                                //SizedBox(height: 100,),
-                                AspectRatio(
-                                  aspectRatio: 4/3,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      ImageContainer(state.feeds.elementAt(_index), "assets/images/"+state.feeds.elementAt(_index).event.imagePath+".png"),                               
-                                      Positioned(
-                                        left: 0,
-                                        right: 0,
-                                        bottom: 10,
-                                        child: NewsDetail(state.feeds.elementAt(_index)),
-                                      )                                              
-                                  /* Positioned(
-                                    right: 10,
-                                    left: 10,
-                                    top: 10,
-                                    bottom: 10,
-                                    child: Icon(Icons.image, size: 50,) */
-                                        ],                          
-                                      ),
-                                ),
-                              ],                                  
+              return GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => PageDetailEvent(
+                      inputNews: state.feeds.elementAt(_index),
+                    )));
+                
+              },
+                child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(3.0)),   
+                        child: Column(
+                          children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: putihMain,
+                            child: CustomExpansionTile(           
+                              onExpansionChanged: (input) => BlocProvider.of<FeedblocBloc>(context).add(CheckExpansionCollapse(input, _index)),   //checkExpandCollapse(), 
+                              initiallyExpanded: state.status.elementAt(_index),//checkCollapseState(),
+                              title: NewsUser(state.feeds.elementAt(_index)),      
+                              //trailing: Icon(Icons.swap_calls),
+                              children: <Widget>[                
+                                  //SizedBox(height: 100,),
+                                  AspectRatio(
+                                    aspectRatio: 4/3,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        ImageContainer(state.feeds.elementAt(_index), "assets/images/"+state.feeds.elementAt(_index).event.imagePath+".png"),                               
+                                        Positioned(
+                                          left: 0,
+                                          right: 0,
+                                          bottom: 10,
+                                          child: NewsDetail(state.feeds.elementAt(_index)),
+                                        )                                              
+                                    /* Positioned(
+                                      right: 10,
+                                      left: 10,
+                                      top: 10,
+                                      bottom: 10,
+                                      child: Icon(Icons.image, size: 50,) */
+                                          ],                          
+                                        ),
+                                  ),
+                                ],                                  
+                            ),
                           ),
+                          SizedBox(height: 5, 
+                          child: Container(color: putihBack,),)
+                          ],      
                         ),
-                        SizedBox(height: 5, 
-                        child: Container(color: putihBack,),)
-                        ],      
-                      ),
-                  );
+                    ),
+              );
             },
               
       )
-    );
+    ;
   }    
 }
 

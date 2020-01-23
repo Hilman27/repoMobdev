@@ -62,7 +62,7 @@ class NewsItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => PageDetailEvent(
-                  index: index,
+                  inputNews: news,
                 )));
       },
       child: ClipRRect(

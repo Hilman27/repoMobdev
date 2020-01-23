@@ -9,6 +9,7 @@ import 'package:religi_app/model/newsfeed.dart';
 
 class JsonCRUD{
   File jsonFile;
+  File bookmarkFile;
   Directory dir;
   String fileName = "myFile.json";
   String feedName = "myFile.json";
@@ -26,36 +27,50 @@ class JsonCRUD{
       if (fileExists) fileContent = json.decode(jsonFile.readAsStringSync());
       print("Feed File : $fileContent ");
       print ("Feed : $fileExists");
-    });
-    initToBookmark();
-  }
 
-  initToBookmark(){
-    print("Init Bookmark");
-    getApplicationDocumentsDirectory().then((Directory directory) {
-      dir = directory;
-      jsonFile = new File(dir.path + "/" + bookMarkName);
+      bookmarkFile = new File(dir.path + "/" + bookMarkName);
       print ("Checking Existence");
-      bookMarkFileExist = jsonFile.existsSync();
+      bookMarkFileExist = bookmarkFile.existsSync();
       print ("Reading");
-      if (bookMarkFileExist) fileContent = json.decode(jsonFile.readAsStringSync());
+      if (bookMarkFileExist) fileContent = json.decode(bookmarkFile.readAsStringSync());
       print("Bookmark File : $fileContent ");
       print ("BookMark : $bookMarkFileExist");
     });
-  }  
+    
+  }
+
+  
 
   bool verifyFileExsistence(int destination){
+    print("Verify");    
+    if(destination==0){      
+      return fileExists;      
+    }else if(destination==1){      
+      return bookMarkFileExist;
+    }
+    
+  }
+
+  Future<bool> fverifyFileExsistence(int destination) async {
     print("Verify");    
     if(destination==0){
       print("myfile Exist");
       fileName = feedName; 
       jsonFile = File(dir.path + "/" + fileName);
+      await jsonFile.exists().then((result){
+        fileExists=result;
+      });
       return fileExists;      
     }else if(destination==1){
       print("Bookmark Exist");
       fileName = bookMarkName; 
       jsonFile = File(dir.path + "/" + fileName);
+      await jsonFile.exists().then((result){
+        bookMarkFileExist=result;
+      });
       return bookMarkFileExist;
+    } else {
+      return null;
     }
     
   }
@@ -116,13 +131,17 @@ class JsonCRUD{
     
   }
 
-  Future<Map<String,dynamic>> fReadJsonData(int source){    
+  Future<Map<String,dynamic>> fReadJsonData(int source) async {    
     print("Reading Json $source");
-    if(verifyFileExsistence(source)){   
+    
+    //bool exist = await fverifyFileExsistence(source);
+    bool exist = true;
+    print("Future Read Json");
+    if(exist){   
       //print("Test file content ${fileContent.keys}");   
-      fileContent = json.decode(jsonFile.readAsStringSync());    
+      fileContent = await json.decode(bookmarkFile.readAsStringSync());    
       print("Test Reading : ${fileContent.length}");
-      return Future<Map<String,dynamic>>(()=>fileContent);
+      return fileContent;
     }else {
       print("File Does not Exist");
       return null;

@@ -9,28 +9,23 @@ import 'package:religi_app/widget/_widgets.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(//Don't delete! for routing purpose.
-      providers: [
-        Provider(create: (context) => NewsFeed()),
-      ],
-      child:MaterialApp(
-      /* initialRoute: '/',
-      routes: {
-        '/' : (context) => PageUtama(),
-        '/Search' : (context) => SearchPage(),
-      }, */
-      home: Scaffold(
-        /* appBar: AppBar(
-          title : BarAtas(),
-        ), */
-        /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: SearchButton(),      
-        bottomNavigationBar: MenuBar(), */
-        body: NavBar(
-            topWords: "Beranda",
-            backgroundWidget: CallNewsFeed(),
-            pageIndex: 0),
-      ),
+    return MaterialApp(
+    /* initialRoute: '/',
+    routes: {
+      '/' : (context) => PageUtama(),
+      '/Search' : (context) => SearchPage(),
+    }, */
+    home: Scaffold(
+      /* appBar: AppBar(
+        title : BarAtas(),
+      ), */
+      /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SearchButton(),      
+      bottomNavigationBar: MenuBar(), */
+      body: NavBar(
+          topWords: "Beranda",
+          backgroundWidget: CallNewsFeed(),
+          pageIndex: 0),
     ),
     );
   }

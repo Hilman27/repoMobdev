@@ -3,6 +3,7 @@ import 'dart:ffi';
 
 import 'package:meta/meta.dart';
 import 'package:religi_app/model/_model.dart';
+import 'package:religi_app/model/jsonManagement2.dart' as crud2;
 import 'feedbloc_bloc.dart';
 import 'dart:developer' as developer;
 import 'package:http/http.dart' as http;

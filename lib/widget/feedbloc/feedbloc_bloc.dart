@@ -9,41 +9,23 @@ import './bloc.dart';
 
 class FeedblocBloc extends Bloc<FeedblocEvent, FeedblocState> {
   final int source;// Source 1 = Feed. Source 2 = Bookmark
-  List<Feed> inputData;
-  final FeedRepository feedRepository = FeedRepository();
-  final BehaviorSubject<List<Feed>> prevRepos =
-      BehaviorSubject<List<Feed>>();
-
+  List<Feed> inputData;  
+  StreamSubscription subscription ;
+  FeedRepository feedRepository =FeedRepository();
   
 
   FeedblocBloc(this.source);
 
   FeedblocBloc.withData(this.source, this.inputData);
   
-  @override
-  //FeedblocState get initialState => InitialFeedblocState();
+  @override  
   FeedblocState get initialState => InitialFeedblocState(source);
-  /* {
-    if(inputData.isEmpty){
-      return InitialFeedblocState(source);
-    } else {
-      return InitialFeedblocState.withData(source,inputData);
-    }
-    
+
+  initFeedBloc(){
+    subscription?.cancel();
+    subscription = feedRepository.getStreamDummyNewsFeed().listen((onData)=>add(ReInit(onData)));
   }
-   */
-
-  getFeeds() async {
-    List<Feed> feeds = await feedRepository.getDummyNewsFeed();
-    prevRepos.sink.add(feeds);
-  }
-
-  dispose() {
-    prevRepos.close();
-  }
-
-  BehaviorSubject<List<Feed>> get repoCalls => prevRepos;
-
+ 
 
   @override
   Stream<FeedblocState> mapEventToState(
@@ -72,12 +54,21 @@ class FeedblocBloc extends Bloc<FeedblocEvent, FeedblocState> {
     }else if (event is JsonRead) {//Read from JSON
       state.readJson(1);
       yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
-    }else if (event is JsonClear) {//Clear from JSON
-       state.clearJson(1);  
-      yield ContinousFeedBlocState(state.feeds,state.crud,state.status);
     }
     else if (event is GetFeedListEvent) {// Don't Use. Scrapped
       yield InitialFeedblocState(source);
+    }
+
+    if (event is JsonStart) {
+      subscription?.cancel();
+      subscription = feedRepository.getStreamDummyNewsFeed().listen((onData){
+        print("DataGet : $onData");
+        add(ReInit(onData));
+        });//ticker.tick().listen((tick) => add(Tick(tick)));
+    }
+    if (event is ReInit) {
+      print("ReInit");
+      yield ContinousFeedBlocState(event.newFeed,state.crud,state.status);
     }
   }
 }

@@ -9,19 +9,8 @@ import 'package:religi_app/widget/_widgets.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-    /* initialRoute: '/',
-    routes: {
-      '/' : (context) => PageUtama(),
-      '/Search' : (context) => SearchPage(),
-    }, */
-    home: Scaffold(
-      /* appBar: AppBar(
-        title : BarAtas(),
-      ), */
-      /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: SearchButton(),      
-      bottomNavigationBar: MenuBar(), */
+    return MaterialApp(    
+    home: Scaffold(     
       body: NavBar(
           topWords: "Beranda",
           backgroundWidget: CallNewsFeed(),

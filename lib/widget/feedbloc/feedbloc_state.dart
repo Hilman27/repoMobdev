@@ -3,7 +3,6 @@ import 'dart:ffi';
 
 import 'package:meta/meta.dart';
 import 'package:religi_app/model/_model.dart';
-import 'package:religi_app/model/jsonManagement2.dart' as crud2;
 import 'feedbloc_bloc.dart';
 import 'dart:developer' as developer;
 import 'package:http/http.dart' as http;
@@ -34,6 +33,11 @@ abstract class FeedblocState {
     feeds.clear();
   } */
   //Note : Initialize dilakukan di sub function (InitialFeedblocState)
+
+  Stream<List<Feed>> feedsStream() async*{
+    var temp = feeds;
+    yield temp;
+  }
 
   void addFeed(Feed newFeed){
     initStatusList();
@@ -219,7 +223,7 @@ class InitialFeedblocState extends FeedblocState {
       print("Set to Bookmark");      
       /* JsonCRUD tempcrud = JsonCRUD();
       Map<String,dynamic> tempInitData = Map<String,dynamic>(); */      
-      update(source);
+      //update(source);
       /* Future<List<Feed>>( () => readJson(source))
       .then((value) {
         print("values are :");

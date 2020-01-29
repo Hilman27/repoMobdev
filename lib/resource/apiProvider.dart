@@ -20,6 +20,19 @@ class APIFeedRepository{
       //print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");
   }
 
+  Stream<List<Feed>> getStreamDummyNewsFeed() {
+    print("Stream DummyFeed");
+    NewsFeed dummy = NewsFeed();
+    List<Feed> dummyList = List<Feed>();
+    for(int i=0; i< NewsFeed.dummyEvents.length; i++){
+      dummyList.add(dummy.init(i));
+    }
+    /* Iterable<List<Feed>> iterable = dummyList as Iterable<List<Feed>>;
+    print("Itterable : ${iterable.elementAt(0)}"); */
+    //return Stream.fromIterable(iterable);
+    return Stream.periodic(Duration(seconds: 1), (x) => dummyList).take(10);
+  }
+
   
   /* Future<UserResponse> getUser() async {
     try {

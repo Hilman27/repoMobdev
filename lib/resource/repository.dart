@@ -11,4 +11,9 @@ class FeedRepository{
   Future<List<Feed>> getDummyNewsFeed(){
     return _apiProvider.getDummyNewsFeed();
   }
+
+  Stream<List<Feed>> getStreamDummyNewsFeed() {
+    return _apiProvider.getStreamDummyNewsFeed();
+    //return Stream.periodic(Duration(seconds: 1), (x) => x).take(10);
+  }
 }

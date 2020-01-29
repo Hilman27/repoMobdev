@@ -25,7 +25,7 @@ class JsonCRUD{
       jsonFile = new File(dir.path + "/" + fileName);
       fileExists = jsonFile.existsSync();
       if (fileExists) fileContent = json.decode(jsonFile.readAsStringSync());
-      print("Feed File : $fileContent ");
+      //print("Feed File : $fileContent ");
       print ("Feed : $fileExists");
 
       bookmarkFile = new File(dir.path + "/" + bookMarkName);
@@ -33,7 +33,7 @@ class JsonCRUD{
       bookMarkFileExist = bookmarkFile.existsSync();
       print ("Reading");
       if (bookMarkFileExist) fileContent = json.decode(bookmarkFile.readAsStringSync());
-      print("Bookmark File : $fileContent ");
+      //print("Bookmark File : $fileContent ");
       print ("BookMark : $bookMarkFileExist");
     });
     

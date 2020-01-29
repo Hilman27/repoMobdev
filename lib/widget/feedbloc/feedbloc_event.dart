@@ -41,10 +41,19 @@ class JsonWrite extends FeedblocEvent{
   JsonWrite(this.feedInput);
 }
 
+class ReInit extends FeedblocEvent{
+  final List<Feed> newFeed;
+
+  ReInit(this.newFeed);
+  
+  
+}
+
+class JsonStart extends FeedblocEvent{
+  
+}
+
 class JsonRead extends FeedblocEvent{
   
 }
 
-class JsonClear extends FeedblocEvent{
-  
-}

@@ -311,82 +311,91 @@ class NewsDetail extends StatelessWidget{
   Widget build(BuildContext context) {    
     //FeedProvider        
     return Container(
+      //color: Color(0XFF00ffff),
       //width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         //mainAxisAlignment: ,
         children: <Widget>[
           //SizedBox(width: 30,),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                // Row Kiri
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  //SizedBox(width: 40,),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 1 / 4,
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          intDatesToString(news.event.edateTime.month),
-                          style: TextStyle(color: Colors.red),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(news.event.edateTime.day.toString()),
-                      ],
-                    ),
-                  ),
-                  //SizedBox(width : 20),
-                  Container(
-                      width: MediaQuery.of(context).size.width * 3 / 4 - 10,
+          Container(
+            //color: Color(0XFFff0066),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  // Row Kiri
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  //crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    //SizedBox(width: 40,),
+                    Container(
+                      //color: Color(0XFFffff66),
+                      width: MediaQuery.of(context).size.width * 1 / 4,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            news.event.eventName,
-                            style: feedTitle(),
+                            intDatesToString(news.event.edateTime.month),
+                            style: TextStyle(color: Colors.red),
                             textAlign: TextAlign.left,
-                            maxLines: 2,
                           ),
-                          SizedBox(height: 4),
+                          Text(news.event.edateTime.day.toString()),
                         ],
-                      )),
-                ],
+                      ),
+                    ),
+                    //SizedBox(width : 20),
+                    Container(
+                      //color:  Color(0XFF99ff33),
+                        width: MediaQuery.of(context).size.width * 3 / 4 - 10,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              news.event.eventName,
+                              style: feedTitle(),
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                            ),
+                            SizedBox(height: 4),
+                          ],
+                        )),
+                  ],
+                ),
               ),
             ),
           ),
           //SizedBox(width: 10,),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  //SizedBox(width: 40,),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 1 / 4,
-                    child: Icon(Icons.location_on, color: Colors.red),
-                  ),
-                  //SizedBox(width : 20),
-
-                  Container(
-                    width: MediaQuery.of(context).size.width * 3 / 4 - 10,
-                    child: Text(
-                      news.event.eventLocation,
-                      style: feedLoc(),
-                      softWrap: true,
-                      maxLines: 2,
-                      textAlign: TextAlign.left,
+          Container(
+            //color: Color(0XFF3366ff),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    //SizedBox(width: 40,),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 1 / 4,
+                      child: Icon(Icons.location_on, color: Colors.red),
                     ),
-                  ),
-                ],
+                    //SizedBox(width : 20),
+
+                    Container(
+                      width: MediaQuery.of(context).size.width * 3 / 4 - 10,
+                      child: Text(
+                        news.event.eventLocation,
+                        style: feedLoc(),
+                        softWrap: true,
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -409,12 +418,16 @@ class NewsDetail extends StatelessWidget{
                          /*  BlocProvider.of<FeedblocBloc>(context)                            
                             .add(JsonClear()); */
 
-                          BlocProvider.of<FeedblocBloc>(context)                            
+                          /* BlocProvider.of<FeedblocBloc>(context)                            
                             .add(JsonWrite(news));
 
                           BlocProvider.of<FeedblocBloc>(context)                            
                           .add(JsonRead());
-                          
+                           */
+
+                           BlocProvider.of<FeedblocBloc>(context)                            
+                          .add(JsonStart());
+
                           /* print("To JSON");
                           
                           jsonstuff.changeNewContent(news.toJson());

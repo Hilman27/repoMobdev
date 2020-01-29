@@ -31,7 +31,8 @@ class FeedListWidgetBookmarkState extends State<FeedListWidgetBookmark> {
   @override
   void initState() {    
     //feedbloc = FeedblocBloc.withData(source, initJSON());
-    feedbloc.getFeeds();
+    //feedbloc.getFeeds();
+    WidgetsBinding.instance.addPostFrameCallback((_)=> feedbloc.initFeedBloc());
     super.initState();        
   }
 
@@ -65,41 +66,32 @@ class FeedListWidgetBookmarkState extends State<FeedListWidgetBookmark> {
         //future: ,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
         if(snapshot.connectionState == ConnectionState.done){ */
-          return StreamBuilder<List<Feed>>(
-            stream: feedbloc.repoCalls.stream,
-            builder: (context, snapshot) {
-              return BlocProvider(
-              create: (BuildContext context) => feedbloc,        
-                child: BlocBuilder <FeedblocBloc, FeedblocState>(
-                  //bloc: BlocProvider.of<FeedblocBloc>(context),
-                  builder: (context, state) {    
-                    return CustomScrollView(
-                          controller: scrollController,
-                          slivers: <Widget>[
-                            SliverList(              
-                              delegate: SliverChildBuilderDelegate(
-                            (context,index) => NewsItem( index: index,                                                               
-                                                          ),
-                            childCount: state.feeds.length
-                              ),
-                            )
-                          ],          
-                          );              
-                    /* return FutureBuilder(
-                      future: state.fReadJson(source),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        if(snapshot.connectionState == ConnectionState.done){
-                          
-                        } else {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                      },
-                      ); */
-                    }        
-                )       
-      );
-            }
+          return BlocProvider(
+                create: (BuildContext context) => feedbloc,        
+                  child: BlocBuilder <FeedblocBloc, FeedblocState>(
+                    //bloc: BlocProvider.of<FeedblocBloc>(context),
+                    builder: (context, state) {                          
+                      if(state is ContinousFeedBlocState){
+                          return  
+                          CustomScrollView(
+                            controller: scrollController,
+                            slivers: <Widget>[
+                              SliverList(              
+                                delegate: SliverChildBuilderDelegate(
+                              (context,index) => NewsItem( index: index,                                                               
+                                                            ),
+                              childCount: state.feeds.length
+                                ),
+                              )
+                            ],          
+                          );   
+                      }else {
+                      return Center(child: CircularProgressIndicator());
+                     }        
+                    }
+                  )
           );
+                 
         /* } else {
           return Center(child: CircularProgressIndicator());
         }

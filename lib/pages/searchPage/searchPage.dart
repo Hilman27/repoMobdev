@@ -6,12 +6,12 @@ import 'package:religi_app/widget/AppBar/appBar.dart';
 class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
-      body: NavBar(
-            topWords : "Search Page", 
-            backgroundWidget : CallSearchPage(),
-            pageIndex : 1),        
-      );
+    return  Scaffold(      
+        body: NavBar(
+              topWords : "Search Page", 
+              backgroundWidget : CallSearchPage(),
+              pageIndex : 1),        
+        );
   }
 }
 

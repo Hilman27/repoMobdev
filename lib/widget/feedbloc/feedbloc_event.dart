@@ -41,10 +41,19 @@ class JsonWrite extends FeedblocEvent{
   JsonWrite(this.feedInput);
 }
 
-class ReInit extends FeedblocEvent{
+class ReInitFeed extends FeedblocEvent{
+  final List<Feed> newFeed;
+  final List<Feed> newBookmarkFeed;
+
+  ReInitFeed({this.newFeed,this.newBookmarkFeed});
+  
+  
+}
+
+class ReInitBookmark extends FeedblocEvent{
   final List<Feed> newFeed;
 
-  ReInit(this.newFeed);
+  ReInitBookmark(this.newFeed);
   
   
 }

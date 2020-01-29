@@ -16,4 +16,9 @@ class FeedRepository{
     return _apiProvider.getStreamDummyNewsFeed();
     //return Stream.periodic(Duration(seconds: 1), (x) => x).take(10);
   }
+
+  Stream<List<Feed>> getBookmarkJson() {
+    return _apiProvider.getBookmark();
+    //return Stream.periodic(Duration(seconds: 1), (x) => x).take(10);
+  }
 }

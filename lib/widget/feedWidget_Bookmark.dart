@@ -23,7 +23,7 @@ class FeedListWidgetBookmarkState extends State<FeedListWidgetBookmark> {
   ScrollController scrollController;
   static int source=1;
   //FeedblocBloc feedbloc;
-  final FeedblocBloc feedbloc = FeedblocBloc(source); 
+  final FeedblocBloc feedbloc = FeedblocBloc(1); 
     
   //final FeedBloc _feedBloc = FeedBloc();    
   //List<bool> status;
@@ -61,11 +61,6 @@ class FeedListWidgetBookmarkState extends State<FeedListWidgetBookmark> {
 
   @override
   Widget build(BuildContext context) {    
-    //final newsfeedProvider = FeedProvider.of(context);    
-    /*return  FutureBuilder(
-        //future: ,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if(snapshot.connectionState == ConnectionState.done){ */
           return BlocProvider(
                 create: (BuildContext context) => feedbloc,        
                   child: BlocBuilder <FeedblocBloc, FeedblocState>(
@@ -91,12 +86,6 @@ class FeedListWidgetBookmarkState extends State<FeedListWidgetBookmark> {
                     }
                   )
           );
-                 
-        /* } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    ); */
   }  
 }
 

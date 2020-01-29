@@ -131,7 +131,7 @@ class JsonCRUD{
     
   }
 
-  Future<Map<String,dynamic>> fReadJsonData(int source) async {    
+  Future<Map<String, dynamic>>  fReadJsonData(int source) async {    
     print("Reading Json $source");
     
     //bool exist = await fverifyFileExsistence(source);
@@ -141,10 +141,7 @@ class JsonCRUD{
       //print("Test file content ${fileContent.keys}");   
       fileContent = await json.decode(bookmarkFile.readAsStringSync());    
       print("Test Reading : ${fileContent.length}");
-      return fileContent;
-    }else {
-      print("File Does not Exist");
-      return null;
+      return Future.value(fileContent);
     }
     
     

@@ -21,15 +21,12 @@ class FeedListWidgetState extends State<FeedListWidget> {
   List status = List<bool>.filled(0, true, growable: true);
   ScrollController scrollController;
   static int source=0;
-  final feedbloc = FeedblocBloc(source);
-
-  
-  
-  //final FeedBloc _feedBloc = FeedBloc();    
-  //List<bool> status;
+  final feedbloc = FeedblocBloc(0);
 
   @override
-  void initState() {        
+  @override
+  void initState() {    
+    WidgetsBinding.instance.addPostFrameCallback((_)=> feedbloc.initFeedBloc());
     super.initState();        
   }
 
@@ -38,155 +35,69 @@ class FeedListWidgetState extends State<FeedListWidget> {
     feedbloc.close();
     super.dispose();
   }
+  
 
   @override
-  Widget build(BuildContext context) {    
-    //final newsfeedProvider = FeedProvider.of(context);    
+  Widget build(BuildContext context) {       
     return BlocProvider(
-        create: (BuildContext context) => feedbloc,        
-          child: BlocBuilder <FeedblocBloc, FeedblocState>(
-            //bloc: BlocProvider.of<FeedblocBloc>(context),
-            builder: (context, state) {
-                      return CustomScrollView(
-                        controller: scrollController,
-                        slivers: <Widget>[
-                          SliverList(              
-                            delegate: SliverChildBuilderDelegate(
-                          (context,index) => NewsItem( index: index, 
-                                                        //onPressed: _statusToogle, 
-                                                        //statusCheck: statusCheck, 
-                                                        //initialize: initList, 
-                                                        //feed: snapshot.data.elementAt(index),
-                                                        //changeData: newsfeedProvider.changeNewContent,
-                                                        //scrollingOnTap: scrollByIndex, 
-                                                        ),
-                          childCount: state.feeds.length
-                            ),
-                          )
-                        ],          
-                        );    
-              }        
-          )       
+          create: (BuildContext context) => feedbloc,        
+            child: BlocBuilder <FeedblocBloc, FeedblocState>(
+              //bloc: BlocProvider.of<FeedblocBloc>(context),
+              builder: (context, state) {                          
+                if(state is ContinousFeedBlocState){
+                    return  
+                    CustomScrollView(
+                      controller: scrollController,
+                      slivers: <Widget>[
+                        SliverList(              
+                          delegate: SliverChildBuilderDelegate(
+                        (context,index) => NewsItem( index: index,                                                               
+                                                      ),
+                        childCount: state.feeds.length
+                          ),
+                        )
+                      ],          
+                    );   
+                }else {
+                return Center(child: CircularProgressIndicator());
+                }        
+              }
+            )
     );
   }  
 }
 
-class NewsItem extends StatefulWidget{
-  //final ValueChanged<int> onPressed;  
-  //final ValueChanged<int> initialize;  
-  //final Function statusCheck;   
-  //final ValueChanged<int> scrollingOnTap;   
+class NewsItem extends StatefulWidget{ 
   final int index;
-  //final Feed feed;
   final Function changeData;
   
 
   const NewsItem( {Key key, 
                   @required this.index,                   
-                  //@required this.onPressed, 
-                  //@required this.initialize, 
-                  //@required this.statusCheck, 
-                  //@required this.feed, 
                   this.changeData
-                  //this.scrollingOnTap, 
                   }) : super(key: key);
 
   @override
   NewsItemState createState() => NewsItemState();
 }
 
-class NewsItemState extends State<NewsItem> {
-  //GlobalKey _keyRed = GlobalKey();
-  int _index;
-  //bool _expanded;
-  //Function(int) parentPress;
-  //Function(int) initialList;
-  Function(int) expandCheck;
-  //Feed _feed;
+class NewsItemState extends State<NewsItem> {  
+  int _index;  
+  Function(int) expandCheck;    
   
-  
-  //Function(int) _scrollonTap;
-  
-  void initState(){
-    
-    _index = widget.index;
-    //_expanded = true;
-    //_feed=widget.feed;
-    //_scrollonTap = widget.scrollingOnTap;
-    //parentPress = widget.onPressed;
-    //widget.initialize(_index);
-    //initialList = BlocProvider.of<FeedblocBloc>(context).add(RemFeedListEvent(0));
-    
-    
-    BlocProvider.of<FeedblocBloc>(context).add(InitExpansionStatus(_index));    
-    super.initState();
-    
-    //developer.log("Check $_index and $_expanded Has been Initilaized");
-    //developer.log("Check ${expandCheck(_index)}");
+  void initState(){    
+    _index = widget.index;            
+    //state.initList(_index);
+    //BlocProvider.of<FeedblocBloc>(context).add(InitExpansionStatus(_index));    
+    super.initState();        
   }
-
-  //Doesn't work. Delete Later
-  /* _afterLayout(_){    
-    _getPositions();
-  }
-
-  _getPositions() {
-    try{
-      final RenderBox renderBoxRed = _keyRed.currentContext.findRenderObject();
-    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
-    print("POSITION of Red: $positionRed ");
-    }catch(e){
-      print("$e");
-    }
-    
-  } */
-
-  /* changeExpandCollapse(bool){
-    widget.onPressed(_index);
-  } */
-
-  /* bool checkCollapseState() {
-    if (widget.statusCheck(_index) == null) {
-      developer
-          .log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
-      return widget.statusCheck(_index);
-    } else {
-      developer
-          .log("Check Status = Not Null. It's ${widget.statusCheck(_index)}");
-      return true;
-    }
-  } */
-
-  /* checkExpandCollapse(bool input) {
-    if (input == true) {
-      if (expandCheck(_index) == false) {
-        parentPress(_index);
-      }
-      developer.log("Index $_index Is expanded");
-      //_scrollonTap(_index);
-    }else if (input ==false){
-      if(expandCheck(_index)==true){
-        parentPress(_index);
-      }
-      developer.log("Index $_index Is Collapsed");
-    } else
-      developer.log("Index $_index ????");
-  } */
-
+  
   @override
-  Widget build(BuildContext context) {
-    //widget.onPressed(index);
-    
-    //_expanded = expandCheck(_index);    
-    //WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
-    //print("Test for $_index Height ${context.size}");
-    //developer.log("Index is at $_index and Expansion is $_expanded");    
-    
-    //var textTheme = Theme.of(context).textTheme.title; 
-    return BlocBuilder<FeedblocBloc, FeedblocState>(
-            //bloc: BlocProvider.of<FeedblocBloc>(context),
+  Widget build(BuildContext context) {    
+    return BlocBuilder<FeedblocBloc, FeedblocState>(            
             builder: (context, state) {
               return GestureDetector(
+                
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => PageDetailEvent(
@@ -218,13 +129,7 @@ class NewsItemState extends State<NewsItem> {
                                           right: 0,
                                           bottom: 10,
                                           child: NewsDetail(state.feeds.elementAt(_index)),
-                                        )                                              
-                                    /* Positioned(
-                                      right: 10,
-                                      left: 10,
-                                      top: 10,
-                                      bottom: 10,
-                                      child: Icon(Icons.image, size: 50,) */
+                                        )                                                                                  
                                           ],                          
                                         ),
                                   ),

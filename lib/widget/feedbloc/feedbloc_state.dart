@@ -72,13 +72,6 @@ abstract class FeedblocState {
   
 
   
-  void pushCrud(){
-
-  }
-
-  void pullCrud(){
-
-  }
 
   //Functions for status(Feed Expansion)
   initList(int index){    
@@ -91,6 +84,12 @@ abstract class FeedblocState {
 
   initStatusList(){
     status.add(true);
+  }
+
+  initListbyFeeds(){
+    for(int i=0;i<feeds.length;i++){
+      initList(i);
+    }
   }
 
   statusToogle(int index) {
@@ -159,12 +158,8 @@ abstract class FeedblocState {
 
   List<Feed> readJson(source){    
     Map<String, dynamic> tempMap = crud.readJsonData(source);
-    //print("Data check1 is ${tempMap.length}");
-    //NewsFeed testFeed = NewsFeed.fromJson(tempMap);
     List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
     tempMap.forEach((key,value) => testFeed.add(value)); 
-    //print("Data check2 is ${testFeed.last}");
-    //print("Checking Test Feed ");    
     List<Feed> feedListTest =List<Feed>();
     Feed dummyFeed;
     for(int i=0; i<testFeed.length;i++){
@@ -176,7 +171,7 @@ abstract class FeedblocState {
     
   }
 
-  Future<void> fReadJson(source) async {        
+  /* Future<void> fReadJson(source) async {        
     Map<String, dynamic> tempMap = await crud.fReadJsonData(source);
 
     List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
@@ -193,11 +188,11 @@ abstract class FeedblocState {
     overwriteAll(feedListTest);
     //return Future<List<Feed>>(() => feedListTest);
     
-  }
+  } */
 
-  update(int source) async {
+  /* update(int source) async {
     await fReadJson(source);
-  }
+  } */
 
   
   
@@ -206,55 +201,23 @@ abstract class FeedblocState {
 class InitialFeedblocState extends FeedblocState {
   final int source;  
   final List<Feed> feeds = List<Feed>() ; //Variable dari FeedblocState perlu di deklarasikan di sini
-  final Map<int, Feed> bookmarkFeeds = Map<int, Feed>() ; //Untuk simpan FeedBlock
-  final JsonCRUD crud = JsonCRUD();
-  final List<bool> status = List<bool>.filled(0, true, growable: true);      
+  final Map<int, Feed> bookmarkFeeds = Map<int, Feed>() ; //Untuk simpan FeedBlock  
+  final List<bool> status = List<bool>.filled(0, true, growable: true);     
+  final List<Feed> bookmarkedFeeds = List<Feed>() ;
     
   InitialFeedblocState(this.source){
     if(source==0){
-      NewsFeed dummy = NewsFeed();
+
+      /* NewsFeed dummy = NewsFeed();
       for(int i=0; i< NewsFeed.dummyEvents.length; i++){
       addFeed(dummy.init(i));
-      print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");
+      //print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");
     }
-    print("Init data Done!");  
+    print("Init data Done!");   */
 
     } else if(source==1){       
-      print("Set to Bookmark");      
-      /* JsonCRUD tempcrud = JsonCRUD();
-      Map<String,dynamic> tempInitData = Map<String,dynamic>(); */      
-      //update(source);
-      /* Future<List<Feed>>( () => readJson(source))
-      .then((value) {
-        print("values are :");
-        List<Feed> dummy = List<Feed>();   
-        dummy.addAll(value);
-        //value.forEach((valueIn) => dummy.addAll(valueIn)); 
-        
-        for(int i=0; i< dummy.length; i++){
-        addFeed(dummy.elementAt(i));
-        print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");        
-      }
-      }); */
-      //Future.wait([_loadSettings(), _loadOtherStuff()]).then((_) => _doMoreStuff());
-      
-      /* Future<List<Feed>>( () => readJson(source))
-      .then((value) {
-        print("values are :");
-        List<Feed> dummy = List<Feed>();   
-        dummy.addAll(value);
-        tempInitData.forEach((key,value) => dummy.add(value)); 
-        
-        for(int i=0; i< dummy.length; i++){
-        addFeed(dummy.elementAt(i));
-        print("Init data $i untuk ${feeds.elementAt(i).event.eventName}");        
-        }                
-      }).catchError((error) => print("$error"));
- */
-      
-      
+      print("Set to Bookmark");                        
     }
-    //readJson(source);
       
   }   
 
@@ -280,10 +243,13 @@ class InitialFeedblocState extends FeedblocState {
 
 class ContinousFeedBlocState extends FeedblocState{
   final List<Feed> feeds ; //Variable dari FeedblocState perlu dideklarasikan di sini
-  final JsonCRUD crud;
+  
   final List<bool> status;
+  final List<Feed> bookmarkedFeeds;
 
-  ContinousFeedBlocState(this.feeds,this.crud, this.status);
+  ContinousFeedBlocState(this.feeds, this.status, this.bookmarkedFeeds){
+    initListbyFeeds();
+  }
 
   
 }

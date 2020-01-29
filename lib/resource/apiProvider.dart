@@ -30,7 +30,26 @@ class APIFeedRepository{
     /* Iterable<List<Feed>> iterable = dummyList as Iterable<List<Feed>>;
     print("Itterable : ${iterable.elementAt(0)}"); */
     //return Stream.fromIterable(iterable);
-    return Stream.periodic(Duration(seconds: 1), (x) => dummyList).take(10);
+    //return Stream.periodic(Duration(seconds: 1), (x) => dummyList).take(1);
+    return Stream.value(dummyList);
+  }
+
+  Stream<List<Feed>> getBookmark() async*{
+    JsonCRUD crud = JsonCRUD();
+    Map<String,dynamic> readfromCrud = await crud.fReadJsonData(1);
+    List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
+    readfromCrud.forEach((key,value) => testFeed.add(value)); 
+    List<Feed> feedListTest =List<Feed>();
+    Feed dummyFeed;
+    for(int i=0; i<testFeed.length;i++){
+      dummyFeed = Feed.fromJson(testFeed[i]);
+      feedListTest.add(dummyFeed);
+      print("Data $i is ${feedListTest[i].event.eventName}");
+    }
+    yield feedListTest;
+    //return Stream.value(feedListTest);
+
+
   }
 
   

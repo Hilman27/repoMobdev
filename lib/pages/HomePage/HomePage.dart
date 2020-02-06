@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:religi_app/constant/_const.dart';
-import 'package:religi_app/model/_model.dart';
-import 'package:religi_app/pages/searchPage/searchPage.dart';
 import 'package:religi_app/widget/AppBar/appBar.dart';
 import 'package:religi_app/widget/_widgets.dart';
 
@@ -31,9 +28,7 @@ class CallNewsFeed extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Container(
           alignment: Alignment.topCenter,
-          child: FeedListWidget() /* FeedProvider(            
-            feedBloc: _feedBloc,
-            child: FeedListWidget()),  */
+          child: FeedListWidget() 
           ),
         ),      
     );

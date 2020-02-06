@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:religi_app/pages/HomePage/HomePage.dart';
-import 'package:religi_app/widget/AppBar/appBar.dart';
+import 'package:religi_app/constant/_const.dart';
+import 'package:religi_app/widget/_widgets.dart';
 
 class SearchPage extends StatelessWidget {
   @override
@@ -16,11 +16,19 @@ class SearchPage extends StatelessWidget {
 }
 
 class CallSearchPage extends StatelessWidget{
-  @override
+  @override  
   Widget build(BuildContext context) {    
-    return Center(
-      child: Text("This is Search Page"),
+    return Container(
+      color: putihBack,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        child: Container(
+          alignment: Alignment.topCenter,
+          child: FeedListWidget() 
+          ),
+        ),      
     );
   }
+  
   
 }

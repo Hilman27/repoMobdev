@@ -36,7 +36,10 @@ class APIFeedRepository{
 
   Stream<List<Feed>> getBookmark() async*{
     JsonCRUD crud = JsonCRUD();
-    Map<String,dynamic> readfromCrud = await crud.fReadJsonData(1);
+    await crud.reInit();
+    Map<String,dynamic> readfromCrud = Map<String,dynamic>();
+    Future.delayed(Duration(seconds: 1));
+    readfromCrud=await crud.fReadJsonData(1);
     List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
     readfromCrud.forEach((key,value) => testFeed.add(value)); 
     List<Feed> feedListTest =List<Feed>();

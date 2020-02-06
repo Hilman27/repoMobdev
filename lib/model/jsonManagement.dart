@@ -33,10 +33,29 @@ class JsonCRUD{
       bookMarkFileExist = bookmarkFile.existsSync();
       print ("Reading");
       if (bookMarkFileExist) fileContent = json.decode(bookmarkFile.readAsStringSync());
-      //print("Bookmark File : $fileContent ");
+      print("Bookmark File : $fileContent ");
       print ("BookMark : $bookMarkFileExist");
     });
     
+  }
+
+  Future<void> reInit() async{
+    dir = await getApplicationDocumentsDirectory();
+    print("Init Feeds");    
+    jsonFile = new File(dir.path + "/" + fileName);
+    fileExists = jsonFile.existsSync();
+    if (fileExists) fileContent = json.decode(jsonFile.readAsStringSync());
+    //print("Feed File : $fileContent ");
+    print ("Feed : $fileExists");
+
+    bookmarkFile = new File(dir.path + "/" + bookMarkName);
+    print ("Checking Existence");
+    bookMarkFileExist = bookmarkFile.existsSync();
+    print ("Reading");
+    if (bookMarkFileExist) fileContent = json.decode(bookmarkFile.readAsStringSync());
+    print("Bookmark File : $fileContent ");
+    print ("BookMark : $bookMarkFileExist");
+
   }
 
   
@@ -46,31 +65,20 @@ class JsonCRUD{
     if(destination==0){      
       return fileExists;      
     }else if(destination==1){      
+      
       return bookMarkFileExist;
     }
     
   }
 
-  Future<bool> fverifyFileExsistence(int destination) async {
+  Future<bool> fverifyFileExsistence(int destination) async{
     print("Verify");    
-    if(destination==0){
-      print("myfile Exist");
-      fileName = feedName; 
-      jsonFile = File(dir.path + "/" + fileName);
-      await jsonFile.exists().then((result){
-        fileExists=result;
-      });
+    if(destination==0){     
+      //fileExists = await jsonFile.exists(); 
       return fileExists;      
-    }else if(destination==1){
-      print("Bookmark Exist");
-      fileName = bookMarkName; 
-      jsonFile = File(dir.path + "/" + fileName);
-      await jsonFile.exists().then((result){
-        bookMarkFileExist=result;
-      });
+    }else if(destination==1){      
+      //bookMarkFileExist = await bookmarkFile.exists();
       return bookMarkFileExist;
-    } else {
-      return null;
     }
     
   }
@@ -94,14 +102,14 @@ class JsonCRUD{
       print("File exists");
       print("Test Json File : ${jsonFile.path}");
       print("To be put on Json File : $content");
-      Map<String, dynamic> jsonFileContent = json.decode(jsonFile.readAsStringSync());
+      Map<String, dynamic> jsonFileContent = json.decode(jsonfileSelection(destination).readAsStringSync());
       jsonFileContent.addAll(content);
       jsonFile.writeAsStringSync(json.encode(jsonFileContent));
     } else {            
       print("File '$fileName' does not exist!");
-      createFile(content, dir, fileName);
+      createFile(content, dir, nameFileSelection(destination));
     }
-    fileContent = json.decode(jsonFile.readAsStringSync());
+    fileContent = json.decode(jsonfileSelection(destination).readAsStringSync());
     print(fileContent);
   }
 
@@ -135,16 +143,34 @@ class JsonCRUD{
     print("Reading Json $source");
     
     //bool exist = await fverifyFileExsistence(source);
-    bool exist = true;
+    bool exist = await fverifyFileExsistence(source);
     print("Future Read Json");
     if(exist){   
-      //print("Test file content ${fileContent.keys}");   
-      fileContent = await json.decode(bookmarkFile.readAsStringSync());    
+      print("Verified");
+      //print("Test file content ${fileContent.keys}");  
+      //String temp = await bookmarkFile.readAsString(); 
+      fileContent = await json.decode(jsonfileSelection(source).readAsStringSync());    
       print("Test Reading : ${fileContent.length}");
       return Future.value(fileContent);
     }
     
     
+  }
+  
+  File jsonfileSelection(int source){
+    if(source==0){
+      return jsonFile;
+    }else if(source==1){
+      return bookmarkFile;
+    }
+  }
+
+  String nameFileSelection(int source){
+    if(source==0){
+      return fileName;
+    }else if(source==1){
+      return bookMarkName;
+    }    
   }
   
   

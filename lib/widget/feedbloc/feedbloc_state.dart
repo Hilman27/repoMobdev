@@ -204,6 +204,7 @@ class InitialFeedblocState extends FeedblocState {
   final Map<int, Feed> bookmarkFeeds = Map<int, Feed>() ; //Untuk simpan FeedBlock  
   final List<bool> status = List<bool>.filled(0, true, growable: true);     
   final List<Feed> bookmarkedFeeds = List<Feed>() ;
+  final JsonCRUD crud = JsonCRUD();
     
   InitialFeedblocState(this.source){
     if(source==0){
@@ -243,7 +244,7 @@ class InitialFeedblocState extends FeedblocState {
 
 class ContinousFeedBlocState extends FeedblocState{
   final List<Feed> feeds ; //Variable dari FeedblocState perlu dideklarasikan di sini
-  
+  final JsonCRUD crud = JsonCRUD();
   final List<bool> status;
   final List<Feed> bookmarkedFeeds;
 

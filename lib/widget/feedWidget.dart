@@ -49,13 +49,26 @@ class FeedListWidgetState extends State<FeedListWidget> {
                     CustomScrollView(
                       controller: scrollController,
                       slivers: <Widget>[
-                        SliverList(              
-                          delegate: SliverChildBuilderDelegate(
-                        (context,index) => NewsItem( index: index,                                                               
-                                                      ),
-                        childCount: state.feeds.length
+                        /* SliverAppBar(
+                          title: Text("Title"),
+                        ), */                        
+                        SliverSafeArea(
+                          top :false,
+                          right :false,
+                          left :false,
+                          minimum: EdgeInsets.only(bottom : 4.0),
+                          sliver: 
+                          SliverList(              
+                            delegate: SliverChildBuilderDelegate(
+                          (context,index) => NewsItem( index: index,                                                               
+                                                        ),
+                          childCount: state.feeds.length
+                            ),
                           ),
-                        )
+                        ),
+                        
+                        
+                        
                       ],          
                     );   
                 }else {
@@ -323,15 +336,15 @@ class NewsDetail extends StatelessWidget{
                          /*  BlocProvider.of<FeedblocBloc>(context)                            
                             .add(JsonClear()); */
 
-                          /* BlocProvider.of<FeedblocBloc>(context)                            
+                          BlocProvider.of<FeedblocBloc>(context)                            
                             .add(JsonWrite(news));
-
+                          /*
                           BlocProvider.of<FeedblocBloc>(context)                            
                           .add(JsonRead());
                            */
 
-                           BlocProvider.of<FeedblocBloc>(context)                            
-                          .add(JsonStart());
+                           /* BlocProvider.of<FeedblocBloc>(context)                            
+                          .add(JsonStart()); */
 
                           /* print("To JSON");
                           

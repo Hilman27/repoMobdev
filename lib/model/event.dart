@@ -1,4 +1,3 @@
-import '_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'event.g.dart';
 @JsonSerializable()

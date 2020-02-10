@@ -1,17 +1,13 @@
 import 'dart:async';
-import 'dart:ffi';
-
 import 'package:meta/meta.dart';
 import 'package:religi_app/model/_model.dart';
-import 'feedbloc_bloc.dart';
 import 'dart:developer' as developer;
-import 'package:http/http.dart' as http;
 
 @immutable
 abstract class FeedblocState {
   final List<Feed> feeds ;
   final List<Feed> bookmarkedFeeds ;
-  final JsonCRUD crud;
+  //final JsonCRUD crud;
   final List<bool> status ;
   
   
@@ -19,7 +15,7 @@ abstract class FeedblocState {
 
   const FeedblocState(  {
     this.feeds, 
-    this.crud,
+    //this.crud,
     this.status,
     this.bookmarkedFeeds,
     //Key key
@@ -133,68 +129,14 @@ abstract class FeedblocState {
       developer.log("Index $index ????");
   }
 
-  //Json Functions
-  void writeToJson(Feed input){
-    //List<Map> dataToJson = List<Map>();
-    Map<String,dynamic> tempDataToJSON = Map<String,dynamic>();
-    /* for(int i=0; i<feeds.length;i++){      
-      print("Making data no.$i.");
-      tempDataToJSON = feeds.elementAt(i).toJson();
-      crud.writeToFile(feeds.elementAt(i).event.eventID.toString(),tempDataToJSON,1);
-      //dataToJson.add(tempDataToJSON);
-            
-      //print("Making data no.$i, creating ${dataToJson.elementAt(i).toString()}");
-    } */
-    print("Making data no.${input.event.eventID}.");
-    tempDataToJSON = input.toJson();
-    crud.writeToFile(input.event.eventID.toString(),tempDataToJSON,1);
-    //crud.mapWriteToFile(tempDataToJSON);
-    
-  }
+  bool checkBookmark(int index){
+    bool result = false;
+    bookmarkedFeeds.forEach((feed){
+      if(feed.event.eventID == index) {result = true;}
+      });
+    return result;
 
-  void clearJson(int source){
-    crud.clearJsonData(source);
-  }
-
-  List<Feed> readJson(source){    
-    Map<String, dynamic> tempMap = crud.readJsonData(source);
-    List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
-    tempMap.forEach((key,value) => testFeed.add(value)); 
-    List<Feed> feedListTest =List<Feed>();
-    Feed dummyFeed;
-    for(int i=0; i<testFeed.length;i++){
-      dummyFeed = Feed.fromJson(testFeed[i]);
-      feedListTest.add(dummyFeed);
-      print("Data $i is ${feedListTest[i].event.eventName}");
-    }
-    return feedListTest;
-    
-  }
-
-  /* Future<void> fReadJson(source) async {        
-    Map<String, dynamic> tempMap = await crud.fReadJsonData(source);
-
-    List<Map<String,dynamic>> testFeed = List<Map<String,dynamic>>();
-    tempMap.forEach((key,value) => testFeed.add(value)); 
-    
-    List<Feed> feedListTest =List<Feed>();
-    Feed dummyFeed;
-    for(int i=0; i<testFeed.length;i++){
-      dummyFeed = Feed.fromJson(testFeed[i]);
-      feedListTest.add(dummyFeed);
-      print("Data $i is ${feedListTest[i].event.eventName}");
-    }
-
-    overwriteAll(feedListTest);
-    //return Future<List<Feed>>(() => feedListTest);
-    
-  } */
-
-  /* update(int source) async {
-    await fReadJson(source);
-  } */
-
-  
+  }  
   
 }
   
@@ -204,7 +146,7 @@ class InitialFeedblocState extends FeedblocState {
   final Map<int, Feed> bookmarkFeeds = Map<int, Feed>() ; //Untuk simpan FeedBlock  
   final List<bool> status = List<bool>.filled(0, true, growable: true);     
   final List<Feed> bookmarkedFeeds = List<Feed>() ;
-  final JsonCRUD crud = JsonCRUD();
+  //final JsonCRUD crud = JsonCRUD();
     
   InitialFeedblocState(this.source){
     if(source==0){
@@ -244,7 +186,7 @@ class InitialFeedblocState extends FeedblocState {
 
 class ContinousFeedBlocState extends FeedblocState{
   final List<Feed> feeds ; //Variable dari FeedblocState perlu dideklarasikan di sini
-  final JsonCRUD crud = JsonCRUD();
+  //final JsonCRUD crud = JsonCRUD();
   final List<bool> status;
   final List<Feed> bookmarkedFeeds;
 

@@ -1,9 +1,8 @@
 import 'dart:async' show Future;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:religi_app/model/feed.dart';
-import 'package:religi_app/constant/_const.dart';
+
 
 class LoaderImages extends StatefulWidget {
   final String imagePath;

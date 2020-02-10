@@ -1,20 +1,20 @@
-import 'dart:async';
 import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:religi_app/constant/_const.dart';
 import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/_widgets.dart';
-import 'dart:developer' as developer;
 
 class FeedListWidget extends StatefulWidget {
+  final headerTitle;
+
+  const FeedListWidget({Key key, this.headerTitle}) : super(key: key);
   
   @override
-  FeedListWidgetState createState() => FeedListWidgetState();
+  FeedListWidgetState createState() => FeedListWidgetState(headerTitle);
 }
 
 class FeedListWidgetState extends State<FeedListWidget> {
@@ -22,10 +22,12 @@ class FeedListWidgetState extends State<FeedListWidget> {
   ScrollController scrollController;
   static int source=0;
   final feedbloc = FeedblocBloc(0);
+  final String headerTitle;
 
-  @override
-  @override
-  void initState() {    
+  FeedListWidgetState(this.headerTitle);
+
+  @override  
+  void initState() {        
     WidgetsBinding.instance.addPostFrameCallback((_)=> feedbloc.initFeedBloc());
     super.initState();        
   }
@@ -49,14 +51,17 @@ class FeedListWidgetState extends State<FeedListWidget> {
                     CustomScrollView(
                       controller: scrollController,
                       slivers: <Widget>[
-                        /* SliverAppBar(
-                          title: Text("Title"),
-                        ), */                        
-                        SliverSafeArea(
+                        SliverAppBar(
+                          title: Text(headerTitle),
+                          backgroundColor: hijauMain,
+                        ),    
+                        SliverPadding(
+                          padding: EdgeInsets.all(4.0),
+                          sliver: SliverSafeArea(
                           top :false,
-                          right :false,
-                          left :false,
-                          minimum: EdgeInsets.only(bottom : 4.0),
+                          right :true,
+                          left :true,
+                          minimum: EdgeInsets.only(bottom : 4.0,right :1.0,left : 1.0),
                           sliver: 
                           SliverList(              
                             delegate: SliverChildBuilderDelegate(
@@ -66,9 +71,7 @@ class FeedListWidgetState extends State<FeedListWidget> {
                             ),
                           ),
                         ),
-                        
-                        
-                        
+                        )                            
                       ],          
                     );   
                 }else {
@@ -222,11 +225,12 @@ class NewsUser extends StatelessWidget{
 }
 
 class NewsDetail extends StatelessWidget{
-  final Feed news;  
-  final VoidCallback onPressed; //Delete this Later
-  const NewsDetail(this.news, {Key key, this.onPressed}) : super(key: key);
+  final Feed news;        
+  const NewsDetail(this.news, {Key key}) : super(key: key);
+      
   @override
   Widget build(BuildContext context) {    
+    
     //FeedProvider        
     return Container(
       //color: Color(0XFF00ffff),
@@ -289,7 +293,7 @@ class NewsDetail extends StatelessWidget{
             //color: Color(0XFF3366ff),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: Container(
+              child: Container(                
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -316,54 +320,77 @@ class NewsDetail extends StatelessWidget{
                 ),
               ),
             ),
-          ),
-          BlocBuilder <FeedblocBloc, FeedblocState>(
-            //bloc: BlocProvider.of<FeedblocBloc>(context),
-            builder: (context, state) {
-                      return FlatButton(
-                        onPressed:(){                  
-                          //newsfeedProvider.addTest(news);
-                          
-                          /* print("Test adding ${news.event.eventName}");
-                          BlocProvider.of<FeedblocBloc>(context)                            
-                            .add(AddFeedListEvent(news)); */
-
-                          /* BlocProvider.of<FeedblocBloc>(context)                            
-                            .add(RemFeedListEvent(0)); */
-                          
-                          /* BlocProvider.of<FeedblocBloc>(context)                            
-                            .add(JsonClear()); */
-                         /*  BlocProvider.of<FeedblocBloc>(context)                            
-                            .add(JsonClear()); */
-
-                          BlocProvider.of<FeedblocBloc>(context)                            
-                            .add(JsonWrite(news));
-                          /*
-                          BlocProvider.of<FeedblocBloc>(context)                            
-                          .add(JsonRead());
-                           */
-
-                           /* BlocProvider.of<FeedblocBloc>(context)                            
-                          .add(JsonStart()); */
-
-                          /* print("To JSON");
-                          
-                          jsonstuff.changeNewContent(news.toJson());
-                          //jsonStuff.writeMethod("Hello There");
-                          //jsonstuff = JsonCRUD(news.toJson());
-                          //print("Taken Directory : ${jsonstuff.dir.path}");
-                          jsonstuff.printstuff();
-                          print("Write to JSON ");
-                          //jsonstuff.writeToJSON(); */
-                        }, 
-                        child: Text("Send to JSON"), 
-                      );
-            }
-          )          
+          ),          
+          LopeButton(news),  
         ],
       ),
     );
   }
   
+}
+
+class LopeButton extends StatefulWidget{
+  final Feed news;
+
+  const LopeButton(this.news,{Key key, }) : super(key: key);
+  @override
+  LopeButtonState createState() => LopeButtonState();
+
+}
+
+class LopeButtonState extends State<LopeButton> with SingleTickerProviderStateMixin{
+  Feed news;
+  Animation<double> sizeAnimation;
+  AnimationController controller;
+  double animWidth;
+
+  @override
+  void initState() {
+    news = widget.news;
+    controller = AnimationController(duration: Duration(milliseconds: 500),vsync: this);
+    sizeAnimation = Tween<double>(begin: 1, end: 2).animate(controller)..addListener(
+      (){}
+    );
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(           
+        duration: Duration(milliseconds: 500) ,
+        //color: Colors.red,
+        width: MediaQuery.of(context).size.width,
+        child: BlocBuilder <FeedblocBloc, FeedblocState>(
+          //bloc: BlocProvider.of<FeedblocBloc>(context),
+          //Posible Icon : cloud done and cloud queue | Favorite and Favorite Border
+          builder: (context, state) {
+                    if(state.checkBookmark(news.event.eventID)){
+                      return IconButton(icon: Icon(Icons.favorite, color: hijauMain,), 
+                      onPressed:(){                                            
+                        BlocProvider.of<FeedblocBloc>(context)                            
+                          .add(JsonRemove(news,1));   
+                        setState(() {
+                          
+                        });
+                      }              
+                      );                            
+                    }else {
+                      return IconButton(icon: Icon(Icons.favorite_border, color: hijauMain,), 
+                      onPressed:(){                                            
+                        BlocProvider.of<FeedblocBloc>(context)                            
+                          .add(JsonWrite(news,1));   
+                        setState(() {
+                          
+                        });                       
+                      },        
+                      //splashColor: hijauMain,
+                      );          
+                    }
+          }
+        ), 
+        //duration: Duration(seconds: 1),
+        curve: Curves.bounceIn,
+      );
+  }
+
 }
 

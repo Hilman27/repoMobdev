@@ -55,6 +55,23 @@ class APIFeedRepository{
 
   }
 
+  Future writeToJson(Feed input, int source) async{
+    JsonCRUD crud = JsonCRUD();
+    await crud.reInit();    
+    Map<String,dynamic> tempDataToJSON = Map<String,dynamic>();    
+    print("Making data no.${input.event.eventID}.");
+    tempDataToJSON = input.toJson();
+    crud.writeToFile(input.event.eventID.toString(),tempDataToJSON,source);
+    //crud.mapWriteToFile(tempDataToJSON);    
+  }
+
+  Future removeFromJson(Feed input, int source) async{
+    JsonCRUD crud = JsonCRUD();
+    await crud.reInit();        
+    crud.removeFromFile(input.event.eventID.toString(),source);
+    //crud.mapWriteToFile(tempDataToJSON);    
+  }
+
   
   /* Future<UserResponse> getUser() async {
     try {

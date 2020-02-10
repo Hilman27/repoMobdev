@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/resource/_res.dart';
-import 'package:rxdart/rxdart.dart';
 import './bloc.dart';
 
 //enum FeedblocEvent {addFeedListEvent,remFeedListEvent}
@@ -25,8 +24,9 @@ class FeedblocBloc extends Bloc<FeedblocEvent, FeedblocState> {
     subscription?.cancel();
     if(source==0){
       subscription = feedRepository.getStreamDummyNewsFeed().listen((onData)=>add(ReInitFeed(newFeed: onData)));
+      subscription = feedRepository.getBookmarkJson().listen((onData)=>add(ReInitFeed(newBookmarkFeed: onData)));
     } else if(source==1){
-      subscription = feedRepository.getBookmarkJson().listen((onData)=>add(ReInitFeed(newFeed: onData)));
+      subscription = feedRepository.getBookmarkJson().listen((onData)=>add(ReInitFeed(newFeed: onData,newBookmarkFeed: onData)));
     }
   }
  
@@ -52,11 +52,17 @@ class FeedblocBloc extends Bloc<FeedblocEvent, FeedblocState> {
       yield ContinousFeedBlocState(state.feeds,state.status,state.bookmarkedFeeds);
 
     }else if (event is JsonWrite) {//Write to JSON
-      state.writeToJson(event.feedInput);
+      feedRepository.addToJson(event.feedInput, event.source);
+      state.bookmarkedFeeds.add(event.feedInput);
+      yield ContinousFeedBlocState(state.feeds,state.status,state.bookmarkedFeeds);
+    }else if (event is JsonRemove) {//Write to JSON
+      //state.writeToJson(event.feedInput);
       //state.crud.writeToJSON();    
+      feedRepository.removeFromJson(event.feedInput,event.source);
+      state.bookmarkedFeeds.removeWhere((test)=>test.event.eventID == event.feedInput.event.eventID);
       yield ContinousFeedBlocState(state.feeds,state.status,state.bookmarkedFeeds);
     }else if (event is JsonRead) {//Read from JSON
-      state.readJson(1);
+      //state.readJson(1);
       yield ContinousFeedBlocState(state.feeds,state.status,state.bookmarkedFeeds);
     }    
 

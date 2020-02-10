@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:religi_app/constant/_const.dart';
 import 'package:religi_app/pages/eventpage/detail.dart';
 import 'package:religi_app/widget/AppBar/appBar.dart';
-import 'package:religi_app/widget/Buttons/searchButton.dart';
 import 'package:religi_app/model/_model.dart';
 import 'package:religi_app/widget/_widgets.dart';
 import 'package:religi_app/widget/dates.dart';

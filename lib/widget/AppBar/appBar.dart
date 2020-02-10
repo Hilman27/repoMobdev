@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:religi_app/constant/_const.dart';
-import 'package:religi_app/main.dart';
 import 'package:religi_app/pages/BookmarkPage/BookmarkPage.dart';
 import 'package:religi_app/pages/HomePage/HomePage.dart';
-import 'package:religi_app/pages/eventpage/create.dart';
 import 'package:religi_app/pages/eventpage/create2.dart';
 import 'package:religi_app/pages/searchPage/searchPage.dart';
 
 class NavBar extends StatelessWidget {
-  final String topWords;
+  //final String topWords;
   final Widget backgroundWidget;
   final int pageIndex;
 
   const NavBar({
     Key key,
-    this.topWords,
+    //this.topWords,
     this.backgroundWidget,
     this.pageIndex,
   }) : super(key: key);
@@ -27,12 +25,11 @@ class NavBar extends StatelessWidget {
       //width: 1000,
       child: Stack(
         children: <Widget>[
-          Scaffold(
-            appBar: AppBar(
-              backgroundColor: hijauMain,
-              title: BarAtas(topWords),
-            ),
+          Scaffold(            
             body: backgroundWidget,
+            /* appBar: AppBar(
+              title : Text(topWords),
+            ), */
             bottomNavigationBar:
                 /* BottomAppBar(
               child: Text("Test"),

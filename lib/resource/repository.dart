@@ -21,4 +21,14 @@ class FeedRepository{
     return _apiProvider.getBookmark();
     //return Stream.periodic(Duration(seconds: 1), (x) => x).take(10);
   }
+
+  Future addToJson(Feed input, int source) {
+    return _apiProvider.writeToJson(input, source);
+    //return Stream.periodic(Duration(seconds: 1), (x) => x).take(10);
+  }
+
+  Future removeFromJson(Feed input, int source) {
+    return _apiProvider.removeFromJson(input, source);
+    //return Stream.periodic(Duration(seconds: 1), (x) => x).take(10);
+  }
 }

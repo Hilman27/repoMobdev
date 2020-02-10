@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:religi_app/model/feed.dart';
-import 'package:religi_app/model/newsfeed.dart';
+
 
 class JsonCRUD{
   File jsonFile;
@@ -100,14 +97,32 @@ class JsonCRUD{
     Map<String, dynamic> content = {key: value};    
     if (verifyFileExsistence(destination)) {
       print("File exists");
-      print("Test Json File : ${jsonFile.path}");
-      print("To be put on Json File : $content");
+      print("Test Json File : ${jsonfileSelection(destination).path}");
+      //print("To be put on Json File : $content");
       Map<String, dynamic> jsonFileContent = json.decode(jsonfileSelection(destination).readAsStringSync());
       jsonFileContent.addAll(content);
-      jsonFile.writeAsStringSync(json.encode(jsonFileContent));
+      print("To be put on Json File : $jsonFileContent");
+      jsonfileSelection(destination).writeAsStringSync(json.encode(jsonFileContent));
     } else {            
       print("File '$fileName' does not exist!");
       createFile(content, dir, nameFileSelection(destination));
+    }
+    fileContent = json.decode(jsonfileSelection(destination).readAsStringSync());
+    print(fileContent);
+  }
+
+  void removeFromFile(String key, int destination) {
+    print("Deleting key $key from No.$destination!");        
+    if (verifyFileExsistence(destination)) {
+      print("File exists");
+      print("Test Json File : ${jsonfileSelection(destination).path}");
+      //print("To be put on Json File : $content");
+      Map<String, dynamic> jsonFileContent = json.decode(jsonfileSelection(destination).readAsStringSync());
+      jsonFileContent.remove(key);
+      print("To be put on Json File : $jsonFileContent");
+      jsonfileSelection(destination).writeAsStringSync(json.encode(jsonFileContent));
+    } else {            
+      print("File '$fileName' does not exist! You can't erase those that doesn't exist!");      
     }
     fileContent = json.decode(jsonfileSelection(destination).readAsStringSync());
     print(fileContent);

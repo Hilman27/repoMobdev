@@ -1,8 +1,6 @@
 //import 'package:religi_app/Model/LayarUtama/feed.dart';
 
-import 'dart:convert';
 import 'dart:core';
-import 'dart:io';
 import '_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'feed.g.dart';
